@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.transfer package &mdash; shakemap 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.1 documentation" href="index.html"/>
+        <link rel="up" title="shakemap package" href="shakemap.html"/>
+        <link rel="next" title="shakemap.utils package" href="shakemap.utils.html"/>
+        <link rel="prev" title="shakemap.mapping package" href="shakemap.mapping.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.correlation.html">shakemap.correlation package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.directivity.html">shakemap.directivity package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.extern.html">shakemap.extern package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmpe.html">shakemap.gmpe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.transfer.copysender">shakemap.transfer.copysender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.transfer.ftpsender">shakemap.transfer.ftpsender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.transfer.pdlsender">shakemap.transfer.pdlsender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shakemap-transfer-securesender-module">shakemap.transfer.securesender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.transfer.sender">shakemap.transfer.sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+    <li>shakemap.transfer package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.transfer.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shakemap-transfer-package">
+<h1>shakemap.transfer package<a class="headerlink" href="#shakemap-transfer-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-shakemap.transfer.copysender">
+<span id="shakemap-transfer-copysender-module"></span><h2>shakemap.transfer.copysender module<a class="headerlink" href="#module-shakemap.transfer.copysender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.transfer.copysender.CopySender">
+<em class="property">class </em><code class="descclassname">shakemap.transfer.copysender.</code><code class="descname">CopySender</code><span class="sig-paren">(</span><em>properties=None</em>, <em>files=None</em>, <em>directory=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/copysender.html#CopySender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.copysender.CopySender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shakemap.transfer.sender.Sender" title="shakemap.transfer.sender.Sender"><code class="xref py py-class docutils literal"><span class="pre">shakemap.transfer.sender.Sender</span></code></a></p>
+<p>(Really simple) Class for sending and deleting files and directories via system copy and delete.</p>
+<dl class="method">
+<dt id="shakemap.transfer.copysender.CopySender.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/copysender.html#CopySender.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.copysender.CopySender.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete any files and folders that have been passed to constructor.
+:returns:</p>
+<blockquote>
+<div>The number of files deleted from local directory.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.copysender.CopySender.send">
+<code class="descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/copysender.html#CopySender.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.copysender.CopySender.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send any files or folders that have been passed to constructor.
+:returns:</p>
+<blockquote>
+<div>Number of files sent to local directory.</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.transfer.ftpsender">
+<span id="shakemap-transfer-ftpsender-module"></span><h2>shakemap.transfer.ftpsender module<a class="headerlink" href="#module-shakemap.transfer.ftpsender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.transfer.ftpsender.FTPSender">
+<em class="property">class </em><code class="descclassname">shakemap.transfer.ftpsender.</code><code class="descname">FTPSender</code><span class="sig-paren">(</span><em>properties=None</em>, <em>files=None</em>, <em>directory=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/ftpsender.html#FTPSender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.ftpsender.FTPSender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shakemap.transfer.sender.Sender" title="shakemap.transfer.sender.Sender"><code class="xref py py-class docutils literal"><span class="pre">shakemap.transfer.sender.Sender</span></code></a></p>
+<p>Class for sending and deleting files and directories via FTP.</p>
+<dl class="method">
+<dt id="shakemap.transfer.ftpsender.FTPSender.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/ftpsender.html#FTPSender.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.ftpsender.FTPSender.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete any files and folders that have been passed to constructor.
+:returns:</p>
+<blockquote>
+<div>The number of files deleted on remote FTP server.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.ftpsender.FTPSender.send">
+<code class="descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/ftpsender.html#FTPSender.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.ftpsender.FTPSender.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send any files or folders that have been passed to constructor.
+:returns:</p>
+<blockquote>
+<div>Number of files sent to remote SSH server.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.ftpsender.FTPSender.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/ftpsender.html#FTPSender.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.ftpsender.FTPSender.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate an ftp connection with properties passed to constructor.
+:returns:</p>
+<blockquote>
+<div>Instance of the ftplib.FTP class.</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.transfer.pdlsender">
+<span id="shakemap-transfer-pdlsender-module"></span><h2>shakemap.transfer.pdlsender module<a class="headerlink" href="#module-shakemap.transfer.pdlsender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.transfer.pdlsender.PDLSender">
+<em class="property">class </em><code class="descclassname">shakemap.transfer.pdlsender.</code><code class="descname">PDLSender</code><span class="sig-paren">(</span><em>properties=None</em>, <em>files=None</em>, <em>directory=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/pdlsender.html#PDLSender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.pdlsender.PDLSender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shakemap.transfer.sender.Sender" title="shakemap.transfer.sender.Sender"><code class="xref py py-class docutils literal"><span class="pre">shakemap.transfer.sender.Sender</span></code></a></p>
+<dl class="method">
+<dt id="shakemap.transfer.pdlsender.PDLSender.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/pdlsender.html#PDLSender.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.pdlsender.PDLSender.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.transfer.pdlsender.PDLSender.pdlcmd">
+<code class="descname">pdlcmd</code><em class="property"> = '[JAVA] -jar [JARFILE] --send --status=[STATUS] --source=[PRODUCTSOURCE] --type=[PRODUCTTYPE] --code=[PRODUCTCODE] --eventsource=[EVENTSOURCE] --eventsourcecode=[EVENTSOURCECODE] --privateKey=[KEYFILE]  --configFile=[CONFIGFILE] [FILE] [DIRECTORY]'</em><a class="headerlink" href="#shakemap.transfer.pdlsender.PDLSender.pdlcmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.transfer.pdlsender.PDLSender.required_properties">
+<code class="descname">required_properties</code><em class="property"> = ['java', 'jarfile', 'keyfile', 'configfile', 'productsource', 'producttype', 'productcode', 'eventsource', 'eventsourcecode']</em><a class="headerlink" href="#shakemap.transfer.pdlsender.PDLSender.required_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.pdlsender.PDLSender.send">
+<code class="descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/pdlsender.html#PDLSender.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.pdlsender.PDLSender.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="shakemap-transfer-securesender-module">
+<h2>shakemap.transfer.securesender module<a class="headerlink" href="#shakemap-transfer-securesender-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-shakemap.transfer.sender">
+<span id="shakemap-transfer-sender-module"></span><h2>shakemap.transfer.sender module<a class="headerlink" href="#module-shakemap.transfer.sender" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.transfer.sender.Sender">
+<em class="property">class </em><code class="descclassname">shakemap.transfer.sender.</code><code class="descname">Sender</code><span class="sig-paren">(</span><em>properties=None</em>, <em>files=None</em>, <em>directory=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Base class for concrete subclasses that wrap around different methods of transmitting files.</p>
+<dl class="method">
+<dt id="shakemap.transfer.sender.Sender.addDirectory">
+<code class="descname">addDirectory</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender.addDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender.addDirectory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.sender.Sender.addFiles">
+<code class="descname">addFiles</code><span class="sig-paren">(</span><em>files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender.addFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender.addFiles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.sender.Sender.addProperty">
+<code class="descname">addProperty</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender.addProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender.addProperty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.sender.Sender.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.transfer.sender.Sender.send">
+<code class="descname">send</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/transfer/sender.html#Sender.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.transfer.sender.Sender.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.transfer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shakemap.transfer" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.utils.html" class="btn btn-neutral float-right" title="shakemap.utils package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.mapping.html" class="btn btn-neutral" title="shakemap.mapping package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

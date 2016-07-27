@@ -1,0 +1,27 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Technical Guide}{}% 2
+\BOOKMARK [1][-]{section.2.1}{ShakeMap Software Overview}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Philosophy of Estimating and Interpolating Ground Motions}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Recorded Ground-motion Parameters}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.4}{Ground Motion and Intensity Predictions}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.5}{ShakeMap Processing}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.6}{Representing Macroseismic Intensity on Maps}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.7}{Discussion of Chosen Map Parameters \(Intensity Measures\)}{chapter.2}% 9
+\BOOKMARK [0][-]{chapter.3}{User's Guide}{}% 10
+\BOOKMARK [1][-]{section.3.1}{Background}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.2}{Products and Formats}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.3}{ShakeMap Archives}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.4}{Applications of ShakeMap}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.5}{Related Systems}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.6}{Disclaimers}{chapter.3}% 16
+\BOOKMARK [0][-]{chapter.4}{Software \046 Implementation Guide}{}% 17
+\BOOKMARK [1][-]{section.4.1}{Implementation Considerations}{chapter.4}% 18
+\BOOKMARK [1][-]{section.4.2}{ShakeMap Implementation Checklist}{chapter.4}% 19
+\BOOKMARK [1][-]{section.4.3}{Software Availability \046 Software Guide}{chapter.4}% 20
+\BOOKMARK [0][-]{chapter.5}{Regional Operations}{}% 21
+\BOOKMARK [0][-]{chapter.6}{Future Directions}{}% 22
+\BOOKMARK [1][-]{section.6.1}{Research \046 Development}{chapter.6}% 23
+\BOOKMARK [1][-]{section.6.2}{Software: ShakeMap 4.0 \(Python\)}{chapter.6}% 24
+\BOOKMARK [0][-]{chapter.7}{Acknowledgments}{}% 25
+\BOOKMARK [0][-]{chapter.8}{References \046 Bibliography}{}% 26
+\BOOKMARK [0][-]{chapter.9}{Glossary}{}% 27

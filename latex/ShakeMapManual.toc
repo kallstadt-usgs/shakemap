@@ -1,0 +1,97 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Technical Guide}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}ShakeMap Software Overview}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Philosophy of Estimating and Interpolating Ground Motions}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Recorded Ground-motion Parameters}{4}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Data Acquisition}{4}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Derived Parametric Ground-motion Values}{5}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Macroseismic Intensity}{5}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Ground Motion and Intensity Predictions}{6}{section.2.4}
+\contentsline {section}{\numberline {2.5}ShakeMap Processing}{6}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Data preparation}{10}{subsection.2.5.1}
+\contentsline {subsubsection}{Flagged Stations}{10}{subsubsection*.3}
+\contentsline {subsubsection}{Converting MMI to PGM and PGM to MMI}{11}{subsubsection*.4}
+\contentsline {subsubsection}{Site Corrections}{12}{subsubsection*.5}
+\contentsline {paragraph}{Site Characterization Map}{12}{paragraph*.6}
+\contentsline {paragraph}{Amplification Factors}{16}{paragraph*.7}
+\contentsline {paragraph}{Correct Data to ``Rock''}{16}{paragraph*.8}
+\contentsline {subsection}{\numberline {2.5.2}Event Bias}{16}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Interpolation}{23}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}Amplify Ground Motions}{23}{subsection.2.5.4}
+\contentsline {subsection}{\numberline {2.5.5}Differences in Handling MMI}{24}{subsection.2.5.5}
+\contentsline {subsection}{\numberline {2.5.6}Fault Considerations}{24}{subsection.2.5.6}
+\contentsline {subsubsection}{Median Distance and Finite Faults}{24}{subsubsection*.11}
+\contentsline {subsubsection}{Fault Dimensions}{25}{subsubsection*.12}
+\contentsline {subsubsection}{Directivity}{26}{subsubsection*.13}
+\contentsline {subsection}{\numberline {2.5.7}Additional Considerations}{26}{subsection.2.5.7}
+\contentsline {subsubsection}{User-supplied Estimate Grids}{26}{subsubsection*.14}
+\contentsline {subsubsection}{Uncertainty}{26}{subsubsection*.15}
+\contentsline {section}{\numberline {2.6}Representing Macroseismic Intensity on Maps}{29}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Color Palette for the ShakeMap Instrumental Intensity Scale}{29}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}ShakeMap Instrumental Intensity Scale Text Descriptions}{30}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}ShakeMap Intensity Scale and Peak Ground Motions}{31}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Color Coding Stations by Intensity}{31}{subsection.2.6.4}
+\contentsline {section}{\numberline {2.7}Discussion of Chosen Map Parameters (Intensity Measures)}{32}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Use of Peak Values Rather than Mean}{32}{subsection.2.7.1}
+\contentsline {chapter}{\numberline {3}User's Guide}{35}{chapter.3}
+\contentsline {section}{\numberline {3.1}Background}{35}{section.3.1}
+\contentsline {section}{\numberline {3.2}Products and Formats}{36}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Input Files}{36}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Output Files and Products}{37}{subsection.3.2.2}
+\contentsline {subsubsection}{Metadata and Runtime Information}{37}{subsubsection*.16}
+\contentsline {subsubsection}{Static Maps and Plots (Images)}{38}{subsubsection*.17}
+\contentsline {subsubsection}{Interactive Maps}{38}{subsubsection*.18}
+\contentsline {subsubsection}{Interpolated Ground Motion Grids}{47}{subsubsection*.19}
+\contentsline {subsubsection}{Station Lists}{52}{subsubsection*.20}
+\contentsline {subsubsection}{GIS Products}{52}{subsubsection*.21}
+\contentsline {paragraph}{Shapefiles}{53}{paragraph*.22}
+\contentsline {paragraph}{ESRI Raster Files (\emph {.fit} files)}{54}{paragraph*.24}
+\contentsline {paragraph}{Google Earth Overlay}{54}{paragraph*.25}
+\contentsline {paragraph}{Contour Files}{55}{paragraph*.26}
+\contentsline {subsection}{\numberline {3.2.3}Real-Time Product Distribution, Automatic Access, and Feeds}{55}{subsection.3.2.3}
+\contentsline {subsubsection}{Interactive Web Downloads}{55}{subsubsection*.27}
+\contentsline {subsubsection}{RSS Feeds}{55}{subsubsection*.28}
+\contentsline {subsubsection}{GeoJSON Feeds}{55}{subsubsection*.29}
+\contentsline {subsubsection}{Additional Feeds}{56}{subsubsection*.30}
+\contentsline {subsubsection}{ShakeCast System}{56}{subsubsection*.31}
+\contentsline {subsubsection}{Product Delivery Layer (PDL) Client}{56}{subsubsection*.32}
+\contentsline {subsubsection}{Web Mapping (GIS) Services}{56}{subsubsection*.33}
+\contentsline {section}{\numberline {3.3}ShakeMap Archives}{57}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Real-time ShakeMaps}{57}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}ShakeMap Atlas}{58}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}ShakeMap Scenarios}{59}{subsection.3.3.3}
+\contentsline {subsubsection}{Generating Earthquake Scenarios}{62}{subsubsection*.34}
+\contentsline {subsubsection}{Standardizing Earthquake Scenarios}{64}{subsubsection*.35}
+\contentsline {section}{\numberline {3.4}Applications of ShakeMap}{65}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Emergency Management and Response}{65}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Loss Estimation}{70}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Financial Sector Decision-Making}{72}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Public Information and Education}{73}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}Emergency Preparedness}{74}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}Earthquake Engineering and Seismological Research}{75}{subsection.3.4.6}
+\contentsline {section}{\numberline {3.5}Related Systems}{77}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}ShakeCast}{77}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}PAGER}{79}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Public and Private Sector Tools}{79}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Disclaimers}{83}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}General Disclaimer}{83}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}ShakeMap Update Policy}{83}{subsection.3.6.2}
+\contentsline {chapter}{\numberline {4}Software \& Implementation Guide}{85}{chapter.4}
+\contentsline {section}{\numberline {4.1}Implementation Considerations}{85}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Seismic Network}{85}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Seismic Stations and Parametric Data}{85}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Triggering ShakeMap}{86}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}System Configuration}{86}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Operations}{87}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}Scenarios}{87}{subsection.4.1.6}
+\contentsline {subsection}{\numberline {4.1.7}Backup}{88}{subsection.4.1.7}
+\contentsline {section}{\numberline {4.2}ShakeMap Implementation Checklist}{88}{section.4.2}
+\contentsline {section}{\numberline {4.3}Software Availability \& Software Guide}{90}{section.4.3}
+\contentsline {chapter}{\numberline {5}Regional Operations}{93}{chapter.5}
+\contentsline {chapter}{\numberline {6}Future Directions}{95}{chapter.6}
+\contentsline {section}{\numberline {6.1}Research \& Development}{95}{section.6.1}
+\contentsline {section}{\numberline {6.2}Software: ShakeMap 4.0 (Python)}{96}{section.6.2}
+\contentsline {chapter}{\numberline {7}Acknowledgments}{97}{chapter.7}
+\contentsline {chapter}{\numberline {8}References \& Bibliography}{99}{chapter.8}
+\contentsline {chapter}{\numberline {9}Glossary}{109}{chapter.9}

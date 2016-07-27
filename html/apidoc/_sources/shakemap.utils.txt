@@ -1,0 +1,46 @@
+shakemap.utils package
+======================
+
+Submodules
+----------
+
+shakemap.utils.conf module
+--------------------------
+
+.. automodule:: shakemap.utils.conf
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.utils.exception module
+-------------------------------
+
+.. automodule:: shakemap.utils.exception
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.utils.misc module
+--------------------------
+
+.. automodule:: shakemap.utils.misc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.utils.timeutils module
+-------------------------------
+
+.. automodule:: shakemap.utils.timeutils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: shakemap.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

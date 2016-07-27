@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.utils.conf &mdash; shakemap 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.utils.conf</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.utils.conf</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#stdlib imports</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">io</span>
+
+<span class="c1">#third party libraries</span>
+<span class="kn">from</span> <span class="nn">configobj</span> <span class="kn">import</span> <span class="n">ConfigObj</span>
+<span class="kn">from</span> <span class="nn">validate</span> <span class="kn">import</span> <span class="n">Validator</span><span class="p">,</span><span class="n">VdtTypeError</span><span class="p">,</span><span class="n">VdtParamError</span>
+
+<div class="viewcode-block" id="getCustomValidator"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.getCustomValidator">[docs]</a><span class="k">def</span> <span class="nf">getCustomValidator</span><span class="p">():</span>
+    <span class="n">fdict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;file_type&#39;</span><span class="p">:</span> <span class="n">file_type</span><span class="p">,</span>
+        <span class="s1">&#39;directory_type&#39;</span><span class="p">:</span> <span class="n">directory_type</span><span class="p">,</span>
+        <span class="s1">&#39;annotatedfloat_type&#39;</span><span class="p">:</span><span class="n">annotatedfloat_type</span><span class="p">,</span>
+        <span class="s1">&#39;gmpe_type&#39;</span><span class="p">:</span><span class="n">gmpe_type</span><span class="p">,}</span>
+    
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">Validator</span><span class="p">(</span><span class="n">fdict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">validator</span></div>
+
+<div class="viewcode-block" id="createDefaultConfig"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.createDefaultConfig">[docs]</a><span class="k">def</span> <span class="nf">createDefaultConfig</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="n">includeComments</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">configfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span><span class="s1">&#39;.shakemap&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">configfolder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">configfolder</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">configfolder</span><span class="p">,</span><span class="s1">&#39;config.ini&#39;</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">configspec</span><span class="o">=</span><span class="n">configspec</span><span class="p">,</span><span class="n">stringify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">getCustomValidator</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span><span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span><span class="s1">&#39;wt&#39;</span><span class="p">)</span>
+    <span class="c1">#TODO - should we write out the docs for the parameters that have default=None?</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">includeComments</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+        <span class="c1">#this is a hack because I can&#39;t figure out what to do with floats with default value of None.</span>
+        <span class="c1">#tried stringify=False/True, still get errors when I try to validate</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&quot;&quot;&#39;</span><span class="p">:</span> 
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+            <span class="k">continue</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">outfile</span></div>
+
+<div class="viewcode-block" id="whatIs"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.whatIs">[docs]</a><span class="k">def</span> <span class="nf">whatIs</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="n">param</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">configspec</span><span class="o">=</span><span class="n">configspec</span><span class="p">)</span>
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">getCustomValidator</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span><span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not a value found in </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">configspec</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sectionkey</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">:</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">sectionkey</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;Section [</span><span class="si">%s</span><span class="s1">] has that option:&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sectionkey</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">comment</span></div>
+
+<div class="viewcode-block" id="annotatedfloat_type"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.annotatedfloat_type">[docs]</a><span class="k">def</span> <span class="nf">annotatedfloat_type</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="o">/</span><span class="mf">3600.0</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="o">/</span><span class="mf">60.0</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="gmpe_type"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.gmpe_type">[docs]</a><span class="k">def</span> <span class="nf">gmpe_type</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">VdtParamError</span><span class="p">(</span><span class="s1">&#39;gmpe&#39;</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">minmag</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">maxmag</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">mindep</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">maxdep</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">minmag</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">minmag</span> <span class="o">&lt;=</span> <span class="mf">9.9</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">maxmag</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">maxmag</span> <span class="o">&lt;=</span> <span class="mf">9.9</span> <span class="ow">and</span> <span class="n">maxmag</span> <span class="o">&gt;</span> <span class="n">minmag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mindep</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">mindep</span> <span class="o">&lt;=</span> <span class="mf">10000.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">maxdep</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">maxdep</span> <span class="o">&lt;=</span> <span class="mf">10000.0</span> <span class="ow">and</span> <span class="n">maxdep</span> <span class="o">&gt;</span> <span class="n">mindep</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="p">[</span><span class="n">minmag</span><span class="p">,</span><span class="n">maxmag</span><span class="p">,</span><span class="n">mindep</span><span class="p">,</span><span class="n">maxdep</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">VdtParamError</span><span class="p">(</span><span class="s1">&#39;gmpe&#39;</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="file_type"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.file_type">[docs]</a><span class="k">def</span> <span class="nf">file_type</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="directory_type"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.directory_type">[docs]</a><span class="k">def</span> <span class="nf">directory_type</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">VdtTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="validate"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.conf.validate">[docs]</a><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="n">configfile</span><span class="p">,</span><span class="n">macros</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;return a validated config object.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#first, replace all the macros if we have the values</span>
+    <span class="k">if</span> <span class="n">macros</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">configstr</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span><span class="s1">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">macros</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">macro</span> <span class="o">=</span> <span class="s1">&#39;&lt;&#39;</span><span class="o">+</span><span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span>
+            <span class="n">configstr</span> <span class="o">=</span> <span class="n">configstr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">macro</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">configfile</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">configstr</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span><span class="n">configspec</span><span class="o">=</span><span class="n">configspec</span><span class="p">)</span>
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">getCustomValidator</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+    <span class="c1"># for rkey,rvalue in result.iteritems():</span>
+    <span class="c1">#     if not rvalue and rkey.find(&#39;transfer&#39;) &gt; -1:</span>
+    <span class="c1">#         if config[rkey]</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">config</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span></div>
+
+<span class="k">def</span> <span class="nf">_test_validate</span><span class="p">():</span>
+    <span class="n">dummydir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
+    <span class="n">dummyfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span><span class="s1">&#39;.bash_profile&#39;</span><span class="p">)</span> 
+    <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;[grind]</span>
+<span class="s1">    smVs30default = 686.0</span>
+<span class="s1">    use_gmpe_sc = False</span>
+<span class="s1">    basin_module = Field2000</span>
+<span class="s1">    x_grid_interval = 0.025</span>
+<span class="s1">    y_grid_interval = 0.025</span>
+<span class="s1">    lonspan = 2.5</span>
+<span class="s1">    gmroi = 10.0</span>
+<span class="s1">    iroi = 10.0</span>
+<span class="s1">    gmdecay = 0.5</span>
+<span class="s1">    [[gmpe]]</span>
+<span class="s1">         Zhao06_surface = 0.0,9.9,0,60</span>
+<span class="s1">         Zhao06_intraslab = 0.0,9.9,60,999</span>
+<span class="s1">    [[ipe]]</span>
+<span class="s1">         AW07_CEUS = 0.0,9.9,0,999</span>
+<span class="s1">    idecay = 0.5</span>
+<span class="s1">    outlier_deviation_level = 3</span>
+<span class="s1">    outlier_max_mag = 7.0</span>
+<span class="s1">    bias_norm = l1</span>
+<span class="s1">    bias_max_range = 120.0</span>
+<span class="s1">    bias_min_stations = 6</span>
+<span class="s1">    bias_max_mag = 7.0</span>
+<span class="s1">    bias_max_bias = 2.0</span>
+<span class="s1">    bias_min_bias = -2.0</span>
+<span class="s1">    bias_log_amp = True</span>
+<span class="s1">    direct_patch_size = 1000.0</span>
+<span class="s1">    mi2pgm = WGRW11</span>
+<span class="s1">    pgm2mi = WGRW11</span>
+
+<span class="s1">    [transfer_ftp]</span>
+<span class="s1">      [[dest1]]</span>
+<span class="s1">        category = &#39;webcopy&#39;</span>
+<span class="s1">        files = *.jpg,</span>
+<span class="s1">        sendDone = false</span>
+<span class="s1">        username = user</span>
+<span class="s1">        password = thispass</span>
+<span class="s1">        remotehost = ftp.ftptest.org</span>
+<span class="s1">        remotedirectory = /pub/shakemap</span>
+<span class="s1">    [transfer_copy]</span>
+<span class="s1">      [[dest2]]</span>
+<span class="s1">        category = &#39;webcopy&#39;</span>
+<span class="s1">        files = *.jpg,</span>
+<span class="s1">        sendDone = false</span>
+<span class="s1">        directory = </span><span class="si">%s</span><span class="s1"></span>
+<span class="s1">    [transfer_rsync]</span>
+<span class="s1">      [[dest2]]</span>
+<span class="s1">        category = &#39;webcopy&#39;</span>
+<span class="s1">        files = *.jpg,</span>
+<span class="s1">        sendDone = true</span>
+<span class="s1">        username = fred</span>
+<span class="s1">        password = password</span>
+<span class="s1">        privatekey = </span><span class="si">%s</span><span class="s1"></span>
+<span class="s1">        remotehost = remotehost.org</span>
+<span class="s1">        remotedirectory = /home/user/data</span>
+<span class="s1">    [transfer_pdl]</span>
+<span class="s1">      [[dest2]]</span>
+<span class="s1">        category = &#39;webcopy&#39;</span>
+<span class="s1">        files = *.jpg,</span>
+<span class="s1">        sendDone = true</span>
+<span class="s1">        java = /usr/bin/java</span>
+<span class="s1">        configfile = </span><span class="si">%s</span><span class="s1"></span>
+<span class="s1">        client = </span><span class="si">%s</span><span class="s1"></span>
+<span class="s1">        productsource = &lt;SHAKEMAP_NETWORK&gt;</span>
+<span class="s1">        producttype = shakemap</span>
+<span class="s1">        productcode = &lt;EVENT_CODE&gt;</span>
+<span class="s1">        eventsource = &lt;EVENT_NETWORK&gt;</span>
+<span class="s1">        eventsourcecode = &lt;EVENT_ID&gt;</span>
+<span class="s1">        privatekey = </span><span class="si">%s</span><span class="s1"></span>
+<span class="s1">    &#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dummydir</span><span class="p">,</span><span class="n">dummyfile</span><span class="p">,</span><span class="n">dummyfile</span><span class="p">,</span><span class="n">dummyfile</span><span class="p">,</span><span class="n">dummyfile</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fh</span><span class="p">,</span><span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span><span class="s1">&#39;wt&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">homedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="c1">#where is this script?</span>
+        <span class="n">configspec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">homedir</span><span class="p">,</span><span class="s1">&#39;configspec.ini&#39;</span><span class="p">)</span>
+        <span class="n">macros</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;shakemap_network&#39;</span><span class="p">:</span><span class="s1">&#39;us&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;event_code&#39;</span><span class="p">:</span><span class="s1">&#39;2015abcd&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;event_network&#39;</span><span class="p">:</span><span class="s1">&#39;us&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;event_id&#39;</span><span class="p">:</span><span class="s1">&#39;us2015abcd&#39;</span><span class="p">}</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="n">tfile</span><span class="p">,</span><span class="n">macros</span><span class="o">=</span><span class="n">macros</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;_test_validate() failed with error &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">_test_validate</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">homedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="c1">#where is this script?</span>
+    <span class="n">configspec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">homedir</span><span class="p">,</span><span class="s1">&#39;configspec.ini&#39;</span><span class="p">)</span>
+    <span class="n">configfile</span> <span class="o">=</span> <span class="n">createDefaultConfig</span><span class="p">(</span><span class="n">configspec</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">whatIs</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="s1">&#39;pgm2mi&#39;</span><span class="p">))</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">validate</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span><span class="n">configfile</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
