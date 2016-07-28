@@ -259,6 +259,7 @@
             <span class="k">if</span> <span class="n">res1</span><span class="o">+</span><span class="n">res2</span><span class="o">+</span><span class="n">res3</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Something bad happened when attempting to add, commit, or push gh-pages content to GitHub. Exiting.&#39;</span><span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;You can inspect the ShakeMap manual and API docs by looking here: http://usgs.github.io/shakemap/index.html&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">clean</span><span class="p">:</span>
                 <span class="n">indexpage</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CLONE_DIR</span><span class="p">,</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span> <span class="c1">#this should not have &#39;html&#39; in it</span>
