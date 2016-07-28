@@ -229,8 +229,8 @@
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Distance.fromPoints"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance.fromPoints">[docs]</a>    <span class="k">def</span> <span class="nf">fromPoints</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convenience class method to construct a Distance object from an array of lons, lats,</span>
-<span class="sd">        and depths..</span>
+<span class="sd">        Convenience class method to construct a Distance object from an array of</span>
+<span class="sd">        lons, lats, and depths.</span>
 <span class="sd">        :param gmpe:</span>
 <span class="sd">            Concrete subclass of GMPE</span>
 <span class="sd">            https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</span>
@@ -545,8 +545,8 @@
                 <span class="n">w_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span>
                 <span class="c1"># Case 1:</span>
                 <span class="n">ix</span> <span class="o">=</span> <span class="n">t_i</span> <span class="o">!=</span> <span class="mi">0</span>
-                <span class="n">w_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">((</span><span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> \
-                           <span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="o">-</span><span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]))</span>
+                <span class="n">w_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">((</span><span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span>
+                                                        <span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="o">-</span><span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]))</span>
                 <span class="c1"># Case 2:</span>
                 <span class="n">ix</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">u_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">u_i</span> <span class="o">&gt;</span> <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
                 <span class="n">w_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">-</span> <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
@@ -951,42 +951,6 @@
     <span class="k">return</span> <span class="n">dist</span></div>
 
 
-<div class="viewcode-block" id="calc_ry0_distance"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.calc_ry0_distance">[docs]</a><span class="k">def</span> <span class="nf">calc_ry0_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate Ry0 distance.</span>
-
-<span class="sd">    Compute the minimum distance between sites (lat, lon, dep) and the great</span>
-<span class="sd">    circle arcs perpendicular to the average strike direction of the</span>
-<span class="sd">    fault trace and passing through the end-points of the trace.</span>
-
-<span class="sd">    :param P0:</span>
-<span class="sd">      Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
-<span class="sd">    :param P1:</span>
-<span class="sd">      Point object, representing the second top-edge vertex of a fault quadrilateral.</span>
-<span class="sd">    :param lat:</span>
-<span class="sd">      Numpy array of latitude.</span>
-<span class="sd">    :param lon:</span>
-<span class="sd">      Numpy array of longitude.</span>
-<span class="sd">    :param dep:</span>
-<span class="sd">      Numpy array of depths (km).</span>
-<span class="sd">    :returns:</span>
-<span class="sd">      Array of size lon.shape of distances (in km) from input points to rupture surface.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Strike</span>
-    <span class="n">surfaceP0</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-    <span class="n">surfaceP1</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-    <span class="n">strike</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
-    <span class="n">dst1</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">distance_to_arc</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
-                                    <span class="p">(</span><span class="n">strike</span> <span class="o">+</span> <span class="mf">90.</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
-    <span class="n">dst2</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">distance_to_arc</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
-                                    <span class="p">(</span><span class="n">strike</span> <span class="o">+</span> <span class="mf">90.</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
-    <span class="c1"># Get the shortest distance from the two lines</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dst1</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dst2</span><span class="p">)</span>
-    <span class="n">dst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dst1</span><span class="p">)</span>
-    <span class="n">dst</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dst1</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dst2</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="n">dst</span></div>
-
-
 <div class="viewcode-block" id="calc_u_i"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.calc_u_i">[docs]</a><span class="k">def</span> <span class="nf">calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate u_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance</span>
@@ -1088,58 +1052,6 @@
         <span class="n">t_i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">t_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">t_i</span></div>
-
-
-<div class="viewcode-block" id="get_top_edge"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.get_top_edge">[docs]</a><span class="k">def</span> <span class="nf">get_top_edge</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Determine which edge of a quadrilateral rupture surface is the top.</span>
-<span class="sd">    :param lat:</span>
-<span class="sd">        Sequence of 4 or 5 latitudes defining vertices of rupture surface.</span>
-<span class="sd">    :param lon:</span>
-<span class="sd">        Sequence of 4 or 5 longitudes defining vertices of rupture surface.</span>
-<span class="sd">    :param dep:</span>
-<span class="sd">        Sequence of 4 or 5 depths defining vertices of rupture surface.</span>
-<span class="sd">    :returns:</span>
-<span class="sd">        (P0,P1) where P0 and P1 are Vector objects in ECEF coordinates indicating</span>
-<span class="sd">        the vertices of the top edge.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span>
-    <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
-    <span class="n">dep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dep</span><span class="p">)</span>
-    <span class="n">p1</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">p2</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">dep</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dep</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dep</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">dep2</span> <span class="o">=</span> <span class="n">dep</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-        <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">dep2</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">dd</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-        <span class="n">p1idx</span> <span class="o">=</span> <span class="n">dep2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">p2idx</span> <span class="o">=</span> <span class="n">p1idx</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="n">p1idx</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="n">p1idx</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
-        <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="n">p2idx</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="n">p2idx</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="minimize"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.minimize">[docs]</a><span class="k">def</span> <span class="nf">minimize</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get minimum values from two numpy arrays, ignoring sign in comparison</span>
-<span class="sd">    but preserving sign in result.</span>
-<span class="sd">    :param a:</span>
-<span class="sd">      Numpy array</span>
-<span class="sd">    :param b:</span>
-<span class="sd">      Numpy array</span>
-<span class="sd">    :returns:</span>
-<span class="sd">      Numpy array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">aidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    <span class="n">bidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">aidx</span><span class="p">)</span>
-    <span class="n">d</span><span class="p">[</span><span class="n">aidx</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">aidx</span><span class="p">]</span>
-    <span class="n">d</span><span class="p">[</span><span class="n">bidx</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">bidx</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">d</span></div>
 </pre></div>
 
            </div>

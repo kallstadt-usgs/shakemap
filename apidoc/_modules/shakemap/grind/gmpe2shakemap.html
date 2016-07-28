@@ -138,6 +138,7 @@
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.imt</span> <span class="kn">import</span> <span class="n">PGA</span><span class="p">,</span> <span class="n">PGV</span><span class="p">,</span> <span class="n">SA</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib</span> <span class="kn">import</span> <span class="n">const</span>
 
+
 <div class="viewcode-block" id="ampShakeMapToGMPE"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.gmpe2shakemap.ampShakeMapToGMPE">[docs]</a><span class="k">def</span> <span class="nf">ampShakeMapToGMPE</span><span class="p">(</span><span class="n">sm_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">PGV</span><span class="p">):</span>
@@ -145,16 +146,17 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">sm_amps</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> \
+    <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span>
                                <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
     <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_distribution_values</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">gmpe_amps</span></div>
 
+
 <div class="viewcode-block" id="ampGmpeToShakeMap"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.gmpe2shakemap.ampGmpeToShakeMap">[docs]</a><span class="k">def</span> <span class="nf">ampGmpeToShakeMap</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
 
     <span class="n">sm_amps</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_imt_unit_values</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">)</span>
-    <span class="n">sm_amps</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">sm_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> \
+    <span class="n">sm_amps</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">sm_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span>
                              <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">PGV</span><span class="p">):</span>
@@ -162,22 +164,23 @@
 
     <span class="k">return</span> <span class="n">sm_amps</span></div>
 
+
 <div class="viewcode-block" id="sigmaShakeMapToGMPE"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.gmpe2shakemap.sigmaShakeMapToGMPE">[docs]</a><span class="k">def</span> <span class="nf">sigmaShakeMapToGMPE</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
 
     <span class="n">gmpe_sigmas</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_distribution_values</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">)</span>
-    <span class="n">gmpe_sigmas</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> \
+    <span class="n">gmpe_sigmas</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span>
                                    <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">gmpe_sigmas</span></div>
 
+
 <div class="viewcode-block" id="sigmaGmpeToShakeMap"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.gmpe2shakemap.sigmaGmpeToShakeMap">[docs]</a><span class="k">def</span> <span class="nf">sigmaGmpeToShakeMap</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
 
-    <span class="n">sm_sigmas</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> \
+    <span class="n">sm_sigmas</span> <span class="o">=</span> <span class="n">BB</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span>
                                  <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
     <span class="n">sm_sigmas</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_imt_unit_values</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">sm_sigmas</span></div>
-
 </pre></div>
 
            </div>

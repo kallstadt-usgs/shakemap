@@ -131,22 +131,24 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
+
 <div class="viewcode-block" id="Zone"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.zoneconfig.Zone">[docs]</a><span class="k">class</span> <span class="nc">Zone</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zonedict</span> <span class="o">=</span> <span class="p">{}</span>
 
-<div class="viewcode-block" id="Zone.addZone"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.zoneconfig.Zone.addZone">[docs]</a>    <span class="k">def</span> <span class="nf">addZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">depths</span><span class="p">,</span><span class="n">magnitudes</span><span class="p">,</span><span class="n">gmpes</span><span class="p">):</span>
+<div class="viewcode-block" id="Zone.addZone"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.zoneconfig.Zone.addZone">[docs]</a>    <span class="k">def</span> <span class="nf">addZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">depths</span><span class="p">,</span> <span class="n">magnitudes</span><span class="p">,</span> <span class="n">gmpes</span><span class="p">):</span>
         <span class="n">ndep</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span>
         <span class="n">nmag</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">magnitudes</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gmpes</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input gmpe list must be a numpy array of dimensions: </span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ndep</span><span class="p">,</span><span class="n">nmag</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gmpes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Input gmpe list must be a numpy array of dimensions: </span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ndep</span><span class="p">,</span> <span class="n">nmag</span><span class="p">))</span>
         <span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span>
         <span class="n">magnitudes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">magnitudes</span><span class="p">)</span>
-        <span class="c1">#make sure that depths and magnitudes are increasing</span>
+        <span class="c1"># make sure that depths and magnitudes are increasing</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">magnitudes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Depths and magnitudes must be monotonically increasing&#39;</span><span class="p">)</span></div></div>
-        
-            
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Depths and magnitudes must be monotonically increasing&#39;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

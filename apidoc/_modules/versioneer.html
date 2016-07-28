@@ -1148,7 +1148,7 @@
         <span class="c1"># &quot;stabilization&quot;, as well as &quot;HEAD&quot; and &quot;master&quot;.</span>
         <span class="n">tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">refs</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">r&#39;\d&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)])</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;discarding &#39;</span><span class="si">%s</span><span class="s2">&#39;, no digits&quot;</span> <span class="o">%</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">refs</span><span class="o">-</span><span class="n">tags</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;discarding &#39;</span><span class="si">%s</span><span class="s2">&#39;, no digits&quot;</span> <span class="o">%</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">refs</span> <span class="o">-</span> <span class="n">tags</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;likely tags: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">tags</span><span class="p">)))</span>
     <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tags</span><span class="p">):</span>
@@ -1661,6 +1661,7 @@
         <span class="kn">from</span> <span class="nn">distutils.command.build_py</span> <span class="kn">import</span> <span class="n">build_py</span> <span class="k">as</span> <span class="n">_build_py</span>
 
     <span class="k">class</span> <span class="nc">cmd_build_py</span><span class="p">(</span><span class="n">_build_py</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">root</span> <span class="o">=</span> <span class="n">get_root</span><span class="p">()</span>
             <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_config_from_root</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
@@ -1679,6 +1680,7 @@
         <span class="kn">from</span> <span class="nn">cx_Freeze.dist</span> <span class="kn">import</span> <span class="n">build_exe</span> <span class="k">as</span> <span class="n">_build_exe</span>
 
         <span class="k">class</span> <span class="nc">cmd_build_exe</span><span class="p">(</span><span class="n">_build_exe</span><span class="p">):</span>
+
             <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                 <span class="n">root</span> <span class="o">=</span> <span class="n">get_root</span><span class="p">()</span>
                 <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_config_from_root</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
@@ -1708,6 +1710,7 @@
         <span class="kn">from</span> <span class="nn">distutils.command.sdist</span> <span class="kn">import</span> <span class="n">sdist</span> <span class="k">as</span> <span class="n">_sdist</span>
 
     <span class="k">class</span> <span class="nc">cmd_sdist</span><span class="p">(</span><span class="n">_sdist</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">versions</span> <span class="o">=</span> <span class="n">get_versions</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_versioneer_generated_versions</span> <span class="o">=</span> <span class="n">versions</span>

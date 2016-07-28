@@ -134,10 +134,11 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
+
 <div class="viewcode-block" id="BooreAtkinson2008ShakeMap"><a class="viewcode-back" href="../../../shakemap.gmpe.html#shakemap.gmpe.boore_atkinson_2008_shake.BooreAtkinson2008ShakeMap">[docs]</a><span class="k">class</span> <span class="nc">BooreAtkinson2008ShakeMap</span><span class="p">(</span><span class="n">BooreAtkinson2008</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Subclasses GEM OpenQuake Boore-Atkinson 2008 GMPE, but with methods that allow finer-grained</span>
 <span class="sd">       access to methods into that GMPE implementation.  Specifically, methods that allow the user to:</span>
-<span class="sd">       </span>
+
 <span class="sd">      - apply or un-apply site corrections to a particular site.</span>
 <span class="sd">      - get ground motions on bare rock</span>
 <span class="sd">      - get the standard deviations for the GMPE</span>
@@ -147,17 +148,17 @@
         <span class="sd">&#39;&#39;&#39;Calculate site corrections for sites on rock (forward=True), OR</span>
 <span class="sd">        Remove site corrections from data on other substrates.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COEFFS</span><span class="p">[</span><span class="n">imt</span><span class="p">]</span>
         <span class="n">C_SR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COEFFS_SOIL_RESPONSE</span><span class="p">[</span><span class="n">imt</span><span class="p">]</span>
         <span class="n">pga4nl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pga_on_rock</span><span class="p">(</span><span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">forward</span><span class="p">:</span>
             <span class="n">pgm_corrected</span> <span class="o">=</span> <span class="n">pgm</span> <span class="o">+</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span>
+                    <span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pgm_corrected</span> <span class="o">=</span> <span class="n">pgm</span> <span class="o">-</span> \
-               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">))</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">pgm_corrected</span></div>
 
@@ -169,22 +170,22 @@
         <span class="n">C_SR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COEFFS_SOIL_RESPONSE</span><span class="p">[</span><span class="n">imt</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">forward</span><span class="p">:</span>
             <span class="n">pgm_corrected</span> <span class="o">=</span> <span class="n">pgm</span> <span class="o">+</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span>
+                    <span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pgm_corrected</span> <span class="o">=</span> <span class="n">pgm</span> <span class="o">-</span> \
-               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">))</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">_get_site_amplification_non_linear</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">pga4nl</span><span class="p">,</span> <span class="n">C_SR</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">pgm_corrected</span></div>
-
 
 <div class="viewcode-block" id="BooreAtkinson2008ShakeMap.get_amplitudes"><a class="viewcode-back" href="../../../shakemap.gmpe.html#shakemap.gmpe.boore_atkinson_2008_shake.BooreAtkinson2008ShakeMap.get_amplitudes">[docs]</a>    <span class="k">def</span> <span class="nf">get_amplitudes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Calculate peak ground motion on rock.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COEFFS</span><span class="p">[</span><span class="n">imt</span><span class="p">]</span>
         <span class="n">pgmrock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_magnitude_scaling</span><span class="p">(</span><span class="n">rup</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span> <span class="o">+</span> \
-                  <span class="bp">self</span><span class="o">.</span><span class="n">_compute_distance_scaling</span><span class="p">(</span><span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compute_distance_scaling</span><span class="p">(</span><span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">pgmrock</span></div>
 

@@ -149,14 +149,15 @@
 <span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>
 
 <span class="c1"># CONSTANTS</span>
-<span class="c1"># what is the maximum ratio of distance out of the plane defined by 3 points a 4th point can be before</span>
-<span class="c1"># being considered non-co-planar?</span>
+<span class="c1"># what is the maximum ratio of distance out of the plane defined by 3 points a</span>
+<span class="c1"># 4th point can be before being considered non-co-planar?</span>
 <span class="n">OFFPLANE_TOLERANCE</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 
 <div class="viewcode-block" id="Fault"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.fault.Fault">[docs]</a><span class="k">class</span> <span class="nc">Fault</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class to handle fault files of various types and output fault data in various ways.</span>
+<span class="sd">    Class to handle fault files of various types and output fault data in </span>
+<span class="sd">    various ways.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
@@ -496,32 +497,6 @@
                        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nq</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Fault.multiplyFaultLength"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.fault.Fault.multiplyFaultLength">[docs]</a>    <span class="k">def</span> <span class="nf">multiplyFaultLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
-        <span class="c1"># What does this do and why do we want to do it????</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)):</span>
-            <span class="n">quad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quad</span>
-            <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
-            <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
-            <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
-            <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
-            <span class="n">dtop</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
-            <span class="n">toplen</span> <span class="o">=</span> <span class="n">dtop</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
-            <span class="n">topnorm</span> <span class="o">=</span> <span class="n">dtop</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
-            <span class="n">dbottom</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">-</span> <span class="n">p3</span>
-            <span class="n">bottomlen</span> <span class="o">=</span> <span class="n">dbottom</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
-            <span class="n">bottomnorm</span> <span class="o">=</span> <span class="n">dbottom</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
-            <span class="n">newtoplen</span> <span class="o">=</span> <span class="n">toplen</span> <span class="o">*</span> <span class="n">factor</span>
-            <span class="n">newbottomlen</span> <span class="o">=</span> <span class="n">bottomlen</span> <span class="o">*</span> <span class="n">factor</span>
-            <span class="n">newp1</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">+</span> <span class="n">topnorm</span> <span class="o">*</span> <span class="n">newtoplen</span>
-            <span class="n">newp2</span> <span class="o">=</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">bottomnorm</span> <span class="o">*</span> <span class="n">newbottomlen</span>
-            <span class="n">newP1</span> <span class="o">=</span> <span class="n">newp1</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
-            <span class="n">newP2</span> <span class="o">=</span> <span class="n">newp2</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
-            <span class="n">newP1</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span>
-            <span class="n">newP2</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">newP1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">newP2</span></div>
 
 <div class="viewcode-block" id="Fault.getFaultLength"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.fault.Fault.getFaultLength">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -961,7 +936,7 @@
 <span class="sd">        :returns:</span>
 <span class="sd">            3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Fault.getFaultAsMesh"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.fault.Fault.getFaultAsMesh">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultAsMesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -969,7 +944,7 @@
 <span class="sd">        :returns:</span>
 <span class="sd">            Mesh (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fault</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">)</span>
+        <span class="n">fault</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fault</span></div>
 
     <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1190,10 +1165,10 @@
 <span class="sd">    :returns:</span>
 <span class="sd">        Unit slip vector in ECEF space.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">strike</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
-    <span class="n">dip</span> <span class="o">=</span> <span class="n">getQuadDip</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
-    <span class="n">s1_local</span> <span class="o">=</span> <span class="n">getLocalUnitSlipVector</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">get_quad_dip</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">s1_local</span> <span class="o">=</span> <span class="n">get_local_unit_slip_vector</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">)</span>
     <span class="n">s0_local</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">qlats</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">latitude</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">q</span><span class="p">]</span>
     <span class="n">qlons</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">longitude</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">q</span><span class="p">]</span>

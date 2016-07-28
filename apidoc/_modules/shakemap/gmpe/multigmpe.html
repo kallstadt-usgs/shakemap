@@ -270,6 +270,34 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">REQUIRES_DISTANCES</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">distpars</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div></div>
+
+<span class="c1">#----------------------------------------------------</span>
+<span class="c1"># Functions for getting depth parameters from Vs30</span>
+<span class="c1">#----------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="z1_from_vs30_cy14_cal"><a class="viewcode-back" href="../../../shakemap.gmpe.html#shakemap.gmpe.multigmpe.z1_from_vs30_cy14_cal">[docs]</a><span class="k">def</span> <span class="nf">z1_from_vs30_cy14_cal</span><span class="p">(</span><span class="n">vs30</span><span class="p">):</span>
+    <span class="c1"># vs30 = V_S30 in units of m/s</span>
+    <span class="c1"># z1   = z_1 in units of m</span>
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">7.15</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span> <span class="o">*</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">vs30</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">+</span> <span class="mf">571.</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1360</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">+</span> <span class="mf">571.</span><span class="o">**</span><span class="mi">4</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">z1</span></div>
+
+
+<div class="viewcode-block" id="z1_from_vs30_ask14_cal"><a class="viewcode-back" href="../../../shakemap.gmpe.html#shakemap.gmpe.multigmpe.z1_from_vs30_ask14_cal">[docs]</a><span class="k">def</span> <span class="nf">z1_from_vs30_ask14_cal</span><span class="p">(</span><span class="n">vs30</span><span class="p">):</span>
+    <span class="c1"># vs30 = V_S30 in units of m/s</span>
+    <span class="c1"># z1   = z_1 in units of m</span>
+    <span class="c1"># ASK14 define units as KM, but implemented as m in OQ</span>
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">7.67</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span> <span class="o">*</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">vs30</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">+</span> <span class="mf">610.</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1360</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">+</span> <span class="mf">610.</span><span class="o">**</span><span class="mi">4</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">z1</span></div>
+
+
+<div class="viewcode-block" id="z2p5_from_vs30_cb14_cal"><a class="viewcode-back" href="../../../shakemap.gmpe.html#shakemap.gmpe.multigmpe.z2p5_from_vs30_cb14_cal">[docs]</a><span class="k">def</span> <span class="nf">z2p5_from_vs30_cb14_cal</span><span class="p">(</span><span class="n">vs30</span><span class="p">):</span>
+    <span class="c1"># vs30 = V_S30 in units of m/s</span>
+    <span class="c1"># z2p5 = z_2.5 in units of m</span>
+    <span class="n">z2p5</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">7.089</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.144</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs30</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">z2p5</span></div>
 </pre></div>
 
            </div>

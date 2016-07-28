@@ -169,6 +169,17 @@
 <span id="shakemap-grind-beyerbommer2006-module"></span><h2>shakemap.grind.BeyerBommer2006 module<a class="headerlink" href="#module-shakemap.grind.BeyerBommer2006" title="Permalink to this headline">¶</a></h2>
 <p>Implements conversion for various &#8220;Intensity Measure
 Components&#8221; per Beyer and Bommer, 2006, BSSA, 96(4A).</p>
+<p>IMC equivalencies:
+OpenQuake                   Beyer&amp;Bommer
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
+AVERAGE_HORIZONTAL          GMxy (Geometric mean)       # This is the &#8220;reference&#8221; type
+HORIZONTAL                  ???
+MEDIAN_HORIZONTAL           AMxy (Arithmetic mean)
+GMRotI50                    GMRotI50
+RotD50                      GMRotD50
+RANDOM_HORIZONTAL           Random
+GREATER_OF_TWO_HORIZONTAL   Env_xy
+VERTICAL                    &#8212;</p>
 <dl class="function">
 <dt id="shakemap.grind.BeyerBommer2006.ampIMCtoIMC">
 <code class="descclassname">shakemap.grind.BeyerBommer2006.</code><code class="descname">ampIMCtoIMC</code><span class="sig-paren">(</span><em>amps</em>, <em>imc_in</em>, <em>imc_out</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/BeyerBommer2006.html#ampIMCtoIMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.BeyerBommer2006.ampIMCtoIMC" title="Permalink to this definition">¶</a></dt>
@@ -191,7 +202,7 @@ imt &#8211; the IMT of the input amps (must be one of PGA, PGV, or SA)</div></bl
 <dt id="shakemap.grind.BeyerBommer2006.sigmaIMCtoIMC">
 <code class="descclassname">shakemap.grind.BeyerBommer2006.</code><code class="descname">sigmaIMCtoIMC</code><span class="sig-paren">(</span><em>sigmas</em>, <em>imc_in</em>, <em>imc_out</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/BeyerBommer2006.html#sigmaIMCtoIMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.BeyerBommer2006.sigmaIMCtoIMC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns sigmas converted from one IMC to another.
-IMPORTANT: Assumes the input sigmas are in log space 
+IMPORTANT: Assumes the input sigmas are in log space
 IMPORTANT: IMC types &#8216;VERTICAL&#8217; and &#8216;HORIZONTAL&#8217; are not supported
 Inputs:</p>
 <blockquote>
@@ -301,8 +312,8 @@ by Alarcon and Bommer (2006).</p>
 <dl class="classmethod">
 <dt id="shakemap.grind.distance.Distance.fromPoints">
 <em class="property">classmethod </em><code class="descname">fromPoints</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.fromPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.fromPoints" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience class method to construct a Distance object from an array of lons, lats,
-and depths..
+<dd><p>Convenience class method to construct a Distance object from an array of
+lons, lats, and depths.
 :param gmpe:</p>
 <blockquote>
 <div>Concrete subclass of GMPE
@@ -391,33 +402,6 @@ adjusted based on magnitude to get the median fault distance.</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of size N of distances (in km) from input points to rupture surface.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.distance.calc_ry0_distance">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">calc_ry0_distance</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>lat</em>, <em>lon</em>, <em>dep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#calc_ry0_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.calc_ry0_distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Ry0 distance.</p>
-<p>Compute the minimum distance between sites (lat, lon, dep) and the great
-circle arcs perpendicular to the average strike direction of the
-fault trace and passing through the end-points of the trace.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P0</strong> &#8211; Point object, representing the first top-edge vertex of a fault quadrilateral.</li>
-<li><strong>P1</strong> &#8211; Point object, representing the second top-edge vertex of a fault quadrilateral.</li>
-<li><strong>lat</strong> &#8211; Numpy array of latitude.</li>
-<li><strong>lon</strong> &#8211; Numpy array of longitude.</li>
-<li><strong>dep</strong> &#8211; Numpy array of depths (km).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of size lon.shape of distances (in km) from input points to rupture surface.</p>
 </td>
 </tr>
 </tbody>
@@ -553,51 +537,6 @@ adjusted based on magnitude to get the median fault distance.</div></blockquote>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="shakemap.grind.distance.get_top_edge">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">get_top_edge</code><span class="sig-paren">(</span><em>lat</em>, <em>lon</em>, <em>dep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#get_top_edge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.get_top_edge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine which edge of a quadrilateral rupture surface is the top.
-:param lat:</p>
-<blockquote>
-<div>Sequence of 4 or 5 latitudes defining vertices of rupture surface.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>lon</strong> &#8211; Sequence of 4 or 5 longitudes defining vertices of rupture surface.</li>
-<li><strong>dep</strong> &#8211; Sequence of 4 or 5 depths defining vertices of rupture surface.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(P0,P1) where P0 and P1 are Vector objects in ECEF coordinates indicating
-the vertices of the top edge.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.distance.minimize">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">minimize</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.minimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get minimum values from two numpy arrays, ignoring sign in comparison
-but preserving sign in result.
-:param a:</p>
-<blockquote>
-<div>Numpy array</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>b</strong> &#8211; Numpy array</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Numpy array</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="module-shakemap.grind.ecef">
 <span id="shakemap-grind-ecef-module"></span><h2>shakemap.grind.ecef module<a class="headerlink" href="#module-shakemap.grind.ecef" title="Permalink to this headline">¶</a></h2>
@@ -656,7 +595,8 @@ but preserving sign in result.
 <dt id="shakemap.grind.fault.Fault">
 <em class="property">class </em><code class="descclassname">shakemap.grind.fault.</code><code class="descname">Fault</code><span class="sig-paren">(</span><em>lon</em>, <em>lat</em>, <em>depth</em>, <em>reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Class to handle fault files of various types and output fault data in various ways.</p>
+<p>Class to handle fault files of various types and output fault data in 
+various ways.</p>
 <dl class="classmethod">
 <dt id="shakemap.grind.fault.Fault.fromTrace">
 <em class="property">classmethod </em><code class="descname">fromTrace</code><span class="sig-paren">(</span><em>xp0</em>, <em>yp0</em>, <em>xp1</em>, <em>yp1</em>, <em>zp</em>, <em>widths</em>, <em>dips</em>, <em>strike=None</em>, <em>reference=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.fromTrace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.fromTrace" title="Permalink to this definition">¶</a></dt>
@@ -936,11 +876,6 @@ by this algorithm.
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.isPointToRight">
 <code class="descname">isPointToRight</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>P2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.isPointToRight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.isPointToRight" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.multiplyFaultLength">
-<code class="descname">multiplyFaultLength</code><span class="sig-paren">(</span><em>factor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.multiplyFaultLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.multiplyFaultLength" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1307,7 +1242,8 @@ ShakeMap amps are %g and max horizontal</p>
 <dl class="classmethod">
 <dt id="shakemap.grind.sites.Sites.createFromBounds">
 <em class="property">classmethod </em><code class="descname">createFromBounds</code><span class="sig-paren">(</span><em>xmin</em>, <em>xmax</em>, <em>ymin</em>, <em>ymax</em>, <em>dx</em>, <em>dy</em>, <em>defaultVs30=686.0</em>, <em>vs30File=None</em>, <em>vs30measured_grid=None</em>, <em>backarc=False</em>, <em>padding=False</em>, <em>resample=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites.createFromBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites.createFromBounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Sites object by defining a center point, resolution, extent, and Vs30 values.</p>
+<dd><p>Create a Sites object by defining a center point, resolution, extent, 
+and Vs30 values.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1337,7 +1273,8 @@ bounds.  If False, grid will be clipped to the extent of the input file.</li>
 <dl class="classmethod">
 <dt id="shakemap.grind.sites.Sites.createFromCenter">
 <em class="property">classmethod </em><code class="descname">createFromCenter</code><span class="sig-paren">(</span><em>cx</em>, <em>cy</em>, <em>xspan</em>, <em>yspan</em>, <em>dx</em>, <em>dy</em>, <em>defaultVs30=686.0</em>, <em>vs30File=None</em>, <em>vs30measured_grid=None</em>, <em>backarc=False</em>, <em>padding=False</em>, <em>resample=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites.createFromCenter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites.createFromCenter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Sites object by defining a center point, resolution, extent, and Vs30 values.</p>
+<dd><p>Create a Sites object by defining a center point, resolution, extent, 
+and Vs30 values.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
