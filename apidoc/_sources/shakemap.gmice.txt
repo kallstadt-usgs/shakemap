@@ -1,0 +1,22 @@
+shakemap.gmice package
+======================
+
+Submodules
+----------
+
+shakemap.gmice.wgrw12 module
+----------------------------
+
+.. automodule:: shakemap.gmice.wgrw12
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: shakemap.gmice
+    :members:
+    :undoc-members:
+    :show-inheritance:

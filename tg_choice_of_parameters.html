@@ -83,27 +83,31 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="technical_guide.html">2. Technical Guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="tg_software.html">2.1. ShakeMap Software Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tg_philosophy.html">2.2. Philosophy of Estimating and Interpolating Ground Motions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tg_parameters.html">2.3. Recorded Ground-motion Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tg_predictions.html">2.4. Ground Motion and Intensity Predictions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tg_processing.html">2.5. ShakeMap Processing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tg_intensity.html">2.6. Representing Macroseismic Intensity on Maps</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">2.7. Discussion of Chosen Map Parameters (Intensity Measures)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#use-of-peak-values-rather-than-mean">2.7.1. Use of Peak Values Rather than Mean</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="shake_index.html">ShakeMap Manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="technical_guide.html">2. Technical Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tg_software.html">2.1. ShakeMap Software Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tg_philosophy.html">2.2. Philosophy of Estimating and Interpolating Ground Motions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tg_parameters.html">2.3. Recorded Ground-motion Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tg_predictions.html">2.4. Ground Motion and Intensity Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tg_processing.html">2.5. ShakeMap Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tg_intensity.html">2.6. Representing Macroseismic Intensity on Maps</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.7. Discussion of Chosen Map Parameters (Intensity Measures)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#use-of-peak-values-rather-than-mean">2.7.1. Use of Peak Values Rather than Mean</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="users_guide.html">3. User&#8217;s Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="software_guide.html">4. Software &amp; Implementation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regionals.html">5. Regional Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="future_directions.html">6. Future Directions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="acknowledgments.html">7. Acknowledgments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">8. References &amp; Bibliography</a></li>
-<li class="toctree-l1"><a class="reference internal" href="glossary.html">9. Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users_guide.html">3. User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="software_guide.html">4. Software &amp; Implementation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regionals.html">5. Regional Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="future_directions.html">6. Future Directions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="acknowledgments.html">7. Acknowledgments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html">8. References &amp; Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html">9. Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="apidoc/index.html">ShakeMap V4.0 API Documentation</a></li>
 </ul>
 
             
@@ -126,13 +130,15 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shake_index.html">ShakeMap Manual</a> &raquo;</li>
       
           <li><a href="technical_guide.html">2. Technical Guide</a> &raquo;</li>
       
@@ -165,11 +171,11 @@ values or median of the peak values&#8212;determining vector sums of the two hor
 components was not an option, because the peak values on each component do not
 necessarily occur at the same time.  A useful strategy going forward may be to employ
 the 50th percentile of the response spectra over all non-redundant rotation angles
-(RotD50; <a class="reference internal" href="references.html#boore2010"><span>Boore, 2010</span></a>), which is becoming a standard
+(RotD50; <a class="reference internal" href="references.html#boore2010"><span class="std std-ref">Boore, 2010</span></a>), which is becoming a standard
 for &#8220;next-generation&#8221;
-GMPEs (<a class="reference internal" href="references.html#abrahamson2014"><span>Abrahamson et al., 2014</span></a>), or on another
+GMPEs (<a class="reference internal" href="references.html#abrahamson2014"><span class="std std-ref">Abrahamson et al., 2014</span></a>), or on another
 agreed-upon vector-component
-calculation. (See <a class="reference internal" href="future_directions.html#future-directions"><span>Future Directions</span></a>). However, such changes would
+calculation. (See <a class="reference internal" href="future_directions.html#future-directions"><span class="std std-ref">Future Directions</span></a>). However, such changes would
 require adoption of these
 calculations on the part of each contributing seismic network, and would thus require
 consensus (and substantial software upgrades) all around.</p>
@@ -182,7 +188,7 @@ such motions (particularly when determined in logarithmic space) can seriously u
 the largest motion that a building may have experienced, and these pulse-like motions are
 typically associated with the regions of greatest damage. Thus, we chose peak ground
 motions as the parameters to be mapped.</p>
-<p><a class="reference internal" href="references.html#beyer2006"><span>Beyer and Bommer (2006)</span></a> provide statistical relationships
+<p><a class="reference internal" href="references.html#beyer2006"><span class="std std-ref">Beyer and Bommer (2006)</span></a> provide statistical relationships
 to convert among median and
 peak parameters and between aleatory variability for different definitions of the
 horizontal component of motion. This is useful when approximating alternative
@@ -191,19 +197,19 @@ these statistics may or may not be representative.</p>
 <p>Initially, our use of PGA and PGV for estimating intensities was also simply practical.
 We were retrieving only peak values from a large subset of the network, so it was
 impractical to compute more specific ground-motion parameters, such as average-
-response spectral values, kinetic energy, cumulative absolute velocities (CAV, <a class="reference internal" href="references.html#epri1991"><span>EPRI,
-1991</span></a>), or the JMA intensity algorithm (<a class="reference internal" href="references.html#jma1996"><span>JMA, 1996</span></a>). However, because
+response spectral values, kinetic energy, cumulative absolute velocities (CAV, <a class="reference internal" href="references.html#epri1991"><span class="std std-ref">EPRI,
+1991</span></a>), or the JMA intensity algorithm (<a class="reference internal" href="references.html#jma1996"><span class="std std-ref">JMA, 1996</span></a>). However, because
 near-source strong ground motions are often dominated by short-duration, pulse-like
 ground motions (usually associated with source directivity), PGV appears to be a robust measure
 of intensity for strong shaking. In other words, the kinetic energy (proportional to
 velocity squared) available for damage is well characterized by PGV. In addition, the
 close correspondence of the JMA intensities and peak ground velocity
 indicates that our use of peak ground velocities for higher intensities was
-consistent with the algorithm used by JMA. Work by <a class="reference internal" href="references.html#wu2003"><span>Wu et al. (2003)</span></a> indicates a very
+consistent with the algorithm used by JMA. Work by <a class="reference internal" href="references.html#wu2003"><span class="std std-ref">Wu et al. (2003)</span></a> indicates a very
 good correspondence between PGV and damage for data collected on the island of Taiwan,
 which included high-quality loss data and densely sampled strong-motion observations
 for the 1999 Chi-Chi earthquake. More recent work on Ground-Motion/Intensity
-Conversion Equations (GMICEs) (e.g., <a class="reference internal" href="references.html#atkinson2007"><span>Atkinson and Kaka, 2007</span></a>; <a class="reference internal" href="references.html#worden2012"><span>Worden, et al., 2012</span></a>) has also
+Conversion Equations (GMICEs) (e.g., <a class="reference internal" href="references.html#atkinson2007"><span class="std std-ref">Atkinson and Kaka, 2007</span></a>; <a class="reference internal" href="references.html#worden2012"><span class="std std-ref">Worden, et al., 2012</span></a>) has also
 confirmed the strong relationship between PGV and intensity.</p>
 <p>Nonetheless, for large, distant earthquakes, peak motions may be less informative, and
 spectral content and perhaps duration become key parameters.  Although we may eventually

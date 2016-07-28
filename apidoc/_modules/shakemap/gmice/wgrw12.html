@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.gmice.wgrw12 &mdash; shakemap 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.gmice.wgrw12</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.gmice.wgrw12</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implements the GMICE of Worden et al., 2013, BSSA, 102(1), pp. 204-221</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="WGRW12"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12">[docs]</a><span class="k">class</span> <span class="nc">WGRW12</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+      <span class="c1">#--------------------------------------------------------------------------</span>
+      <span class="c1">#</span>
+      <span class="c1"># MMI = c2-&gt;C1 + c2-&gt;C2 * log(Y)  for log(Y) &lt;= c2-&gt;T1</span>
+      <span class="c1"># MMI = C1 + C2 * log(Y)          for c2-&gt;T1 &lt; log(Y) &lt;= T1</span>
+      <span class="c1"># MMI = C3 + C4 * log(Y)          for log(Y) &gt; T1</span>
+      <span class="c1">#</span>
+      <span class="c1"># or</span>
+      <span class="c1">#</span>
+      <span class="c1"># MMI = c2-&gt;C1 + c2-&gt;C2 * log(Y) + C5 + C6 * log(D) + C7 * M   </span>
+      <span class="c1">#                            for log(Y) &lt;= c2-&gt;T1</span>
+      <span class="c1"># MMI = C1 + C2 * log(Y) + C5 + C6 * log(D) + C7 * M for c2-&gt;T1 &lt; log(Y) &lt;= T1</span>
+      <span class="c1"># MMI = C3 + C4 * log(Y) + C5 + C6 * log(D) + C7 * M for log(Y) &gt; T1</span>
+      <span class="c1">#</span>
+      <span class="c1"># Limit the distance residuals to between 10 and 300 km.</span>
+      <span class="c1"># Limit the magnitude residuals to between M3.0 and M7.3.</span>
+      <span class="c1">#</span>
+      <span class="c1">#--------------------------------------------------------------------------</span>
+
+    <span class="n">__constants</span> <span class="o">=</span> <span class="p">{</span> \
+        <span class="s1">&#39;pga&#39;</span>   <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">1.78</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.55</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">1.60</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span> <span class="p">:</span> <span class="mf">3.70</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>   <span class="p">:</span> <span class="o">-</span><span class="mf">0.91</span><span class="p">,</span> \
+                    <span class="s1">&#39;C6&#39;</span> <span class="p">:</span>  <span class="mf">1.02</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.17</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">1.57</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">4.22</span><span class="p">,</span> <span class="s1">&#39;SMMI&#39;</span> <span class="p">:</span> <span class="mf">0.66</span><span class="p">,</span>  \
+                    <span class="s1">&#39;SPGM&#39;</span> <span class="p">:</span> <span class="mf">0.35</span> <span class="p">},</span> \
+        <span class="s1">&#39;pgv&#39;</span>   <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">3.78</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.47</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span> <span class="p">:</span>  <span class="mf">2.89</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span> <span class="p">:</span> <span class="mf">3.16</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>   <span class="p">:</span>  <span class="mf">0.90</span><span class="p">,</span> \
+                    <span class="s1">&#39;C6&#39;</span> <span class="p">:</span>  <span class="mf">0.00</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.18</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">0.53</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">4.56</span><span class="p">,</span> <span class="s1">&#39;SMMI&#39;</span> <span class="p">:</span> <span class="mf">0.63</span><span class="p">,</span>  \
+                    <span class="s1">&#39;SPGM&#39;</span> <span class="p">:</span> <span class="mf">0.38</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa03&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">1.26</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.69</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">4.15</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span> <span class="p">:</span> <span class="mf">4.14</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>   <span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">,</span> \
+                    <span class="s1">&#39;C6&#39;</span> <span class="p">:</span>  <span class="mf">0.60</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span> <span class="p">:</span>  <span class="mf">0.00</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">2.21</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">4.99</span><span class="p">,</span> <span class="s1">&#39;SMMI&#39;</span> <span class="p">:</span> <span class="mf">0.82</span><span class="p">,</span>  \
+                    <span class="s1">&#39;SPGM&#39;</span> <span class="p">:</span> <span class="mf">0.44</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa10&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">2.50</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.51</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span> <span class="p">:</span>  <span class="mf">0.20</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span> <span class="p">:</span> <span class="mf">2.90</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>   <span class="p">:</span>  <span class="mf">2.27</span><span class="p">,</span> \
+                    <span class="s1">&#39;C6&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.49</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.29</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">1.65</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">4.98</span><span class="p">,</span> <span class="s1">&#39;SMMI&#39;</span> <span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>  \
+                    <span class="s1">&#39;SPGM&#39;</span> <span class="p">:</span> <span class="mf">0.47</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa30&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">3.81</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.17</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span> <span class="p">:</span>  <span class="mf">1.99</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span> <span class="p">:</span> <span class="mf">3.01</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>   <span class="p">:</span>  <span class="mf">1.91</span><span class="p">,</span> \
+                    <span class="s1">&#39;C6&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.57</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.21</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">0.99</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">4.96</span><span class="p">,</span> <span class="s1">&#39;SMMI&#39;</span> <span class="p">:</span> <span class="mf">0.89</span><span class="p">,</span>  \
+                    <span class="s1">&#39;SPGM&#39;</span> <span class="p">:</span> <span class="mf">0.64</span> <span class="p">}</span> \
+    <span class="p">}</span>
+
+    <span class="n">__constants2</span> <span class="o">=</span> <span class="p">{</span> \
+        <span class="s1">&#39;pga&#39;</span>   <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">1.71</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">2.08</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">0.14</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">2.0</span> <span class="p">},</span> \
+        <span class="s1">&#39;pgv&#39;</span>   <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">4.62</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">2.17</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">1.21</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">2.0</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa03&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">1.15</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">1.92</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span>  <span class="mf">0.44</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">2.0</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa10&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">2.71</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">2.17</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">2.0</span> <span class="p">},</span> \
+        <span class="s1">&#39;psa30&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;C1&#39;</span> <span class="p">:</span>  <span class="mf">7.35</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span> <span class="p">:</span>  <span class="mf">3.45</span><span class="p">,</span> <span class="s1">&#39;T1&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">1.55</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span> <span class="p">:</span> <span class="mf">2.0</span> <span class="p">}</span>  \
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="WGRW12.getMIfromGM"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getMIfromGM">[docs]</a>    <span class="k">def</span> <span class="nf">getMIfromGM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amps</span><span class="p">,</span> <span class="n">imt</span><span class="p">,</span> <span class="n">dists</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Function getMIfromGM</span>
+<span class="sd">        Put some documentation here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getConsts</span><span class="p">(</span><span class="n">imt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">mag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">doresid</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">ldd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">mag</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">:</span>
+                <span class="n">mag</span> <span class="o">=</span> <span class="mf">3.0</span>
+            <span class="k">elif</span> <span class="n">mag</span> <span class="o">&gt;</span> <span class="mf">7.3</span><span class="p">:</span>
+                <span class="n">mag</span> <span class="o">=</span> <span class="mf">7.3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">doresid</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c1">#</span>
+        <span class="c1"># Convert (for accelerations) from %g to cm/s^2</span>
+        <span class="c1"># then take the log10</span>
+        <span class="c1">#</span>
+        <span class="k">if</span> <span class="s1">&#39;PGV&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="mf">9.81</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">lamps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">amps</span> <span class="o">*</span> <span class="n">units</span><span class="p">)</span>
+        <span class="n">mmi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="c1"># This is the MMI 1 to 2 range that is discussed in the paper but not </span>
+        <span class="c1"># specifically implemented</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">lamps</span> <span class="o">&lt;</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">]</span>
+        <span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;C2&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">lamps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="c1">#</span>
+        <span class="c1"># This is the lower segment of the bi-linear fit</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">lamps</span> <span class="o">&gt;=</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lamps</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">])</span>
+        <span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C2&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">lamps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="c1">#</span>
+        <span class="c1"># This is the upper segment of the bi-linear fit</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">lamps</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">]</span>
+        <span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C3&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C4&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">lamps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">doresid</span><span class="p">:</span>
+            <span class="n">mmi</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C5&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C6&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ldd</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C7&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mag</span>
+
+        <span class="n">mmi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">mmi</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mmi</span></div>
+
+<div class="viewcode-block" id="WGRW12.getGMfromMI"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getGMfromMI">[docs]</a>    <span class="k">def</span> <span class="nf">getGMfromMI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mmi</span><span class="p">,</span> <span class="n">imt</span><span class="p">,</span> <span class="n">dists</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Function getGMfromMI</span>
+<span class="sd">        Put some documentation here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getConsts</span><span class="p">(</span><span class="n">imt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">mag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">doresid</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">ldd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">mag</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">:</span>
+                <span class="n">mag</span> <span class="o">=</span> <span class="mf">3.0</span>
+            <span class="k">elif</span> <span class="n">mag</span> <span class="o">&gt;</span> <span class="mf">7.3</span><span class="p">:</span>
+                <span class="n">mag</span> <span class="o">=</span> <span class="mf">7.3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">doresid</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="n">doresid</span><span class="p">:</span>
+            <span class="n">mmi</span> <span class="o">-=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C5&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C6&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ldd</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C7&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mag</span>
+
+        <span class="n">pgm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mmi</span><span class="p">)</span>
+
+        <span class="c1">#</span>
+        <span class="c1"># MMI 1 to 2</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">mmi</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+        <span class="n">pgm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">c2</span><span class="p">[</span><span class="s1">&#39;C2&#39;</span><span class="p">])</span>
+        <span class="c1">#</span>
+        <span class="c1"># Lower segment of bi-linear relationship</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">mmi</span> <span class="o">&gt;=</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mmi</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;T2&#39;</span><span class="p">])</span>
+        <span class="n">pgm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C2&#39;</span><span class="p">])</span>
+        <span class="c1">#</span>
+        <span class="c1"># Upper segment of bi-linear relationship</span>
+        <span class="c1">#</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">mmi</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;T2&#39;</span><span class="p">]</span>
+        <span class="n">pgm</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">mmi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C3&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;C4&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;PGV&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="mf">9.81</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">pgm</span> <span class="o">/=</span> <span class="n">units</span>
+
+        <span class="k">return</span> <span class="n">pgm</span></div>
+        
+<div class="viewcode-block" id="WGRW12.getGM2MIsd"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getGM2MIsd">[docs]</a>    <span class="k">def</span> <span class="nf">getGM2MIsd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return dictionary of GM to MI sigmas (in MMI units)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="s1">&#39;pga&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pga&#39;</span><span class="p">][</span><span class="s1">&#39;SMMI&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;pgv&#39;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pgv&#39;</span><span class="p">][</span><span class="s1">&#39;SMMI&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa03&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa03&#39;</span><span class="p">][</span><span class="s1">&#39;SMMI&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa10&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa10&#39;</span><span class="p">][</span><span class="s1">&#39;SMMI&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa30&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa30&#39;</span><span class="p">][</span><span class="s1">&#39;SMMI&#39;</span><span class="p">]</span> <span class="p">}</span></div>
+        
+<div class="viewcode-block" id="WGRW12.getMI2GMsd"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getMI2GMsd">[docs]</a>    <span class="k">def</span> <span class="nf">getMI2GMsd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return dictionary of MI to GM sigmas (in linear PGM units)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="s1">&#39;pga&#39;</span>   <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pga&#39;</span><span class="p">][</span><span class="s1">&#39;SPGM&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;pgv&#39;</span>   <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pgv&#39;</span><span class="p">][</span><span class="s1">&#39;SPGM&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa03&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa03&#39;</span><span class="p">][</span><span class="s1">&#39;SPGM&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa10&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa10&#39;</span><span class="p">][</span><span class="s1">&#39;SPGM&#39;</span><span class="p">],</span>
+                 <span class="s1">&#39;psa30&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa30&#39;</span><span class="p">][</span><span class="s1">&#39;SPGM&#39;</span><span class="p">]</span> <span class="p">}</span></div>
+
+<div class="viewcode-block" id="WGRW12.getName"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Worden et al. (2012)&#39;</span></div>
+
+<div class="viewcode-block" id="WGRW12.getScale"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getScale">[docs]</a>    <span class="k">def</span> <span class="nf">getScale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;scale_wgrw12.ps&#39;</span></div>
+
+<div class="viewcode-block" id="WGRW12.getMinMax"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getMinMax">[docs]</a>    <span class="k">def</span> <span class="nf">getMinMax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WGRW12.getDistanceType"><a class="viewcode-back" href="../../../shakemap.gmice.html#shakemap.gmice.wgrw12.WGRW12.getDistanceType">[docs]</a>    <span class="k">def</span> <span class="nf">getDistanceType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;rrup&#39;</span></div>
+          
+    <span class="k">def</span> <span class="nf">__getConsts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Helper function to get the constants &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;PGA&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pga&#39;</span><span class="p">]</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants2</span><span class="p">[</span><span class="s1">&#39;pga&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;PGV&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;pgv&#39;</span><span class="p">]</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants2</span><span class="p">[</span><span class="s1">&#39;pgv&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;SA&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
+            <span class="n">pp</span> <span class="o">=</span> <span class="n">imt</span><span class="o">.</span><span class="n">period</span>
+            <span class="k">if</span> <span class="n">pp</span> <span class="o">==</span> <span class="mf">0.3</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa03&#39;</span><span class="p">]</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants2</span><span class="p">[</span><span class="s1">&#39;psa03&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">pp</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa10&#39;</span><span class="p">]</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants2</span><span class="p">[</span><span class="s1">&#39;psa10&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">pp</span> <span class="o">==</span> <span class="mf">3.0</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants</span><span class="p">[</span><span class="s1">&#39;psa30&#39;</span><span class="p">]</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__constants2</span><span class="p">[</span><span class="s1">&#39;psa30&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown SA period: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">pp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown IMT </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">imt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">c2</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

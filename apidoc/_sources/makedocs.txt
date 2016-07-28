@@ -1,0 +1,7 @@
+makedocs module
+===============
+
+.. automodule:: makedocs
+    :members:
+    :undoc-members:
+    :show-inheritance:

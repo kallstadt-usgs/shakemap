@@ -1,0 +1,46 @@
+shakemap.mapping package
+========================
+
+Submodules
+----------
+
+shakemap.mapping.colormap module
+--------------------------------
+
+.. automodule:: shakemap.mapping.colormap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.mapping.gmtcolormap module
+-----------------------------------
+
+.. automodule:: shakemap.mapping.gmtcolormap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.mapping.mapmaker module
+--------------------------------
+
+.. automodule:: shakemap.mapping.mapmaker
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.mapping.sm_colordict module
+------------------------------------
+
+.. automodule:: shakemap.mapping.sm_colordict
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: shakemap.mapping
+    :members:
+    :undoc-members:
+    :show-inheritance:

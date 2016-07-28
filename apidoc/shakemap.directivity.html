@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.directivity package &mdash; shakemap 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.1 documentation" href="index.html"/>
+        <link rel="up" title="shakemap package" href="shakemap.html"/>
+        <link rel="next" title="shakemap.extern package" href="shakemap.extern.html"/>
+        <link rel="prev" title="shakemap.correlation package" href="shakemap.correlation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.correlation.html">shakemap.correlation package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">shakemap.directivity package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.directivity.bayless2013">shakemap.directivity.bayless2013 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.directivity.rowshandel2013">shakemap.directivity.rowshandel2013 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.directivity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.extern.html">shakemap.extern package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmpe.html">shakemap.gmpe package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+    <li>shakemap.directivity package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.directivity.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shakemap-directivity-package">
+<h1>shakemap.directivity package<a class="headerlink" href="#shakemap-directivity-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-shakemap.directivity.bayless2013">
+<span id="shakemap-directivity-bayless2013-module"></span><h2>shakemap.directivity.bayless2013 module<a class="headerlink" href="#module-shakemap.directivity.bayless2013" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.directivity.bayless2013.Bayless2013">
+<em class="property">class </em><code class="descclassname">shakemap.directivity.bayless2013.</code><code class="descname">Bayless2013</code><span class="sig-paren">(</span><em>source</em>, <em>lat</em>, <em>lon</em>, <em>depth</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for Bayless and Somerville (2013) directvity model.</p>
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.computeAz">
+<code class="descname">computeAz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.computeAz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.computeAz" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.computeD">
+<code class="descname">computeD</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.computeD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.computeD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute d for the i-th quad/segment.</p>
+<p>Y = d/W, where d is the portion (in km) of the width of the fault which
+ruptures up-dip from the hypocenter to the top of the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> &#8211; index of segment for which d is to be computed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.computeDS">
+<code class="descname">computeDS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.computeDS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.computeDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.computeSS">
+<code class="descname">computeSS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.computeSS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.computeSS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.computeThetaAndS">
+<code class="descname">computeThetaAndS</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.computeThetaAndS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.computeThetaAndS" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> &#8211; Compute d for the i-th quad/segment.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.getFd">
+<code class="descname">getFd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.getFd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.getFd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.getSlipCategory">
+<code class="descname">getSlipCategory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.getSlipCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.getSlipCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets self.SlipCategory based on rake angle. Can be SS for
+strike slip, DS for dip slip, or Unspecified.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.bayless2013.Bayless2013.setPseudoHypocenters">
+<code class="descname">setPseudoHypocenters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/bayless2013.html#Bayless2013.setPseudoHypocenters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.bayless2013.Bayless2013.setPseudoHypocenters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a pseudo-hypocenter.</p>
+<p>Adapted from ShakeMap 3.5 src/contour/directivity.c</p>
+<p>From Bayless and Somerville:</p>
+<p>&#8220;Define the pseudo-hypocenter for rupture of successive segments as
+the point on the side edge of the fault segment that is closest to
+the side edge of the previous segment, and that lies half way
+between the top and bottom of the fault. We assume that the fault is
+segmented along strike, not updip. All geometric parameters are
+computed relative to the pseudo-hypocenter.&#8221;</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.directivity.rowshandel2013">
+<span id="shakemap-directivity-rowshandel2013-module"></span><h2>shakemap.directivity.rowshandel2013 module<a class="headerlink" href="#module-shakemap.directivity.rowshandel2013" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013">
+<em class="property">class </em><code class="descclassname">shakemap.directivity.rowshandel2013.</code><code class="descname">Rowshandel2013</code><span class="sig-paren">(</span><em>source</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>dx</em>, <em>T</em>, <em>a_weight=0.5</em>, <em>mtype=1</em>, <em>simpleDT=False</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for Rowshandel (2013) directvity model.</p>
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeDT">
+<code class="descname">computeDT</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeDT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeDT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes DT &#8211; the distance taper term.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeFd">
+<code class="descname">computeFd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeFd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeFd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fd is the term that modifies the GMPE output as an additive term
+(in log space).
+ln(Y) = f(M, R, ...) + Fd</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeLD">
+<code class="descname">computeLD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeLD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeLD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes LD &#8211; the rupture length de-normalization term.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeWP">
+<code class="descname">computeWP</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeWP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeWP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes WP &#8211; the narrow-band multiplier.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeWrup">
+<code class="descname">computeWrup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeWrup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeWrup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the the portion (in km) of the width of the fault which ruptures up-dip from the hypocenter to the top of the fault.</p>
+<p>Wrup is the portion (in km) of the width of the fault which
+ruptures up-dip from the hypocenter to the top of the fault.</p>
+<ul class="simple">
+<li>This is ambiguous for faults with varible top of rupture (not
+allowed in NGA). For now, lets just compute this for the
+quad where the hypocenter is located.</li>
+<li>Alternative is to compute max Wrup for the different quads.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.computeXiPrime">
+<code class="descname">computeXiPrime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.computeXiPrime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.computeXiPrime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the xi&#8217; value.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.fromSites">
+<em class="property">classmethod </em><code class="descname">fromSites</code><span class="sig-paren">(</span><em>source</em>, <em>sites</em>, <em>dx</em>, <em>T</em>, <em>a_weight=0.5</em>, <em>mtype=1</em>, <em>simpleDT=False</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.fromSites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.fromSites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a rowshandel2013 instance from a sites instance.</p>
+<p>Class method for constructing a rowshandel2013 instance from
+a sites instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> &#8211; Source instance.</li>
+<li><strong>sites</strong> &#8211; Sites object</li>
+<li><strong>dx</strong> &#8211; Float for target mesh spacing for subfaults in km. The mesh
+snaps to the edges of the quadrilaterals so the actual mesh spacing
+will not equal this exactly; spacing in x and y will not be equal.</li>
+<li><strong>T</strong> &#8211; <dl class="docutils">
+<dt>Period; Currently, only acceptable values are 1, 2, 3, 4, 5, 7.5</dt>
+<dd>** TODO: interpolate intermediate periods.</dd>
+</dl>
+</li>
+<li><strong>a_weight</strong> &#8211; Weighting factor for how p-dot-q and s-dot-q are averaged; 0 for
+only p-dot-q (propagation factor) and 1 for only s-dot-q (slip
+factor).</li>
+<li><strong>mtype</strong> &#8211; Integer, either 1 or 2; 1 for adding only positive components of dot
+products, 2 for adding all components of dot products.</li>
+<li><strong>simpleDT</strong> &#8211; Boolean; should the simpler DT equation be used? Usually False.</li>
+<li><strong>centered</strong> &#8211; Boolean; should the centered directivity parameter be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getCenteringTerm">
+<code class="descname">getCenteringTerm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getCenteringTerm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getCenteringTerm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getDT">
+<code class="descname">getDT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getDT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getDT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getFd">
+<code class="descname">getFd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getFd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getFd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getLD">
+<code class="descname">getLD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getLD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getWP">
+<code class="descname">getWP</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getWP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getWP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.directivity.rowshandel2013.Rowshandel2013.getXiPrime">
+<code class="descname">getXiPrime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/directivity/rowshandel2013.html#Rowshandel2013.getXiPrime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.directivity.rowshandel2013.Rowshandel2013.getXiPrime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.directivity">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shakemap.directivity" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.extern.html" class="btn btn-neutral float-right" title="shakemap.extern package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.correlation.html" class="btn btn-neutral" title="shakemap.correlation package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
