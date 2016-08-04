@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind package &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.grind package &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="index.html"/>
         <link rel="up" title="shakemap package" href="shakemap.html"/>
-        <link rel="next" title="shakemap.mapping package" href="shakemap.mapping.html"/>
-        <link rel="prev" title="shakemap.gmpe package" href="shakemap.gmpe.html"/> 
+        <link rel="next" title="shakemap.grind.conversions package" href="shakemap.grind.conversions.html"/>
+        <link rel="prev" title="shakemap.gmice package" href="shakemap.gmice.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -85,25 +85,19 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.correlation.html">shakemap.correlation package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.directivity.html">shakemap.directivity package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.extern.html">shakemap.extern package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmpe.html">shakemap.gmpe package</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">shakemap.grind package</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.BeyerBommer2006">shakemap.grind.BeyerBommer2006 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.conversions">shakemap.grind.conversions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.distance">shakemap.grind.distance module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.ecef">shakemap.grind.ecef module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.fault">shakemap.grind.fault module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.gmpe2shakemap">shakemap.grind.gmpe2shakemap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.multigmpe">shakemap.grind.multigmpe module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.sites">shakemap.grind.sites module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.source">shakemap.grind.source module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.station">shakemap.grind.station module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.vector">shakemap.grind.vector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind.zoneconfig">shakemap.grind.zoneconfig module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.grind">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a></li>
@@ -136,7 +130,7 @@
         <div class="rst-content">
           
 
- 
+
 
 
 
@@ -162,145 +156,49 @@
             
   <div class="section" id="shakemap-grind-package">
 <h1>shakemap.grind package<a class="headerlink" href="#shakemap-grind-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.conversions.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.conversions.imc.html">shakemap.grind.conversions.imc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imc.html#module-shakemap.grind.conversions.imc.beyer_bommer_2006">shakemap.grind.conversions.imc.beyer_bommer_2006 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imc.html#module-shakemap.grind.conversions.imc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.conversions.imt.html">shakemap.grind.conversions.imt package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imt.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imt.html#module-shakemap.grind.conversions.imt.bommer_alarcon_2006">shakemap.grind.conversions.imt.bommer_alarcon_2006 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imt.html#module-shakemap.grind.conversions.imt.newmark_hall_1982">shakemap.grind.conversions.imt.newmark_hall_1982 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.imt.html#module-shakemap.grind.conversions.imt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.conversions.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.correlation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.correlation.html#module-shakemap.grind.correlation.boore_2003">shakemap.grind.correlation.boore_2003 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.correlation.html#module-shakemap.grind.correlation.goda_atkinson_2010">shakemap.grind.correlation.goda_atkinson_2010 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.correlation.html#module-shakemap.grind.correlation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.directivity.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.directivity.html#module-shakemap.grind.directivity.bayless2013">shakemap.grind.directivity.bayless2013 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.directivity.html#module-shakemap.grind.directivity.rowshandel2013">shakemap.grind.directivity.rowshandel2013 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.grind.directivity.html#module-shakemap.grind.directivity">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-shakemap.grind.BeyerBommer2006">
-<span id="shakemap-grind-beyerbommer2006-module"></span><h2>shakemap.grind.BeyerBommer2006 module<a class="headerlink" href="#module-shakemap.grind.BeyerBommer2006" title="Permalink to this headline">¶</a></h2>
-<p>Implements conversion for various &#8220;Intensity Measure
-Components&#8221; per Beyer and Bommer, 2006, BSSA, 96(4A).</p>
-<p>IMC equivalencies:
-OpenQuake                   Beyer&amp;Bommer
-&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-AVERAGE_HORIZONTAL          GMxy (Geometric mean)       # This is the &#8220;reference&#8221; type
-HORIZONTAL                  ???
-MEDIAN_HORIZONTAL           AMxy (Arithmetic mean)
-GMRotI50                    GMRotI50
-RotD50                      GMRotD50
-RANDOM_HORIZONTAL           Random
-GREATER_OF_TWO_HORIZONTAL   Env_xy
-VERTICAL                    &#8212;</p>
-<dl class="function">
-<dt id="shakemap.grind.BeyerBommer2006.ampIMCtoIMC">
-<code class="descclassname">shakemap.grind.BeyerBommer2006.</code><code class="descname">ampIMCtoIMC</code><span class="sig-paren">(</span><em>amps</em>, <em>imc_in</em>, <em>imc_out</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/BeyerBommer2006.html#ampIMCtoIMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.BeyerBommer2006.ampIMCtoIMC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns amps converted from one IMC to another.
-IMPORTANT: Assumes the input amps are in linear (not log) space 
-IMPORTANT: IMC types &#8216;VERTICAL&#8217; and &#8216;HORIZONTAL&#8217; are not supported
-Inputs:</p>
-<blockquote>
-<div>amps &#8211; a numpy array of ground motions in IMC imc_in and IMT imt
-imc_in &#8211; the IMC type of the input amp array
-imc_out &#8211; the desired IMC type of the output amps
-imt &#8211; the IMT of the input amps (must be one of PGA, PGV, or SA)</div></blockquote>
-<dl class="docutils">
-<dt>Outputs:</dt>
-<dd>returns amps converted from imc_in to imc_out</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.BeyerBommer2006.sigmaIMCtoIMC">
-<code class="descclassname">shakemap.grind.BeyerBommer2006.</code><code class="descname">sigmaIMCtoIMC</code><span class="sig-paren">(</span><em>sigmas</em>, <em>imc_in</em>, <em>imc_out</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/BeyerBommer2006.html#sigmaIMCtoIMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.BeyerBommer2006.sigmaIMCtoIMC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns sigmas converted from one IMC to another.
-IMPORTANT: Assumes the input sigmas are in log space
-IMPORTANT: IMC types &#8216;VERTICAL&#8217; and &#8216;HORIZONTAL&#8217; are not supported
-Inputs:</p>
-<blockquote>
-<div>sigmas &#8211; a numpy array of ground motions in IMC imc_in and IMT imt
-imc_in &#8211; the IMC type of the input sigmas array
-imc_out &#8211; the desired IMC type of the output sigmas
-imt &#8211; the IMT of the input sigmas (must be one of PGA, PGV, or SA)</div></blockquote>
-<dl class="docutils">
-<dt>Outputs:</dt>
-<dd>returns sigmas converted from imc_in to imc_out</dd>
-</dl>
-</dd></dl>
-
-</div>
-<div class="section" id="module-shakemap.grind.conversions">
-<span id="shakemap-grind-conversions-module"></span><h2>shakemap.grind.conversions module<a class="headerlink" href="#module-shakemap.grind.conversions" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="shakemap.grind.conversions.BommerAlarcon2006">
-<em class="property">class </em><code class="descclassname">shakemap.grind.conversions.</code><code class="descname">BommerAlarcon2006</code><a class="reference internal" href="_modules/shakemap/grind/conversions.html#BommerAlarcon2006"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.BommerAlarcon2006" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Class for conversion between PGV (units of cm/s) and PSA05 (units of g)
-by Alarcon and Bommer (2006).</p>
-<p>Comments for testing.</p>
-<dl class="method">
-<dt id="shakemap.grind.conversions.BommerAlarcon2006.getVfact">
-<code class="descname">getVfact</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#BommerAlarcon2006.getVfact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.BommerAlarcon2006.getVfact" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.conversions.BommerAlarcon2006.pgv2psa05">
-<em class="property">classmethod </em><code class="descname">pgv2psa05</code><span class="sig-paren">(</span><em>pgv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#BommerAlarcon2006.pgv2psa05"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.BommerAlarcon2006.pgv2psa05" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert PGV in cm/s to PSA05 in g.
-** PGV must be linear units **
-:param pgv:</p>
-<blockquote>
-<div>Numpy array or float of PGV values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Values converted to PSA05.</dd>
-</dl>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.conversions.BommerAlarcon2006.psa052pgv">
-<em class="property">classmethod </em><code class="descname">psa052pgv</code><span class="sig-paren">(</span><em>psa05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#BommerAlarcon2006.psa052pgv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.BommerAlarcon2006.psa052pgv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert PSA05 in g to PGV cm/s.
-** PSA10 must be linear units. **
-:param psa05:</p>
-<blockquote>
-<div>Numpy array or float of PSA05 values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Values converted to PGV.</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="shakemap.grind.conversions.NewmarkHall1982">
-<em class="property">class </em><code class="descclassname">shakemap.grind.conversions.</code><code class="descname">NewmarkHall1982</code><a class="reference internal" href="_modules/shakemap/grind/conversions.html#NewmarkHall1982"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.NewmarkHall1982" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Class for conversion between PGA and PSA10 by Newmark and Hall (1982)</p>
-<dl class="method">
-<dt id="shakemap.grind.conversions.NewmarkHall1982.getVfact">
-<code class="descname">getVfact</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#NewmarkHall1982.getVfact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.NewmarkHall1982.getVfact" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.conversions.NewmarkHall1982.pgv2psa10">
-<em class="property">classmethod </em><code class="descname">pgv2psa10</code><span class="sig-paren">(</span><em>pgv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#NewmarkHall1982.pgv2psa10"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.NewmarkHall1982.pgv2psa10" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert PGV in cm/s to PSA10 in g.
-** PGV must be linear units **
-:param pgv:</p>
-<blockquote>
-<div>Numpy array or float of PGV values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Values converted to PSA10.</dd>
-</dl>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.conversions.NewmarkHall1982.psa102pgv">
-<em class="property">classmethod </em><code class="descname">psa102pgv</code><span class="sig-paren">(</span><em>psa10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions.html#NewmarkHall1982.psa102pgv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.NewmarkHall1982.psa102pgv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert PSA10 in g to PGV cm/s.
-** PSA10 must be linear units **
-:param psa10:</p>
-<blockquote>
-<div>Numpy array or float of PSA10 values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Values converted to PGV.</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="module-shakemap.grind.distance">
 <span id="shakemap-grind-distance-module"></span><h2>shakemap.grind.distance module<a class="headerlink" href="#module-shakemap.grind.distance" title="Permalink to this headline">¶</a></h2>
@@ -308,26 +206,35 @@ by Alarcon and Bommer (2006).</p>
 <dt id="shakemap.grind.distance.Distance">
 <em class="property">class </em><code class="descclassname">shakemap.grind.distance.</code><code class="descname">Distance</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Class for distance calculations.</p>
-<dl class="classmethod">
-<dt id="shakemap.grind.distance.Distance.fromPoints">
-<em class="property">classmethod </em><code class="descname">fromPoints</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.fromPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.fromPoints" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience class method to construct a Distance object from an array of
-lons, lats, and depths.
-:param gmpe:</p>
-<blockquote>
-<div>Concrete subclass of GMPE
-<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</a>
-can be individual instance or list of instances.</div></blockquote>
+<p>Class for distance calculations. Primary method is &#8216;get_distance&#8217;. 
+To gracefully handle multiple segment ruptures, many of the distances
+are based on the Spudich and Chiou (2015) GC2 coordinate system.</p>
+<dl class="docutils">
+<dt>References: </dt>
+<dd>Spudich, Paul and Chiou, Brian, 2015, Strike-parallel and strike-normal
+coordinate system around geometrically complicated rupture traces—Use by
+NGA-West2 and further improvements: U.S. Geological Survey Open-File
+Report 2015-1028, 20 p., <a class="reference external" href="http://dx.doi.org/10.3133/ofr20151028">http://dx.doi.org/10.3133/ofr20151028</a>.</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> &#8211; Source object.</li>
-<li><strong>lon</strong> &#8211; Numpy array of longitudes.</li>
-<li><strong>lat</strong> &#8211; Numpy array of latitudes.</li>
-<li><strong>dep</strong> &#8211; Numpy array of depths.</li>
+<li><strong>gmpe</strong> &#8211; Concrete subclass of GMPE
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">[link]</a>;
+can be individual instance or list of instances.</li>
+<li><strong>source</strong> &#8211; Shakemap Source instance. For point-source distances (Repi, Rhyp) the
+hypocenter is taken from the source instance. The finite-fault 
+distances (Rrup, Rjb, ...), are based on the fault representation in
+the source instance if available. If a Fault instance is unavailalbe, 
+the finite-fault distances are computed from point-source distances, 
+in which case the earthquake manitude from the Source instance is 
+required for median distance corrections if use_median_distance is 
+True.</li>
+<li><strong>lat</strong> &#8211; A numpy array of site latitudes.</li>
+<li><strong>lon</strong> &#8211; A numpy array of site longitudes.</li>
+<li><strong>dep</strong> &#8211; A numpy array of site depths (km); down is positive.</li>
 <li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
 availalbe. Default is True, meaning that point-source distances are
 adjusted based on magnitude to get the median fault distance.</li>
@@ -339,24 +246,20 @@ adjusted based on magnitude to get the median fault distance.</li>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
 <dl class="classmethod">
 <dt id="shakemap.grind.distance.Distance.fromSites">
 <em class="property">classmethod </em><code class="descname">fromSites</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>sites</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.fromSites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.fromSites" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience class method to construct a Distance object from a sites object.
-:param gmpe:</p>
-<blockquote>
-<div>Concrete subclass of GMPE
-<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</a>
-can be individual instance or list of instances.</div></blockquote>
+<dd><p>Convenience class method to construct a Distance object from a sites object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> &#8211; Source object.</li>
-<li><strong>sites</strong> &#8211; Site object.</li>
+<li><strong>gmpe</strong> &#8211; Concrete subclass of GMPE
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">[link]</a>;
+can be individual instance or list of instances.</li>
+<li><strong>source</strong> &#8211; Shakeamp Source object.</li>
+<li><strong>sites</strong> &#8211; Shakemap Sites object.</li>
 <li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
 availalbe. Default is True, meaning that point-source distances are
 adjusted based on magnitude to get the median fault distance.</li>
@@ -373,215 +276,100 @@ adjusted based on magnitude to get the median fault distance.</li>
 <dl class="method">
 <dt id="shakemap.grind.distance.Distance.getDistanceContext">
 <code class="descname">getDistanceContext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.getDistanceContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.getDistanceContext" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Openquake distance context
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html?highlight=distancescontext#openquake.hazardlib.gsim.base.DistancesContext">[link]</a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.distance.Distance.getSource">
 <code class="descname">getSource</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.getSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.getSource" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.distance.calc_rupture_distance">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">calc_rupture_distance</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>P2</em>, <em>P3</em>, <em>points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#calc_rupture_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.calc_rupture_distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the shortest distance from a set of points to a rupture surface.
-:param P0:</p>
-<blockquote>
-<div>Point object, representing the first top-edge vertex of a fault quadrilateral.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P1</strong> &#8211; Point object, representing the second top-edge vertex of a fault quadrilateral.</li>
-<li><strong>P2</strong> &#8211; Point object, representing the first bottom-edge vertex of a fault quadrilateral.</li>
-<li><strong>P3</strong> &#8211; Point object, representing the second bottom-edge vertex of a fault quadrilateral.</li>
-<li><strong>points</strong> &#8211; Numpy array Nx3 of points (ECEF) to calculate distance from.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of size N of distances (in km) from input points to rupture surface.</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Shakemap Source object.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="shakemap.grind.distance.calc_t_i">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">calc_t_i</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>lat</em>, <em>lon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#calc_t_i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.calc_t_i" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate t_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance
-measured normal to strike from the i-th segment. Values on the hanging-wall are
-positive and those on the foot-wall are negative.
-:param P0:</p>
-<blockquote>
-<div>Point object, representing the first top-edge vertex of a fault quadrilateral.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P1</strong> &#8211; Point object, representing the second top-edge vertex of a fault quadrilateral.</li>
-<li><strong>lat</strong> &#8211; A numpy array of latitudes.</li>
-<li><strong>lon</strong> &#8211; A numpy array of longitudes.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of size N of distances (in km) from input points to rupture surface.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.distance.calc_u_i">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">calc_u_i</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>lat</em>, <em>lon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#calc_u_i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.calc_u_i" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate u_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance
-along strike from the first vertex (P0) of the i-th segment.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P0</strong> &#8211; Point object, representing the first top-edge vertex of a fault quadrilateral.</li>
-<li><strong>P1</strong> &#8211; Point object, representing the second top-edge vertex of a fault quadrilateral.</li>
-<li><strong>lat</strong> &#8211; A numpy array of latitude.</li>
-<li><strong>lon</strong> &#8211; A numpy array of longitude.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of size lat.shape of distances (in km).</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.distance.distance_sq_to_segment">
-<code class="descclassname">shakemap.grind.distance.</code><code class="descname">distance_sq_to_segment</code><span class="sig-paren">(</span><em>p0</em>, <em>p1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#distance_sq_to_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.distance_sq_to_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the distance^2 from the origin to a segment defined by two vectors
-:param p0: numpy array Nx3 (ECEF)
-:param p1: numpy array Nx3 (ECEF)
-:returns:</p>
-<blockquote>
-<div>The squared distance from the origin to a segment.</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="shakemap.grind.distance.get_distance">
 <code class="descclassname">shakemap.grind.distance.</code><code class="descname">get_distance</code><span class="sig-paren">(</span><em>methods</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>source</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#get_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.get_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate distance using any one of a number of distance measures.
-One of quadlist OR hypo must be specified.
-:param methods:</p>
-<blockquote>
-<div><p>List of strings (or just a string) of distances to compute;
-can include: &#8216;repi&#8217;, &#8216;rhypo&#8217;, &#8216;rjb&#8217;, &#8216;rrup&#8217;, &#8216;rx&#8217;, &#8216;ry&#8217;, &#8216;ry0&#8217;</p>
-<blockquote>
-<div><p>repi:  Distance to epicenter.
-rhypo: Distance to hypocenter.
-rjb:   Joyner-Boore distance; this is closest distance to the</p>
-<blockquote>
-<div>surface projection of the rupture plane.</div></blockquote>
-<p>rrup:  Rupture distance; closest distance to the rupture plane.
-rx:    Strike-normal distance; same as GC2 coordiante T.
-ry:    Strike-parallel distance; same as GC2 coordiante U, but</p>
-<blockquote>
-<div>with a shift in origin definition. See Spudich and Chiou
-(2015) <a class="reference external" href="http://dx.doi.org/10.3133/ofr20151028">http://dx.doi.org/10.3133/ofr20151028</a>.</div></blockquote>
-<dl class="docutils">
-<dt>ry0:   Horizontal distance off the end of the rupture measured</dt>
-<dd>parallel to strike. Can only be zero or positive. We
-compute this as a function of GC2 coordinate U.</dd>
-</dl>
-<p>U:     GC2 coordinate U.
-T:     GC2 coordinate T.</p>
-</div></blockquote>
-</div></blockquote>
+One of quadlist OR hypo must be specified. The following table gives
+the allowed distance strings and a description of each.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">String</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>repi</td>
+<td>Distance to epicenter.</td>
+</tr>
+<tr class="row-odd"><td>rhypo</td>
+<td>Distance to hypocenter.</td>
+</tr>
+<tr class="row-even"><td>rjb</td>
+<td>Joyner-Boore distance; this is closest distance to the
+surface projection of the rupture plane.</td>
+</tr>
+<tr class="row-odd"><td>rrup</td>
+<td>Rupture distance; closest distance to the rupture plane.</td>
+</tr>
+<tr class="row-even"><td>rx</td>
+<td>Strike-normal distance; same as GC2 coordiante T.</td>
+</tr>
+<tr class="row-odd"><td>ry</td>
+<td>Strike-parallel distance; same as GC2 coordiante U, but
+with a shift in origin definition. See Spudich and Chiou
+(2015) <a class="reference external" href="http://dx.doi.org/10.3133/ofr20151028">http://dx.doi.org/10.3133/ofr20151028</a>.</td>
+</tr>
+<tr class="row-even"><td>ry0</td>
+<td>Horizontal distance off the end of the rupture measured
+parallel to strike. Can only be zero or positive. We
+compute this as a function of GC2 coordinate U.</td>
+</tr>
+<tr class="row-odd"><td>U</td>
+<td>GC2 coordinate U.</td>
+</tr>
+<tr class="row-even"><td>T</td>
+<td>GC2 coordinate T.</td>
+</tr>
+</tbody>
+</table>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>methods</strong> &#8211; List of strings (or just a string) of distances to compute.</li>
 <li><strong>lat</strong> &#8211; A numpy array of latitudes.</li>
 <li><strong>lon</strong> &#8211; A numpy array of longidues.</li>
 <li><strong>dep</strong> &#8211; A numpy array of depths (km).</li>
 <li><strong>source</strong> &#8211; source instance.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p><a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a>
-:param use_median_distance:</p>
-<blockquote>
-<div>Boolean; only used if GMPE requests fault distances and not fault is
+<li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
 availalbe. Default is True, meaning that point-source distances are
-adjusted based on magnitude to get the median fault distance.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary of numpy array of distances, size of lon.shape</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ShakeMapException</strong> &#8211; if a fault distance method is called without quadlist</li>
-<li><strong>NotImplementedError</strong> &#8211; for unknown distance measures or ones not yet implemented.</li>
+adjusted based on magnitude to get the median fault distance.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-shakemap.grind.ecef">
-<span id="shakemap-grind-ecef-module"></span><h2>shakemap.grind.ecef module<a class="headerlink" href="#module-shakemap.grind.ecef" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="shakemap.grind.ecef.ecef2latlon">
-<code class="descclassname">shakemap.grind.ecef.</code><code class="descname">ecef2latlon</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/ecef.html#ecef2latlon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.ecef.ecef2latlon" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates to lat,lon,depth.
-:parameter x:</p>
-<blockquote>
-<div>A numpy array (or scalar value) of x coordinates (meters).</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>y</strong> &#8211; A numpy array (or scalar value) of y coordinates (meters).</li>
-<li><strong>z</strong> &#8211; A numpy array (or scalar value) of y coordinates (meters), positive UP.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tuple of lat,lon,depth numpy arrays, where lat,lon are in dd and depth is in km and positive DOWN.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.ecef.latlon2ecef">
-<code class="descclassname">shakemap.grind.ecef.</code><code class="descname">latlon2ecef</code><span class="sig-paren">(</span><em>lat</em>, <em>lon</em>, <em>dep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/ecef.html#latlon2ecef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.ecef.latlon2ecef" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert lat,lon,depth to Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates
-:parameter lat:</p>
-<blockquote>
-<div>A numpy array (or scalar value) of latitude values (decimal degrees).</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>lon</strong> &#8211; A numpy array (or scalar value) of longitude values (decimal degrees).</li>
-<li><strong>dep</strong> &#8211; A numpy array (or scalar value) of depths (km), positive DOWN.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tuple of x,y,z numpy arrays of ECEF coordinates.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary of numpy array of distances, size of lon.shape</p>
 </td>
 </tr>
 </tbody>
@@ -597,6 +385,21 @@ adjusted based on magnitude to get the median fault distance.</div></blockquote>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Class to handle fault files of various types and output fault data in 
 various ways.</p>
+<p>Constructor for Fault class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lon</strong> &#8211; Sequence of fault longitude vertices in clockwise order.</li>
+<li><strong>lat</strong> &#8211; Sequence of fault latitude vertices in clockwise order.</li>
+<li><strong>depth</strong> &#8211; Sequence of fault depth vertices in clockwise order.</li>
+<li><strong>reference</strong> &#8211; String citeable reference for Fault.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="classmethod">
 <dt id="shakemap.grind.fault.Fault.fromTrace">
 <em class="property">classmethod </em><code class="descname">fromTrace</code><span class="sig-paren">(</span><em>xp0</em>, <em>yp0</em>, <em>xp1</em>, <em>yp1</em>, <em>zp</em>, <em>widths</em>, <em>dips</em>, <em>strike=None</em>, <em>reference=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.fromTrace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.fromTrace" title="Permalink to this definition">¶</a></dt>
@@ -604,31 +407,30 @@ various ways.</p>
 fault, and an array of widths/dips.</p>
 <p>These top of rupture points are defined by specifying the x and y
 coordinates of each of the two vertices, and then specifying an array of
-depths,widths, and dips for each rectangle.
-:param xp0:</p>
-<blockquote>
-<div>Array of longitude coordinates for the first (top of rupture) vertex of
-each rectangle (decimal degrees).</div></blockquote>
+depths,widths, and dips for each rectangle.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>yp0</strong> &#8211; Array of latitude coordinates for the first (top of rupture) vertex of
-each rectangle (decimal degrees).</li>
-<li><strong>xp1</strong> &#8211; Array of longitude coordinates for the second (top of rupture) vertex of
-each rectangle (decimal degrees).</li>
-<li><strong>yp1</strong> &#8211; Array of latitude coordinates for the second (top of rupture) vertex of
-each rectangle (decimal degrees).</li>
+<li><strong>xp0</strong> &#8211; Array of longitude coordinates for the first (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>yp0</strong> &#8211; Array of latitude coordinates for the first (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>xp1</strong> &#8211; Array of longitude coordinates for the second (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>yp1</strong> &#8211; Array of latitude coordinates for the second (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
 <li><strong>zp</strong> &#8211; Array of depths for each of the top of rupture rectangles (km).</li>
 <li><strong>widths</strong> &#8211; Array of widths for each of rectangle (km).</li>
 <li><strong>dips</strong> &#8211; Array of dips for each of rectangle (degrees).</li>
 <li><strong>strike</strong> &#8211; If None then strike is computed from verticies of top edge of each
 quadrilateral. If a scalar, then all quadrilaterals are constructed
 assuming this strike direction. If a vector with the same length as
-the trace coordinates then it specifies the strike for each quadrilateral.</li>
-<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication style
-reference, etc.)</li>
+the trace coordinates then it specifies the strike for each 
+quadrilateral.</li>
+<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication
+style reference, etc.)</li>
 </ul>
 </td>
 </tr>
@@ -644,17 +446,19 @@ reference, etc.)</li>
 <em class="property">classmethod </em><code class="descname">fromVertices</code><span class="sig-paren">(</span><em>xp0</em>, <em>yp0</em>, <em>zp0</em>, <em>xp1</em>, <em>yp1</em>, <em>zp1</em>, <em>xp2</em>, <em>yp2</em>, <em>zp2</em>, <em>xp3</em>, <em>yp3</em>, <em>zp3</em>, <em>reference=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.fromVertices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.fromVertices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a fault object from the vector of vertices that fully define the
 quadrilaterals. The points p0, ..., p3 are labeled below for a trapezoid:</p>
-<p>p0&#8212;&#8212;&#8211;p1
-|                  |                   p3&#8212;&#8212;&#8212;-p2</p>
-<p>All of the following vector arguments must have the same length.
-:param xp0:</p>
-<blockquote>
-<div>Vector of longitudes of p0.</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span>   p0--------p1
+  /          |
+ /           |
+p3-----------p2
+</pre></div>
+</div>
+<p>All of the following vector arguments must have the same length.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xp0</strong> &#8211; Vector of longitudes of p0.</li>
 <li><strong>yp0</strong> &#8211; Vector of latitudes of p0.</li>
 <li><strong>zp0</strong> &#8211; Vector of depths of p0 (positive down).</li>
 <li><strong>xp1</strong> &#8211; Vector of longitudes of p1.</li>
@@ -666,8 +470,8 @@ quadrilaterals. The points p0, ..., p3 are labeled below for a trapezoid:</p>
 <li><strong>xp3</strong> &#8211; Vector of longitudes of p3.</li>
 <li><strong>yp3</strong> &#8211; Vector of latitudes of p3.</li>
 <li><strong>zp3</strong> &#8211; Vector of depths of p3 (positive down).</li>
-<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication style
-reference, etc.)</li>
+<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication
+style reference, etc.)</li>
 </ul>
 </td>
 </tr>
@@ -681,26 +485,34 @@ reference, etc.)</li>
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getDip">
 <code class="descname">getDip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getDip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getDip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return average dip of all quadrilaterals in the fault.
-:returns:</p>
-<blockquote>
-<div>Average dip in degrees.</div></blockquote>
+<dd><p>Return average dip of all quadrilaterals in the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Average dip in degrees (float).</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getDistanceToPlane">
 <code class="descname">getDistanceToPlane</code><span class="sig-paren">(</span><em>planepoints</em>, <em>otherpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getDistanceToPlane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getDistanceToPlane" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate a point&#8217;s distance to a plane.  Used to figure out if a quadrilateral points are all co-planar.
-:param planepoints:</p>
-<blockquote>
-<div>List of three points (Vector objects) defining a plane.</div></blockquote>
+<dd><p>Calculate a point&#8217;s distance to a plane.  Used to figure out if a
+quadrilateral points are all co-planar.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>otherpoint</strong> &#8211; 4th Vector to compare to points defining the plane</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>planepoints</strong> &#8211; List of three points (Vector objects) defining a plane.</li>
+<li><strong>otherpoint</strong> &#8211; 4th Vector to compare to points defining the plane</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Distance (in meters) from otherpoint to plane.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Distance (in meters) from otherpoint to plane.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -709,105 +521,148 @@ reference, etc.)</li>
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getFaultAsArrays">
 <code class="descname">getFaultAsArrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultAsArrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultAsArrays" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a 3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.  Fault segments are separated by
-numpy.NaN values.
-:returns:</p>
-<blockquote>
-<div>3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.</div></blockquote>
+<dd><p>Return a 3-tuple of numpy arrays indicating X, Y, Z (lon,lat,depth)
+coordinates. Fault segments are separated by numpy.NaN values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getFaultAsMesh">
 <code class="descname">getFaultAsMesh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultAsMesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultAsMesh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return fault segments as a OQ-Hazardlib Mesh object.
-:returns:</p>
-<blockquote>
-<div>Mesh (<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py</a>)</div></blockquote>
+<dd><p>Return fault segments as a OQ-Hazardlib Mesh object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Mesh (<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py</a>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getFaultLength">
 <code class="descname">getFaultLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultLength" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute lenght of fault based on top edge.
-:returns:</p>
-<blockquote>
-<div>Length of fault.</div></blockquote>
+<dd><p>Compute lenght of fault based on top edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Length of fault.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getIndividualTopLengths">
 <code class="descname">getIndividualTopLengths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getIndividualTopLengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getIndividualTopLengths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an array of fault lengths along top edge (km),
-one for each quadrilateral defined for the fault.
-:returns:</p>
-<blockquote>
-<div>Array of lengths in km of top edge of quadrilaterals.</div></blockquote>
+one for each quadrilateral defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of lengths in km of top edge of quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getIndividualWidths">
 <code class="descname">getIndividualWidths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getIndividualWidths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getIndividualWidths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an array of fault widths (km), one for each quadrilateral defined for the fault.
-:returns:</p>
-<blockquote>
-<div>Array of quad widths in km of all fault quadrilaterals.</div></blockquote>
+<dd><p>Return an array of fault widths (km), one for each quadrilateral defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of quad widths in km of all fault quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getLats">
 <code class="descname">getLats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getLats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getLats" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a copy of the array of latitude points for the fault.
-:returns:</p>
-<blockquote>
-<div>Numpy array of latitude values.</div></blockquote>
+<dd><p>Return a copy of the array of latitude points for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Numpy array of latitude values.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getLons">
 <code class="descname">getLons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getLons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getLons" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a copy of the array of longitude points for the fault.
-:returns:</p>
-<blockquote>
-<div>Numpy array of latitude values.</div></blockquote>
+<dd><p>Return a copy of the array of longitude points for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Numpy array of latitude values.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getNumQuads">
 <code class="descname">getNumQuads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getNumQuads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getNumQuads" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a count of the number of fault quadrilaterals.
-:returns:</p>
-<blockquote>
-<div>number of fault quadrilaterals.</div></blockquote>
+<dd><p>Return a count of the number of fault quadrilaterals.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of fault quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getNumSegments">
 <code class="descname">getNumSegments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getNumSegments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getNumSegments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a count of the number of fault segments.
-:returns:</p>
-<blockquote>
-<div>number of fault segments</div></blockquote>
+<dd><p>Return a count of the number of fault segments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of fault segments</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getQuadWidth">
 <code class="descname">getQuadWidth</code><span class="sig-paren">(</span><em>p0</em>, <em>p1</em>, <em>p3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getQuadWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getQuadWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return width of an individual planar trapezoid, where the p0-p1 distance
-represents the long side.
-:param p0:</p>
-<blockquote>
-<div>ECEF x,y,z point representing the first vertex of a quadrilateral.</div></blockquote>
+represents the long side.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p0</strong> &#8211; ECEF x,y,z point representing the first vertex of a quadrilateral.</li>
 <li><strong>p1</strong> &#8211; ECEF x,y,z point representing the second vertex of a quadrilateral.</li>
 <li><strong>p3</strong> &#8211; ECEF x,y,z point representing the fourth vertex of a quadrilateral.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">width of planar trapezoid.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Width of planar trapezoid (float).</p>
 </td>
 </tr>
 </tbody>
@@ -817,29 +672,30 @@ represents the long side.
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getQuadrilaterals">
 <code class="descname">getQuadrilaterals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getQuadrilaterals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getQuadrilaterals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of quadrilaterals.
-:returns:</p>
-<blockquote>
-<div>each quad is a tuple of four Point objects
-(<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a>)</div></blockquote>
+<dd><p>Return a list of quadrilaterals.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Each quad is a tuple of four Point objects
+(<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getReference">
 <code class="descname">getReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return whatever reference information was contained in fault file.
-:returns:</p>
-<blockquote>
-<div>string citeable reference</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.getSegmentIndex">
-<code class="descname">getSegmentIndex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getSegmentIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getSegmentIndex" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of segment indexes.
-:returns:</p>
-<blockquote>
-<div>List of segment indexes; lenght equals the number of quadrilaterals.</div></blockquote>
+<dd><p>Return whatever reference information was contained in fault file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string citeable reference</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -849,109 +705,62 @@ represents the long side.
 average strike angle, weighted by quad length, is returned.
 Note: for faults with quads where the strike angle changes by 180 deg
 due to reverses in dip direction are problematic and not handeled well
-by this algorithm.
-:returns:</p>
-<blockquote>
-<div>float strike angle</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.getTopOfRupture">
-<code class="descname">getTopOfRupture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getTopOfRupture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getTopOfRupture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine shallowest vertex of entire fault.
-:returns:</p>
-<blockquote>
-<div>float shallowest depth of all vertices.</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.getWidth">
-<code class="descname">getWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getWidth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the average fault width (km) for all quadrilaterals defined for the fault.
-:returns:</p>
-<blockquote>
-<div>Average width in km of all fault quadrilaterals.</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.isPointToRight">
-<code class="descname">isPointToRight</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>P2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.isPointToRight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.isPointToRight" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.fault.Fault.readFaultFile">
-<em class="property">classmethod </em><code class="descname">readFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.readFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.readFaultFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read fault file format as defined in ShakeMap Software Guide.
-:param faultfile:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>Path to fault file OR file-like object in GMT psxy format, where</dt>
-<dd><ul class="first last simple">
-<li>Fault vertices are space separated lat,lon,depth triplets on a single line.</li>
-<li>Fault segments are separated by lines containing &#8220;&gt;&#8221;</li>
-<li>Fault segments must be closed.</li>
-<li>Fault segments must be all clockwise or all counter-clockwise.</li>
-</ul>
-</dd>
-</dl>
-</div></blockquote>
+by this algorithm.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fault object.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>ShakeMapException</strong> &#8211; when any of above conditions are not met.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Strike angle (float).</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="shakemap.grind.fault.Fault.reverseQuad">
-<code class="descname">reverseQuad</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>P2</em>, <em>P3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.reverseQuad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.reverseQuad" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.setQuadrilaterals">
-<code class="descname">setQuadrilaterals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.setQuadrilaterals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.setQuadrilaterals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create internal list of N quadrilaterals.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.validateQuad">
-<code class="descname">validateQuad</code><span class="sig-paren">(</span><em>P0</em>, <em>P1</em>, <em>P2</em>, <em>P3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.validateQuad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.validateQuad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validate and fix* a given quadrilateral (<a href="#id1"><span class="problematic" id="id2">*</span></a>currently &#8220;fix&#8221; means check third vertex for co-planarity
-with other three points, and force it to be co-planar if it&#8217;s not wildly out of the plane.()
-:param P0:</p>
-<blockquote>
-<div>First vertex <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></div></blockquote>
+<dt id="shakemap.grind.fault.Fault.getTopOfRupture">
+<code class="descname">getTopOfRupture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getTopOfRupture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getTopOfRupture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine shallowest vertex of entire fault.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P1</strong> &#8211; Second vertex <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></li>
-<li><strong>P2</strong> &#8211; Third vertex <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></li>
-<li><strong>P3</strong> &#8211; Fourth vertex <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Shallowest depth of all vertices (float).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Tuple of (potentially) modified vertices.</p>
-</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getWidth">
+<code class="descname">getWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the average fault width (km) for all quadrilaterals defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Average width in km of all fault quadrilaterals (float).</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ShakeMapException</strong> &#8211; <ul class="simple">
-<li>if top and bottom edges are not parallel to surface</li>
-<li>if dip angle is not dipping to the right relative to strike (defined by first two vertices)</li>
-<li>if all 4 points are not reasonably co-planar (P2 is more than 5% of mean length of trapezoid out of plane)</li>
-</ul>
-</p>
-</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.grind.fault.Fault.readFaultFile">
+<em class="property">classmethod </em><code class="descname">readFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.readFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.readFaultFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read fault file format as defined in ShakeMap Software Guide.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; Path to fault file OR file-like object in GMT psxy format, where
+* Fault vertices are space separated lat,lon,depth triplets on a single line.
+* Fault segments are separated by lines containing &#8220;&gt;&#8221;
+* Fault segments must be closed.
+* Fault segments must be all clockwise or all counter-clockwise.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Fault object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ShakeMapException</strong> &#8211; when any of above conditions are not met.</td>
 </tr>
 </tbody>
 </table>
@@ -960,10 +769,15 @@ with other three points, and force it to be co-planar if it&#8217;s not wildly o
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.writeFaultFile">
 <code class="descname">writeFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.writeFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.writeFaultFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write fault data to fault file format as defined in ShakeMap Software Guide.
-:param faultfile:</p>
-<blockquote>
-<div>Filename of output data file OR file-like object.</div></blockquote>
+<dd><p>Write fault data to fault file format as defined in ShakeMap Software Guide.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; Filename of output data file OR file-like object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -971,16 +785,14 @@ with other three points, and force it to be co-planar if it&#8217;s not wildly o
 <dl class="function">
 <dt id="shakemap.grind.fault.get_local_unit_slip_vector">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the components of a unit slip vector.
-:param strike:</p>
-<blockquote>
-<div>Clockwise angle (deg) from north of the line at the intersection
-of the fault plane and the horizontal plane.</div></blockquote>
+<dd><p>Compute the components of a unit slip vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
 <li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
 to the strike (0-90 using right hand rule).</li>
 <li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
@@ -998,16 +810,14 @@ foot wall, as measured by the angle (deg) from the strike vector.</li>
 <dl class="function">
 <dt id="shakemap.grind.fault.get_local_unit_slip_vector_DS">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector_DS</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector_DS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector_DS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the DIP SLIP components of a unit slip vector.
-:param strike:</p>
-<blockquote>
-<div>Clockwise angle (deg) from north of the line at the intersection
-of the fault plane and the horizontal plane.</div></blockquote>
+<dd><p>Compute the DIP SLIP components of a unit slip vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
 <li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
 to the strike (0-90 using right hand rule).</li>
 <li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
@@ -1025,16 +835,14 @@ foot wall, as measured by the angle (deg) from the strike vector.</li>
 <dl class="function">
 <dt id="shakemap.grind.fault.get_local_unit_slip_vector_SS">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector_SS</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector_SS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector_SS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the STRIKE SLIP components of a unit slip vector.
-:param strike:</p>
-<blockquote>
-<div>Clockwise angle (deg) from north of the line at the intersection
-of the fault plane and the horizontal plane.</div></blockquote>
+<dd><p>Compute the STRIKE SLIP components of a unit slip vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
 <li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
 to the strike (0-90 using right hand rule).</li>
 <li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
@@ -1052,15 +860,14 @@ foot wall, as measured by the angle (deg) from the strike vector.</li>
 <dl class="function">
 <dt id="shakemap.grind.fault.get_quad_dip">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_dip</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_dip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_dip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dip of a quadrilateral.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+<dd><p>Dip of a quadrilateral.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dip in degrees.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dip in degrees.</td>
 </tr>
 </tbody>
 </table>
@@ -1070,15 +877,14 @@ foot wall, as measured by the angle (deg) from the strike vector.</li>
 <dt id="shakemap.grind.fault.get_quad_down_dip_vector">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_down_dip_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_down_dip_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_down_dip_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the unit vector pointing down dip for a quadrilateral in
-ECEF coordinates.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+ECEF coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing down dip in ECEF coords.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing down dip in ECEF coords.</td>
 </tr>
 </tbody>
 </table>
@@ -1087,15 +893,14 @@ ECEF coordinates.
 <dl class="function">
 <dt id="shakemap.grind.fault.get_quad_length">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_length</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_length" title="Permalink to this definition">¶</a></dt>
-<dd><p>Length of top eduge of a quadrilateral.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+<dd><p>Length of top eduge of a quadrilateral.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Length in km.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Length in km.</td>
 </tr>
 </tbody>
 </table>
@@ -1104,26 +909,28 @@ ECEF coordinates.
 <dl class="function">
 <dt id="shakemap.grind.fault.get_quad_mesh">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_mesh</code><span class="sig-paren">(</span><em>q</em>, <em>dx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_mesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_mesh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Length of top eduge of a quadrilateral.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+<dd><p>Length of top eduge of a quadrilateral.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dx</strong> &#8211; Target dx in km; used to get nx and ny of mesh, but mesh snaps
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>q</strong> &#8211; A quadrilateral.</li>
+<li><strong>dx</strong> &#8211; Target dx in km; used to get nx and ny of mesh, but mesh snaps
 to edges of fault so actual dx/dy will not actually equal this
-value in general.</td>
+value in general.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Mesh dictionary, which includes numpy arrays:</dt>
-<dd>llx: lower left x coordinate in ECEF coords.
-lly: lower left y coordinate in ECEF coords.
-llz: lower left z coordinate in ECEF coords.
-ulx: upper left x coordinate in ECEF coords.
-etc.</dd>
-</dl>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>Mesh dictionary, which includes numpy arrays:</p>
+<ul class="simple">
+<li>llx: lower left x coordinate in ECEF coords.</li>
+<li>lly: lower left y coordinate in ECEF coords.</li>
+<li>llz: lower left z coordinate in ECEF coords.</li>
+<li>ulx: upper left x coordinate in ECEF coords.</li>
+<li>etc.</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1134,15 +941,14 @@ etc.</dd>
 <dt id="shakemap.grind.fault.get_quad_normal">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_normal</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_normal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_normal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the unit normal vector for a quadrilateral in
-ECEF coordinates.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+ECEF coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Normalized normal vector for the quadrilateral in ECEF coords.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Normalized normal vector for the quadrilateral in ECEF coords.</td>
 </tr>
 </tbody>
 </table>
@@ -1151,18 +957,20 @@ ECEF coordinates.
 <dl class="function">
 <dt id="shakemap.grind.fault.get_quad_slip">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_slip</code><span class="sig-paren">(</span><em>q</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_slip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_slip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the unit slip vector in ECEF space for a quad and rake angle.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+<dd><p>Compute the unit slip vector in ECEF space for a quad and rake angle.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
-foot wall, as measured by the angle (deg) from the strike vector.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>q</strong> &#8211; A quadrilateral.</li>
+<li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
+foot wall, as measured by the angle (deg) from the strike vector.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Unit slip vector in ECEF space.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unit slip vector in ECEF space.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1172,15 +980,14 @@ foot wall, as measured by the angle (deg) from the strike vector.</td>
 <dt id="shakemap.grind.fault.get_quad_strike_vector">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_strike_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_strike_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_strike_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the unit vector pointing in the direction of strike for a
-quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing in strike direction in ECEF coords.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing in strike direction in ECEF coords.</td>
 </tr>
 </tbody>
 </table>
@@ -1190,15 +997,14 @@ quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.
 <dt id="shakemap.grind.fault.get_vertical_vector">
 <code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_vertical_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_vertical_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_vertical_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the vertical unit vector for a quadrilateral
-in ECEF coordinates.
-:param q:</p>
-<blockquote>
-<div>A quadrilateral.</div></blockquote>
+in ECEF coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Normalized vertical vector for the quadrilateral in ECEF coords.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Normalized vertical vector for the quadrilateral in ECEF coords.</td>
 </tr>
 </tbody>
 </table>
@@ -1213,22 +1019,185 @@ ShakeMap amps are %g and max horizontal</p>
 <dl class="function">
 <dt id="shakemap.grind.gmpe2shakemap.ampGmpeToShakeMap">
 <code class="descclassname">shakemap.grind.gmpe2shakemap.</code><code class="descname">ampGmpeToShakeMap</code><span class="sig-paren">(</span><em>gmpe_amps</em>, <em>gmpe</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/gmpe2shakemap.html#ampGmpeToShakeMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.gmpe2shakemap.ampGmpeToShakeMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert ground motion amplitudes from a GMPE to match the 
+and intensity measure component
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">IMC</a>)
+used by Shakemap and convert from natural log to linear units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gmpe_amps</strong> &#8211; Numpy array of ground motion amplitudes from a GMPE.</li>
+<li><strong>gmpe</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a>.</li>
+<li><strong>imt</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of converted ground motion amplitudes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="shakemap.grind.gmpe2shakemap.ampShakeMapToGMPE">
 <code class="descclassname">shakemap.grind.gmpe2shakemap.</code><code class="descname">ampShakeMapToGMPE</code><span class="sig-paren">(</span><em>sm_amps</em>, <em>gmpe</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/gmpe2shakemap.html#ampShakeMapToGMPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.gmpe2shakemap.ampShakeMapToGMPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert Shakemap ground motion amplitudes to match the 
+and intensity measure component
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">IMC</a>)
+of a GMPE and convert from linear to natural log units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sa_amps</strong> &#8211; Numpy array of ground motion amplitudes.</li>
+<li><strong>gmpe</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a>.</li>
+<li><strong>imt</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of converted ground motion amplitudes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="shakemap.grind.gmpe2shakemap.sigmaGmpeToShakeMap">
 <code class="descclassname">shakemap.grind.gmpe2shakemap.</code><code class="descname">sigmaGmpeToShakeMap</code><span class="sig-paren">(</span><em>gmpe_sigmas</em>, <em>gmpe</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/gmpe2shakemap.html#sigmaGmpeToShakeMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.gmpe2shakemap.sigmaGmpeToShakeMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert ground motion standard deviations from a GMPE to match the 
+intensity measure type 
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>)
+and intensity measure component
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">IMC</a>)
+used by Shakemap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gmpe_sigmas</strong> &#8211; Numpy array of ground motion standard deviations from a GMPE.</li>
+<li><strong>gmpe</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a>.</li>
+<li><strong>imt</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of converted ground motion standard deviations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="shakemap.grind.gmpe2shakemap.sigmaShakeMapToGMPE">
 <code class="descclassname">shakemap.grind.gmpe2shakemap.</code><code class="descname">sigmaShakeMapToGMPE</code><span class="sig-paren">(</span><em>sm_sigmas</em>, <em>gmpe</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/gmpe2shakemap.html#sigmaShakeMapToGMPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.gmpe2shakemap.sigmaShakeMapToGMPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Shakemap ground motion standard deviations to match the 
+intensity measure type 
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>)
+and intensity measure component
+(<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">IMC</a>)
+of a GMPE.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sa_sigmas</strong> &#8211; Numpy array of ground motion standard deviations.</li>
+<li><strong>gmpe</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a>.</li>
+<li><strong>imt</strong> &#8211; An Openquake <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/imt.html">IMT</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of converted ground motion standard deviations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-shakemap.grind.multigmpe">
+<span id="shakemap-grind-multigmpe-module"></span><h2>shakemap.grind.multigmpe module<a class="headerlink" href="#module-shakemap.grind.multigmpe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="shakemap.grind.multigmpe.MultiGMPE">
+<em class="property">class </em><code class="descclassname">shakemap.grind.multigmpe.</code><code class="descname">MultiGMPE</code><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">openquake.hazardlib.gsim.base.GMPE</span></code></p>
+<p>Implements a GMPE that is the combination of multiple GMPEs.</p>
+<dl class="docutils">
+<dt>Todo:</dt>
+<dd><ul class="first last simple">
+<li>Convert IMT (e.g., PGV) from another IMT if it is not available from
+the GMPE in get_mean_and_stddevs.</li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_COMPONENT">
+<code class="descname">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_COMPONENT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_TYPES">
+<code class="descname">DEFINED_FOR_INTENSITY_MEASURE_TYPES</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_STANDARD_DEVIATION_TYPES">
+<code class="descname">DEFINED_FOR_STANDARD_DEVIATION_TYPES</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_STANDARD_DEVIATION_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_TECTONIC_REGION_TYPE">
+<code class="descname">DEFINED_FOR_TECTONIC_REGION_TYPE</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_TECTONIC_REGION_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.REQUIRES_DISTANCES">
+<code class="descname">REQUIRES_DISTANCES</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.REQUIRES_DISTANCES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.REQUIRES_RUPTURE_PARAMETERS">
+<code class="descname">REQUIRES_RUPTURE_PARAMETERS</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.REQUIRES_RUPTURE_PARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.REQUIRES_SITES_PARAMETERS">
+<code class="descname">REQUIRES_SITES_PARAMETERS</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.REQUIRES_SITES_PARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.from_list">
+<em class="property">classmethod </em><code class="descname">from_list</code><span class="sig-paren">(</span><em>GMPEs</em>, <em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE.from_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a MultiGMPE instance from lists of GMPEs and weights.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>GMPEs</strong> &#8211; List of OpenQuake 
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a> 
+instances.</li>
+<li><strong>weights</strong> &#8211; List of weights; must sum to 1.0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.multigmpe.MultiGMPE.get_mean_and_stddevs">
+<code class="descname">get_mean_and_stddevs</code><span class="sig-paren">(</span><em>sites</em>, <em>rup</em>, <em>dists</em>, <em>imt</em>, <em>stddev_types</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE.get_mean_and_stddevs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.get_mean_and_stddevs" title="Permalink to this definition">¶</a></dt>
+<dd><p>See superclass <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.GroundShakingIntensityModel.get_mean_and_stddevs">method</a>.</p>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-shakemap.grind.sites">
@@ -1237,8 +1206,25 @@ ShakeMap amps are %g and max horizontal</p>
 <dt id="shakemap.grind.sites.Sites">
 <em class="property">class </em><code class="descclassname">shakemap.grind.sites.</code><code class="descname">Sites</code><span class="sig-paren">(</span><em>vs30grid</em>, <em>vs30measured_grid=None</em>, <em>backarc=False</em>, <em>defaultVs30=686.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>An object to encapsulate information used to generate a GEM SitesContext.
-(<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</a>)</p>
+<p>An object to encapsulate information used to generate a GEM 
+<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py">SitesContext</a>.</p>
+<p>Construct a Sites object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vs30grid</strong> &#8211; MapIO Grid2D object containing Vs30 values.</li>
+<li><strong>vs30measured_grid</strong> &#8211; Boolean grid indicating whether Vs30 values were measured or derived
+(i.e., from slope)</li>
+<li><strong>backarc</strong> &#8211; Boolean indicating whether event is on the backarc as defined 
+<a class="reference external" href="http://earthquake.usgs.gov/learn/glossary/?term=backarc">here</a>.</li>
+<li><strong>defaultVs30</strong> &#8211; Default Vs30 value to use in locations where Vs30Grid is not specified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="classmethod">
 <dt id="shakemap.grind.sites.Sites.createFromBounds">
 <em class="property">classmethod </em><code class="descname">createFromBounds</code><span class="sig-paren">(</span><em>xmin</em>, <em>xmax</em>, <em>ymin</em>, <em>ymax</em>, <em>dx</em>, <em>dy</em>, <em>defaultVs30=686.0</em>, <em>vs30File=None</em>, <em>vs30measured_grid=None</em>, <em>backarc=False</em>, <em>padding=False</em>, <em>resample=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites.createFromBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites.createFromBounds" title="Permalink to this definition">¶</a></dt>
@@ -1257,11 +1243,13 @@ and Vs30 values.</p>
 <li><strong>dy</strong> &#8211; Resolution of desired grid in Y direction.</li>
 <li><strong>defaultVs30</strong> &#8211; Default Vs30 value to use if vs30File not specified.</li>
 <li><strong>vs30File</strong> &#8211; Name of GMT or GDAL format grid file containing Vs30 values.</li>
-<li><strong>vs30measured_grid</strong> &#8211; Boolean grid indicating whether Vs30 values were measured or derived (i.e., from slope)</li>
-<li><strong>backarc</strong> &#8211; Boolean indicating whether event is on the backarc as defined here: 
-<a class="reference external" href="http://earthquake.usgs.gov/learn/glossary/?term=backarc">http://earthquake.usgs.gov/learn/glossary/?term=backarc</a></li>
-<li><strong>padding</strong> &#8211; Boolean indicating whether or not to pad resulting Vs30 grid out to edges of input
-bounds.  If False, grid will be clipped to the extent of the input file.</li>
+<li><strong>vs30measured_grid</strong> &#8211; Boolean grid indicating whether Vs30 values were measured or derived 
+(i.e., from slope)</li>
+<li><strong>backarc</strong> &#8211; Boolean indicating whether event is on the backarc as defined
+<a class="reference external" href="http://earthquake.usgs.gov/learn/glossary/?term=backarc">here</a>.</li>
+<li><strong>padding</strong> &#8211; Boolean indicating whether or not to pad resulting Vs30 grid out to
+edges of input bounds. If False, grid will be clipped to the extent
+of the input file.</li>
 <li><strong>resample</strong> &#8211; Boolean indicating whether or not the grid should be resampled.</li>
 </ul>
 </td>
@@ -1281,18 +1269,20 @@ and Vs30 values.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cx</strong> &#8211; X coordinate of desired center point.</li>
-<li><strong>cy</strong> &#8211; X coordinate of desired center point.</li>
+<li><strong>cy</strong> &#8211; Y coordinate of desired center point.</li>
 <li><strong>xspan</strong> &#8211; Width of desired grid.</li>
 <li><strong>yspan</strong> &#8211; Height of desired grid.</li>
 <li><strong>dx</strong> &#8211; Resolution of desired grid in X direction.</li>
 <li><strong>dy</strong> &#8211; Resolution of desired grid in Y direction.</li>
 <li><strong>defaultVs30</strong> &#8211; Default Vs30 value to use if vs30File not specified.</li>
 <li><strong>vs30File</strong> &#8211; Name of GMT or GDAL format grid file containing Vs30 values.</li>
-<li><strong>vs30measured_grid</strong> &#8211; Boolean grid indicating whether Vs30 values were measured or derived (i.e., from slope)</li>
-<li><strong>backarc</strong> &#8211; Boolean indicating whether event is on the backarc as defined here: 
-<a class="reference external" href="http://earthquake.usgs.gov/learn/glossary/?term=backarc">http://earthquake.usgs.gov/learn/glossary/?term=backarc</a></li>
-<li><strong>padding</strong> &#8211; Boolean indicating whether or not to pad resulting Vs30 grid out to edges of input
-bounds.  If False, grid will be clipped to the extent of the input file.</li>
+<li><strong>vs30measured_grid</strong> &#8211; Boolean grid indicating whether Vs30 values were measured or derived 
+(i.e., from slope)</li>
+<li><strong>backarc</strong> &#8211; Boolean indicating whether event is on the backarc as defined
+<a class="reference external" href="http://earthquake.usgs.gov/learn/glossary/?term=backarc">here</a>.</li>
+<li><strong>padding</strong> &#8211; Boolean indicating whether or not to pad resulting Vs30 grid out to
+edges of input bounds. If False, grid will be clipped to the extent
+of the input file.</li>
 <li><strong>resample</strong> &#8211; Boolean indicating whether or not the grid should be resampled.</li>
 </ul>
 </td>
@@ -1304,16 +1294,27 @@ bounds.  If False, grid will be clipped to the extent of the input file.</li>
 <dl class="method">
 <dt id="shakemap.grind.sites.Sites.getSitesContext">
 <code class="descname">getSitesContext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites.getSitesContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites.getSitesContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a SitesContext object appropriate for GMPE use.
-:returns:</p>
-<blockquote>
-<div>SitesContext object.</div></blockquote>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">SitesContext object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.sites.Sites.getVs30Grid">
 <code class="descname">getVs30Grid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#Sites.getVs30Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.Sites.getVs30Grid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the Grid2D object containing Vs30 values for this Sites object.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Grid2D object containing Vs30 values for this Sites object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1327,12 +1328,13 @@ bounds.  If False, grid will be clipped to the extent of the input file.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>lats</strong> &#8211; Sequence of latitudes.</li>
 <li><strong>lons</strong> &#8211; Sequence of longitudes.</li>
-<li><strong>vs30measured_grid</strong> &#8211; Sequence of booleans of the same shape as lats/lons indicating whether
-the vs30 values are measured or inferred.</li>
+<li><strong>vs30measured_grid</strong> &#8211; Sequence of booleans of the same shape as lats/lons indicating 
+whether the vs30 values are measured or inferred.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SitesContext object where data are sampled from the current Sites object.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SitesContext object where data are sampled from the current Sites
+object.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ShakeMapException</strong> &#8211; When lat/lon input sequences do not share dimensionality.</p>
@@ -1344,16 +1346,6 @@ the vs30 values are measured or inferred.</li>
 
 </dd></dl>
 
-<dl class="function">
-<dt id="shakemap.grind.sites.calculate_z1p0">
-<code class="descclassname">shakemap.grind.sites.</code><code class="descname">calculate_z1p0</code><span class="sig-paren">(</span><em>vs30</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#calculate_z1p0"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.calculate_z1p0" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="shakemap.grind.sites.calculate_z2p5">
-<code class="descclassname">shakemap.grind.sites.</code><code class="descname">calculate_z2p5</code><span class="sig-paren">(</span><em>z1pt0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/sites.html#calculate_z2p5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.sites.calculate_z2p5" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-shakemap.grind.source">
 <span id="shakemap-grind-source-module"></span><h2>shakemap.grind.source module<a class="headerlink" href="#module-shakemap.grind.source" title="Permalink to this headline">¶</a></h2>
@@ -1361,28 +1353,50 @@ the vs30 values are measured or inferred.</li>
 <dt id="shakemap.grind.source.Source">
 <em class="property">class </em><code class="descclassname">shakemap.grind.source.</code><code class="descname">Source</code><span class="sig-paren">(</span><em>event</em>, <em>fault=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Encapsulate everything we need to know about an earthquake source.</p>
+<p>Encapsulate everything we need to know about an earthquake source.
+Primary purose of this is to construct the OpenQuake 
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext">RuptureContext</a>.</p>
+<p>Construct a Source object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event</strong> &#8211; Dictionary of values (see read_event_file() and read_source())</li>
+<li><strong>fault</strong> &#8211; A Fault object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source object.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getEventDict">
 <code class="descname">getEventDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getEventDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getEventDict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the event dictionary.
-:returns:</p>
-<blockquote>
-<div>Copy of dictionary of event keys/values</div></blockquote>
+<dd><p>Return the event dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Copy of dictionary of event keys/values</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getEventParam">
 <code class="descname">getEventParam</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getEventParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getEventParam" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a parameter from the internal event dictionary
-:param key:</p>
-<blockquote>
-<div>string key</div></blockquote>
+<dd><p>Get a parameter from the internal event dictionary.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">value (any object type)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> &#8211; String key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Value (any object type).</td>
 </tr>
 </tbody>
 </table>
@@ -1391,84 +1405,106 @@ the vs30 values are measured or inferred.</li>
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getFault">
 <code class="descname">getFault</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getFault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getFault" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return fault instance.
-:returns:</p>
-<blockquote>
-<div>Fault instance</div></blockquote>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fault instance</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getFaultReference">
 <code class="descname">getFaultReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getFaultReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getFaultReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the citeable reference for the fault
-:returns:</p>
-<blockquote>
-<div>string citeable reference</div></blockquote>
+<dd><p>Get the citeable reference for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String citeable reference.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getHypo">
 <code class="descname">getHypo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getHypo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getHypo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return hypocenter point.
-:returns:</p>
-<blockquote>
-<div>Hypocenter point.</div></blockquote>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Hypocenter point.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getQuadrilaterals">
 <code class="descname">getQuadrilaterals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getQuadrilaterals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getQuadrilaterals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of quadrilaterals defining the fault.
-:returns:</p>
-<blockquote>
-<div>List of quadrilateral tuples (4 Point objects each)</div></blockquote>
+<dd><p>Get the list of quadrilaterals defining the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of quadrilateral tuples (4 Point objects each).</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getRuptureContext">
 <code class="descname">getRuptureContext</code><span class="sig-paren">(</span><em>gmpelist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getRuptureContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getRuptureContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a GEM RuptureContext suitable for any GMPE (except for those requiring hypo_loc).
-<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</a>
-:param gmpelist:</p>
-<blockquote>
-<div>Sequence of hazardlib GMPE objects.</div></blockquote>
+<dd><p>Return an Openquake 
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext">RuptureContext</a>
+suitable for any GMPE (except for those requiring hypo_loc).</p>
+<p>If Source does not contain a Fault, strike, dip, ztor, and width will be
+filled with default values. Rake may not be known, or may be estimated
+from a focal mechanism.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">ShakeMapException when a GMPE requiring &#8216;hypo_loc&#8217; is passed in.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>gmpelist</strong> &#8211; Sequence of hazardlib GMPE objects.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">RuptureContext object with all known parameters filled in.</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">ShakeMapException when a GMPE requiring &#8216;hypo_loc&#8217; is passed in.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">RuptureContext object with all known parameters filled in.</td>
 </tr>
 </tbody>
 </table>
-<p>If Source does not contain a Fault, strike, dip, ztor, and width will be
-filled with default values. Rake may not be known, or may be estimated
-from a focal mechanism.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.getTectonicRegion">
 <code class="descname">getTectonicRegion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getTectonicRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getTectonicRegion" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get tectonic region.
-:returns:</p>
-<blockquote>
-<div>TRT object (<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py</a>)</div></blockquote>
+<dd><p>Get tectonic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT">TRT</a>
+object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="shakemap.grind.source.Source.readFromFile">
 <em class="property">classmethod </em><code class="descname">readFromFile</code><span class="sig-paren">(</span><em>eventxmlfile</em>, <em>faultfile=None</em>, <em>sourcefile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.readFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.readFromFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class method to create a Source object by specifying an event.xml file,
-a fault file, and a source.txt file.
-:param eventxmlfile:</p>
-<blockquote>
-<div>Event xml file (see read_event_file())</div></blockquote>
+a fault file, and a source.txt file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eventxmlfile</strong> &#8211; Event xml file (see read_event_file())</li>
 <li><strong>faultfile</strong> &#8211; Fault text file (see fault.py)</li>
 <li><strong>sourcefile</strong> &#8211; source.txt file (see read_source())</li>
 </ul>
@@ -1501,32 +1537,66 @@ a fault file, and a source.txt file.
 <dl class="method">
 <dt id="shakemap.grind.source.Source.setFaultReference">
 <code class="descname">setFaultReference</code><span class="sig-paren">(</span><em>reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setFaultReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setFaultReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the citeable reference for the fault
-:param reference:</p>
-<blockquote>
-<div>string citeable reference</div></blockquote>
+<dd><p>Set the citeable reference for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reference</strong> &#8211; String citeable reference.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="shakemap.grind.source.Source.setMechanism">
 <code class="descname">setMechanism</code><span class="sig-paren">(</span><em>mech</em>, <em>rake=None</em>, <em>dip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setMechanism"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setMechanism" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the earthquake mechanism manually (overriding any values read in from event.xml or source.txt.
-If rake and dip are not specified, they will be assigned by mechanism as follows:
-Mech     Rake    Dip
-&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
-RS         90     40
-NM        -90     50
-SS          0     90
-ALL        45     90</p>
+<dd><p>Set the earthquake mechanism manually (overriding any values read 
+in from event.xml or source.txt. If rake and dip are not specified, 
+they will be assigned by mechanism as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="40%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mech</th>
+<th class="head">Rake</th>
+<th class="head">Dip</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RS</td>
+<td>90</td>
+<td>40</td>
+</tr>
+<tr class="row-odd"><td>NM</td>
+<td>-90</td>
+<td>50</td>
+</tr>
+<tr class="row-even"><td>SS</td>
+<td>0</td>
+<td>90</td>
+</tr>
+<tr class="row-odd"><td>ALL</td>
+<td>45</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mech</strong> &#8211; String - one of &#8216;RS&#8217; (reverse), &#8216;NM&#8217; (normal), &#8216;SS&#8217; (strike slip), or &#8216;ALL&#8217; (unknown).</li>
-<li><strong>rake</strong> &#8211; Value between -360 and 360 degrees. If set, will override default value for mechanism (see table above).</li>
-<li><strong>dip</strong> &#8211; Value betweeen 0 and 90 degrees. If set, will override default value for mechanism (see table above).
-(Value will be converted to range between -180 and 180 degrees.)</li>
+<li><strong>mech</strong> &#8211; String - one of &#8216;RS&#8217; (reverse), &#8216;NM&#8217; (normal), &#8216;SS&#8217; (strike slip), 
+or &#8216;ALL&#8217; (unknown).</li>
+<li><strong>rake</strong> &#8211; Value between -360 and 360 degrees. If set, will override default
+value for mechanism (see table above).</li>
+<li><strong>dip</strong> &#8211; Value betweeen 0 and 90 degrees. If set, will override default value
+for mechanism (see table above). Value will be converted to range 
+between -180 and 180 degrees.</li>
 </ul>
 </td>
 </tr>
@@ -1537,10 +1607,16 @@ ALL        45     90</p>
 <dl class="method">
 <dt id="shakemap.grind.source.Source.setTectonicRegion">
 <code class="descname">setTectonicRegion</code><span class="sig-paren">(</span><em>region</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setTectonicRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setTectonicRegion" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set tectonic region.
-:param region:</p>
-<blockquote>
-<div>TRT object (<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py</a>)</div></blockquote>
+<dd><p>Set tectonic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>region</strong> &#8211; <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT">TRT</a> 
+object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -1548,24 +1624,49 @@ ALL        45     90</p>
 <dl class="function">
 <dt id="shakemap.grind.source.rake_to_mech">
 <code class="descclassname">shakemap.grind.source.</code><code class="descname">rake_to_mech</code><span class="sig-paren">(</span><em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#rake_to_mech"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.rake_to_mech" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert rake to mechanism.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rake</strong> &#8211; Rake angle in degrees.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="shakemap.grind.source.read_event_file">
 <code class="descclassname">shakemap.grind.source.</code><code class="descname">read_event_file</code><span class="sig-paren">(</span><em>eventxml</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#read_event_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.read_event_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read event.xml file from disk, returning a dictionary of attributes.
-Input XML format looks like this:
-<strong>**</strong>
-&lt;earthquake id=&#8221;2008ryan&#8221; lat=&#8221;30.9858&#8221; lon=&#8221;103.3639&#8221; mag=&#8221;7.9&#8221; year=&#8221;2008&#8221; month=&#8221;05&#8221; day=&#8221;12&#8221; hour=&#8221;06&#8221; minute=&#8221;28&#8221; second=&#8221;01&#8221; timezone=&#8221;GMT&#8221; depth=&#8221;19.0&#8221; locstring=&#8221;EASTERN SICHUAN, CHINA&#8221; created=&#8221;1211173621&#8221; otime=&#8221;1210573681&#8221; type=&#8221;&#8221; /&gt;
-<strong>**</strong>
-:param eventxml:</p>
-<blockquote>
-<div>Path to event XML file OR file-like object</div></blockquote>
+Input XML format looks like this:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;earthquake</span> 
+    <span class="na">id=</span><span class="s">&quot;2008ryan&quot;</span> 
+    <span class="na">lat=</span><span class="s">&quot;30.9858&quot;</span> 
+    <span class="na">lon=</span><span class="s">&quot;103.3639&quot;</span> 
+    <span class="na">mag=</span><span class="s">&quot;7.9&quot;</span> 
+    <span class="na">year=</span><span class="s">&quot;2008&quot;</span> 
+    <span class="na">month=</span><span class="s">&quot;05&quot;</span> 
+    <span class="na">day=</span><span class="s">&quot;12&quot;</span> 
+    <span class="na">hour=</span><span class="s">&quot;06&quot;</span> 
+    <span class="na">minute=</span><span class="s">&quot;28&quot;</span> 
+    <span class="na">second=</span><span class="s">&quot;01&quot;</span> 
+    <span class="na">timezone=</span><span class="s">&quot;GMT&quot;</span> 
+    <span class="na">depth=</span><span class="s">&quot;19.0&quot;</span> 
+    <span class="na">locstring=</span><span class="s">&quot;EASTERN SICHUAN, CHINA&quot;</span> 
+    <span class="na">created=</span><span class="s">&quot;1211173621&quot;</span> 
+    <span class="na">otime=</span><span class="s">&quot;1210573681&quot;</span> 
+    <span class="na">type=</span><span class="s">&quot;&quot;</span> 
+<span class="nt">/&gt;</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with keys as indicated above in earthquake element attributes.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eventxml</strong> &#8211; Path to event XML file OR file-like object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with keys as indicated above in earthquake element attributes.</td>
 </tr>
 </tbody>
 </table>
@@ -1574,15 +1675,14 @@ Input XML format looks like this:
 <dl class="function">
 <dt id="shakemap.grind.source.read_source">
 <code class="descclassname">shakemap.grind.source.</code><code class="descname">read_source</code><span class="sig-paren">(</span><em>sourcefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#read_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.read_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read source.txt file, which has lines like key=value.
-:param sourcefile:</p>
-<blockquote>
-<div>Path to source.txt file OR file-like object</div></blockquote>
+<dd><p>Read source.txt file, which has lines like key=value.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary containing key/value pairs from file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sourcefile</strong> &#8211; Path to source.txt file OR file-like object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary containing key/value pairs from file.</td>
 </tr>
 </tbody>
 </table>
@@ -1627,153 +1727,6 @@ Input XML format looks like this:
 </dd></dl>
 
 </div>
-<div class="section" id="module-shakemap.grind.vector">
-<span id="shakemap-grind-vector-module"></span><h2>shakemap.grind.vector module<a class="headerlink" href="#module-shakemap.grind.vector" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="shakemap.grind.vector.Vector">
-<em class="property">class </em><code class="descclassname">shakemap.grind.vector.</code><code class="descname">Vector</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Three-dimensional vector object, stored as three floats of x,y,z.</p>
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.cross">
-<code class="descname">cross</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.cross"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.cross" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate cross product between this Vector and another.
-:param other:</p>
-<blockquote>
-<div>Another Vector object</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a Vector object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>TypeError</strong> &#8211; If other is not a Vector object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.distance">
-<code class="descname">distance</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate distance between this Vector and another.
-:param other:</p>
-<blockquote>
-<div>Another Vector object</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">float distance between Vectors</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>TypeError</strong> &#8211; If other is not a Vector object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.dot">
-<code class="descname">dot</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.dot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate dot product between this Vector and another.
-:param other:</p>
-<blockquote>
-<div>Another Vector object</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a float dot product</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><strong>TypeError</strong> &#8211; If other is not a Vector object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.vector.Vector.fromPoint">
-<em class="property">classmethod </em><code class="descname">fromPoint</code><span class="sig-paren">(</span><em>oqpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.fromPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.fromPoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which allows user to create a Vector from a GEM Hazardlib Point object.  The Point lat,lon,depth
-values are converted to Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates.
-:param oqpoint:</p>
-<blockquote>
-<div>a Point object as defined at <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a Vector object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="shakemap.grind.vector.Vector.fromTuple">
-<em class="property">classmethod </em><code class="descname">fromTuple</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.fromTuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.fromTuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class method which allows user to create a Vector from an x/y/z tuple.
-:param a:</p>
-<blockquote>
-<div>an x/y/z tuple.</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a Vector object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.getArray">
-<code class="descname">getArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.getArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.getArray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return x,y,z parameters as numpy array.
-:returns:</p>
-<blockquote>
-<div>3 element array of [x,y,z]</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.getTuple">
-<code class="descname">getTuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.getTuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.getTuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return x,y,z parameters as tuple
-:returns:</p>
-<blockquote>
-<div>3 element tuple of (x,y,z)</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.mag">
-<code class="descname">mag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.mag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.mag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the length of the Vector.
-:returns:</p>
-<blockquote>
-<div>float length of Vector.</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.norm">
-<code class="descname">norm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the normalized form of the Vector.
-:returns:</p>
-<blockquote>
-<div>Normalized Vector.</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.vector.Vector.toPoint">
-<code class="descname">toPoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/vector.html#Vector.toPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.vector.Vector.toPoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert the Vector to a hazardlib Point object, after translating back to lat,lon,depth.
-:returns:</p>
-<blockquote>
-<div>a Point object as defined at <a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a></div></blockquote>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 <div class="section" id="module-shakemap.grind.zoneconfig">
 <span id="shakemap-grind-zoneconfig-module"></span><h2>shakemap.grind.zoneconfig module<a class="headerlink" href="#module-shakemap.grind.zoneconfig" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1788,9 +1741,9 @@ values are converted to Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates.
 </dd></dl>
 
 </div>
-<div class="section" id="module-shakemap.grind">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shakemap.grind" title="Permalink to this headline">¶</a></h2>
-</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-shakemap.grind"></span></div>
 </div>
 
 
@@ -1800,10 +1753,10 @@ values are converted to Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shakemap.mapping.html" class="btn btn-neutral float-right" title="shakemap.mapping package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shakemap.grind.conversions.html" class="btn btn-neutral float-right" title="shakemap.grind.conversions package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="shakemap.gmpe.html" class="btn btn-neutral" title="shakemap.gmpe package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="shakemap.gmice.html" class="btn btn-neutral" title="shakemap.gmice package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1834,7 +1787,7 @@ values are converted to Earth-Centered-Earth-Fixed (ECEF) cartesian coordinates.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

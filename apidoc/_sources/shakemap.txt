@@ -6,12 +6,8 @@ Subpackages
 
 .. toctree::
 
-    shakemap.correlation
-    shakemap.directivity
-    shakemap.extern
     shakemap.genex
     shakemap.gmice
-    shakemap.gmpe
     shakemap.grind
     shakemap.mapping
     shakemap.transfer

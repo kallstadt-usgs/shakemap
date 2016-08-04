@@ -1,0 +1,18 @@
+shakemap.grind.conversions package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    shakemap.grind.conversions.imc
+    shakemap.grind.conversions.imt
+
+Module contents
+---------------
+
+.. automodule:: shakemap.grind.conversions
+    :members:
+    :undoc-members:
+    :show-inheritance:

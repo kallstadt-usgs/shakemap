@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.mapping package &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.mapping package &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="index.html"/>
         <link rel="up" title="shakemap package" href="shakemap.html"/>
         <link rel="next" title="shakemap.transfer package" href="shakemap.transfer.html"/>
-        <link rel="prev" title="shakemap.grind package" href="shakemap.grind.html"/> 
+        <link rel="prev" title="shakemap.grind.directivity package" href="shakemap.grind.directivity.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -85,13 +85,9 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.correlation.html">shakemap.correlation package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.directivity.html">shakemap.directivity package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.extern.html">shakemap.extern package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmpe.html">shakemap.gmpe package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">shakemap.mapping package</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="">shakemap.mapping package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.mapping.colormap">shakemap.mapping.colormap module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.mapping.gmtcolormap">shakemap.mapping.gmtcolormap module</a></li>
@@ -129,7 +125,7 @@
         <div class="rst-content">
           
 
- 
+
 
 
 
@@ -175,6 +171,22 @@
 <p>Class to encapsulate linear segmented color maps with accompanying data min/max values,
 such as those found in GMT color palette table files, described here:
 <a class="reference external" href="http://gmt.soest.hawaii.edu/doc/5.1.0/GMT_Docs.html#b-gmt-file-formats">http://gmt.soest.hawaii.edu/doc/5.1.0/GMT_Docs.html#b-gmt-file-formats</a></p>
+<p>Create a GMTColorMap from an existing colormap and data min/max values.
+:param cmap:</p>
+<blockquote>
+<div>Matplotlib Colormap object.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vmin</strong> &#8211; Minimum data value (associated with cmap(0.0))</li>
+<li><strong>vmax</strong> &#8211; Minimum data value (associated with cmap(1.0))</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="shakemap.mapping.gmtcolormap.GMTColorMap.cmap">
 <code class="descname">cmap</code><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.cmap" title="Permalink to this definition">¶</a></dt>
@@ -405,7 +417,7 @@ such as those found in GMT color palette table files, described here:
         <a href="shakemap.transfer.html" class="btn btn-neutral float-right" title="shakemap.transfer package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="shakemap.grind.html" class="btn btn-neutral" title="shakemap.grind package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="shakemap.grind.directivity.html" class="btn btn-neutral" title="shakemap.grind.directivity package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -436,7 +448,7 @@ such as those found in GMT color palette table files, described here:
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

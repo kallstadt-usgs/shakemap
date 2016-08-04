@@ -1,6 +1,13 @@
 shakemap.utils package
 ======================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shakemap.utils.extern
+
 Submodules
 ----------
 
@@ -8,6 +15,14 @@ shakemap.utils.conf module
 --------------------------
 
 .. automodule:: shakemap.utils.conf
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.utils.ecef module
+--------------------------
+
+.. automodule:: shakemap.utils.ecef
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,6 +47,14 @@ shakemap.utils.timeutils module
 -------------------------------
 
 .. automodule:: shakemap.utils.timeutils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.utils.vector module
+----------------------------
+
+.. automodule:: shakemap.utils.vector
     :members:
     :undoc-members:
     :show-inheritance:

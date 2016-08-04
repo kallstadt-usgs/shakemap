@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.correlation.boore_2003 &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.1dev-147-gc048d93
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shakemap.html">shakemap package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.grind.correlation.boore_2003</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.grind.correlation.boore_2003</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.imt</span> <span class="kn">import</span> <span class="n">PGA</span>
+
+<div class="viewcode-block" id="Boore2003"><a class="viewcode-back" href="../../../../shakemap.grind.correlation.html#shakemap.grind.correlation.boore_2003.Boore2003">[docs]</a><span class="k">class</span> <span class="nc">Boore2003</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the correlation model proposed in the appendix of Boore et al. </span>
+<span class="sd">    (2003). </span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        Inherit from SpatialCorrelation class. </span>
+
+<span class="sd">    References:</span>
+<span class="sd">        Boore, D. M., Gibbs, J. F., Joyner, W. B., Tinsley, J. C., &amp; Ponti, D. </span>
+<span class="sd">        J. (2003). Estimated ground motion from the 1994 Northridge, California, </span>
+<span class="sd">        earthquake at the site of the Interstate 10 and La Cienega Boulevard </span>
+<span class="sd">        bridge collapse, West Los Angeles, California. Bulletin of the </span>
+<span class="sd">        Seismological Society of America, 93(6), 2737-2751.</span>
+<span class="sd">        `[link] &lt;http://www.bssaonline.org/content/93/6/2737.short&gt;`__</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Boore2003.getSpatialCorrelation"><a class="viewcode-back" href="../../../../shakemap.grind.correlation.html#shakemap.grind.correlation.boore_2003.Boore2003.getSpatialCorrelation">[docs]</a>    <span class="k">def</span> <span class="nf">getSpatialCorrelation</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">imt</span> <span class="o">=</span> <span class="n">PGA</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for evalulating spatial correlation model. </span>
+
+<span class="sd">        :param dists: </span>
+<span class="sd">            Numpy array of distances (km).</span>
+<span class="sd">        :param imt: </span>
+<span class="sd">            Openquake intensity measure type instance. </span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__</span>
+<span class="sd">            This model was developed specifically for PGA, and so this is the</span>
+<span class="sd">            default value.</span>
+<span class="sd">        :returns: </span>
+<span class="sd">            Numpy array of correlation values. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">imt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">PGA</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;PGA is the only supported IMT.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.6</span> <span class="o">*</span> <span class="n">dists</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'v0.1dev-147-gc048d93',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

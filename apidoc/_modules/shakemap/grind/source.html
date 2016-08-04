@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.source &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.grind.source &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -148,7 +148,7 @@
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.const</span> <span class="kn">import</span> <span class="n">TRT</span>
 <span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">geometry</span>
 <span class="kn">from</span> <span class="nn">..utils.timeutils</span> <span class="kn">import</span> <span class="n">ShakeDateTime</span>
-<span class="kn">from</span> <span class="nn">.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span><span class="p">,</span> <span class="n">ecef2latlon</span>
+<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span><span class="p">,</span> <span class="n">ecef2latlon</span>
 <span class="kn">from</span> <span class="nn">.fault</span> <span class="kn">import</span> <span class="n">Fault</span>
 
 <span class="c1"># local imports</span>
@@ -168,9 +168,28 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read event.xml file from disk, returning a dictionary of attributes.</span>
 <span class="sd">    Input XML format looks like this:</span>
-<span class="sd">    ******</span>
-<span class="sd">    &lt;earthquake id=&quot;2008ryan&quot; lat=&quot;30.9858&quot; lon=&quot;103.3639&quot; mag=&quot;7.9&quot; year=&quot;2008&quot; month=&quot;05&quot; day=&quot;12&quot; hour=&quot;06&quot; minute=&quot;28&quot; second=&quot;01&quot; timezone=&quot;GMT&quot; depth=&quot;19.0&quot; locstring=&quot;EASTERN SICHUAN, CHINA&quot; created=&quot;1211173621&quot; otime=&quot;1210573681&quot; type=&quot;&quot; /&gt;</span>
-<span class="sd">    ******</span>
+
+<span class="sd">    .. code-block:: xml</span>
+
+<span class="sd">         &lt;earthquake </span>
+<span class="sd">             id=&quot;2008ryan&quot; </span>
+<span class="sd">             lat=&quot;30.9858&quot; </span>
+<span class="sd">             lon=&quot;103.3639&quot; </span>
+<span class="sd">             mag=&quot;7.9&quot; </span>
+<span class="sd">             year=&quot;2008&quot; </span>
+<span class="sd">             month=&quot;05&quot; </span>
+<span class="sd">             day=&quot;12&quot; </span>
+<span class="sd">             hour=&quot;06&quot; </span>
+<span class="sd">             minute=&quot;28&quot; </span>
+<span class="sd">             second=&quot;01&quot; </span>
+<span class="sd">             timezone=&quot;GMT&quot; </span>
+<span class="sd">             depth=&quot;19.0&quot; </span>
+<span class="sd">             locstring=&quot;EASTERN SICHUAN, CHINA&quot; </span>
+<span class="sd">             created=&quot;1211173621&quot; </span>
+<span class="sd">             otime=&quot;1210573681&quot; </span>
+<span class="sd">             type=&quot;&quot; </span>
+<span class="sd">         /&gt;</span>
+
 <span class="sd">    :param eventxml:</span>
 <span class="sd">        Path to event XML file OR file-like object</span>
 <span class="sd">    :returns:</span>
@@ -226,6 +245,7 @@
 <div class="viewcode-block" id="read_source"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.read_source">[docs]</a><span class="k">def</span> <span class="nf">read_source</span><span class="p">(</span><span class="n">sourcefile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read source.txt file, which has lines like key=value.</span>
+
 <span class="sd">    :param sourcefile:</span>
 <span class="sd">        Path to source.txt file OR file-like object</span>
 <span class="sd">    :returns:</span>
@@ -261,15 +281,18 @@
 <div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Encapsulate everything we need to know about an earthquake source.</span>
+<span class="sd">    Primary purose of this is to construct the OpenQuake </span>
+<span class="sd">    `RuptureContext &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext&gt;`__. </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">fault</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a Source object.</span>
+
 <span class="sd">        :param event:</span>
-<span class="sd">            dictionary of values (see read_event_file() and read_source())</span>
+<span class="sd">            Dictionary of values (see read_event_file() and read_source())</span>
 <span class="sd">        :param fault:</span>
-<span class="sd">            a Fault object</span>
+<span class="sd">            A Fault object.</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Source object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -288,6 +311,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class method to create a Source object by specifying an event.xml file,</span>
 <span class="sd">        a fault file, and a source.txt file.</span>
+
 <span class="sd">        :param eventxmlfile:</span>
 <span class="sd">            Event xml file (see read_event_file())</span>
 <span class="sd">        :param faultfile:</span>
@@ -310,17 +334,20 @@
 
 <div class="viewcode-block" id="Source.getRuptureContext"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getRuptureContext">[docs]</a>    <span class="k">def</span> <span class="nf">getRuptureContext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmpelist</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return a GEM RuptureContext suitable for any GMPE (except for those requiring hypo_loc).</span>
-<span class="sd">        https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</span>
-<span class="sd">        :param gmpelist:</span>
-<span class="sd">          Sequence of hazardlib GMPE objects.</span>
-<span class="sd">        :raises:</span>
-<span class="sd">          ShakeMapException when a GMPE requiring &#39;hypo_loc&#39; is passed in.</span>
-<span class="sd">        :returns:</span>
-<span class="sd">            RuptureContext object with all known parameters filled in.</span>
+<span class="sd">        Return an Openquake </span>
+<span class="sd">        `RuptureContext &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext&gt;`__</span>
+<span class="sd">        suitable for any GMPE (except for those requiring hypo_loc).</span>
+
 <span class="sd">        If Source does not contain a Fault, strike, dip, ztor, and width will be</span>
 <span class="sd">        filled with default values. Rake may not be known, or may be estimated</span>
 <span class="sd">        from a focal mechanism.</span>
+
+<span class="sd">        :param gmpelist:</span>
+<span class="sd">            Sequence of hazardlib GMPE objects.</span>
+<span class="sd">        :raises:</span>
+<span class="sd">            ShakeMapException when a GMPE requiring &#39;hypo_loc&#39; is passed in.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            RuptureContext object with all known parameters filled in.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># rupturecontext constructor inputs:</span>
         <span class="c1"># &#39;mag&#39;, &#39;strike&#39;, &#39;dip&#39;, &#39;rake&#39;, &#39;ztor&#39;, &#39;hypo_lon&#39;, &#39;hypo_lat&#39;,</span>
@@ -359,7 +386,6 @@
 
 <div class="viewcode-block" id="Source.getFault"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getFault">[docs]</a>    <span class="k">def</span> <span class="nf">getFault</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return fault instance.</span>
 <span class="sd">        :returns:</span>
 <span class="sd">           Fault instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -367,7 +393,6 @@
 
 <div class="viewcode-block" id="Source.getHypo"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getHypo">[docs]</a>    <span class="k">def</span> <span class="nf">getHypo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return hypocenter point.</span>
 <span class="sd">        :returns:</span>
 <span class="sd">           Hypocenter point.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -380,8 +405,10 @@
 <div class="viewcode-block" id="Source.setTectonicRegion"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.setTectonicRegion">[docs]</a>    <span class="k">def</span> <span class="nf">setTectonicRegion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set tectonic region.</span>
+
 <span class="sd">        :param region:</span>
-<span class="sd">            TRT object (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py)</span>
+<span class="sd">            `TRT &lt;http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT&gt;`__ </span>
+<span class="sd">            object. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">TRT</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -391,14 +418,17 @@
 <div class="viewcode-block" id="Source.getTectonicRegion"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getTectonicRegion">[docs]</a>    <span class="k">def</span> <span class="nf">getTectonicRegion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get tectonic region.</span>
+
 <span class="sd">        :returns:</span>
-<span class="sd">            TRT object (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/const.py)</span>
+<span class="sd">            `TRT &lt;http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT&gt;`__</span>
+<span class="sd">            object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TectonicRegion</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Source.getEventDict"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getEventDict">[docs]</a>    <span class="k">def</span> <span class="nf">getEventDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the event dictionary.</span>
+
 <span class="sd">        :returns:</span>
 <span class="sd">           Copy of dictionary of event keys/values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -416,22 +446,32 @@
 
 <div class="viewcode-block" id="Source.setMechanism"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.setMechanism">[docs]</a>    <span class="k">def</span> <span class="nf">setMechanism</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mech</span><span class="p">,</span> <span class="n">rake</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dip</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the earthquake mechanism manually (overriding any values read in from event.xml or source.txt.</span>
-<span class="sd">        If rake and dip are not specified, they will be assigned by mechanism as follows:</span>
-<span class="sd">        Mech     Rake    Dip</span>
-<span class="sd">        ----------------------</span>
-<span class="sd">        RS         90     40</span>
-<span class="sd">        NM        -90     50</span>
-<span class="sd">        SS          0     90</span>
-<span class="sd">        ALL        45     90</span>
+<span class="sd">        Set the earthquake mechanism manually (overriding any values read </span>
+<span class="sd">        in from event.xml or source.txt. If rake and dip are not specified, </span>
+<span class="sd">        they will be assigned by mechanism as follows:</span>
+
+<span class="sd">        +-------+--------+-----+</span>
+<span class="sd">        | Mech  |  Rake  | Dip |</span>
+<span class="sd">        +=======+========+=====+</span>
+<span class="sd">        | RS    |    90  |  40 |</span>
+<span class="sd">        +-------+--------+-----+</span>
+<span class="sd">        | NM    |   -90  |  50 |</span>
+<span class="sd">        +-------+--------+-----+</span>
+<span class="sd">        | SS    |     0  |  90 |</span>
+<span class="sd">        +-------+--------+-----+</span>
+<span class="sd">        | ALL   |    45  |  90 |</span>
+<span class="sd">        +-------+--------+-----+</span>
 
 <span class="sd">        :param mech:</span>
-<span class="sd">          String - one of &#39;RS&#39; (reverse), &#39;NM&#39; (normal), &#39;SS&#39; (strike slip), or &#39;ALL&#39; (unknown).</span>
+<span class="sd">            String - one of &#39;RS&#39; (reverse), &#39;NM&#39; (normal), &#39;SS&#39; (strike slip), </span>
+<span class="sd">            or &#39;ALL&#39; (unknown).</span>
 <span class="sd">        :param rake:</span>
-<span class="sd">          Value between -360 and 360 degrees. If set, will override default value for mechanism (see table above).</span>
+<span class="sd">            Value between -360 and 360 degrees. If set, will override default</span>
+<span class="sd">            value for mechanism (see table above).</span>
 <span class="sd">        :param dip:</span>
-<span class="sd">          Value betweeen 0 and 90 degrees. If set, will override default value for mechanism (see table above).</span>
-<span class="sd">          (Value will be converted to range between -180 and 180 degrees.)</span>
+<span class="sd">            Value betweeen 0 and 90 degrees. If set, will override default value</span>
+<span class="sd">            for mechanism (see table above). Value will be converted to range </span>
+<span class="sd">            between -180 and 180 degrees.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mechs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;RS&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rake&#39;</span><span class="p">:</span> <span class="mf">90.0</span><span class="p">,</span> <span class="s1">&#39;dip&#39;</span><span class="p">:</span> <span class="mf">40.0</span><span class="p">},</span>
                  <span class="s1">&#39;NM&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;rake&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">90.0</span><span class="p">,</span> <span class="s1">&#39;dip&#39;</span><span class="p">:</span> <span class="mf">50.0</span><span class="p">},</span>
@@ -467,11 +507,12 @@
 
 <div class="viewcode-block" id="Source.getEventParam"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getEventParam">[docs]</a>    <span class="k">def</span> <span class="nf">getEventParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a parameter from the internal event dictionary</span>
+<span class="sd">        Get a parameter from the internal event dictionary. </span>
+
 <span class="sd">        :param key:</span>
-<span class="sd">            string key</span>
+<span class="sd">            String key. </span>
 <span class="sd">        :returns:</span>
-<span class="sd">            value (any object type)</span>
+<span class="sd">            Value (any object type). </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Key &quot;</span><span class="si">%s</span><span class="s1">&quot; not found in event dictionary&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
@@ -481,30 +522,39 @@
 
 <div class="viewcode-block" id="Source.setFaultReference"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.setFaultReference">[docs]</a>    <span class="k">def</span> <span class="nf">setFaultReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the citeable reference for the fault</span>
+<span class="sd">        Set the citeable reference for the fault.</span>
+
 <span class="sd">        :param reference:</span>
-<span class="sd">            string citeable reference</span>
+<span class="sd">            String citeable reference. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fault</span><span class="o">.</span><span class="n">setReference</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Source.getFaultReference"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getFaultReference">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultReference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the citeable reference for the fault</span>
+<span class="sd">        Get the citeable reference for the fault. </span>
+
 <span class="sd">        :returns:</span>
-<span class="sd">            string citeable reference</span>
+<span class="sd">            String citeable reference. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fault</span><span class="o">.</span><span class="n">getReference</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Source.getQuadrilaterals"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.Source.getQuadrilaterals">[docs]</a>    <span class="k">def</span> <span class="nf">getQuadrilaterals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the list of quadrilaterals defining the fault.</span>
+
 <span class="sd">        :returns:</span>
-<span class="sd">            List of quadrilateral tuples (4 Point objects each)</span>
+<span class="sd">            List of quadrilateral tuples (4 Point objects each). </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fault</span><span class="o">.</span><span class="n">getQuadrilaterals</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="rake_to_mech"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.source.rake_to_mech">[docs]</a><span class="k">def</span> <span class="nf">rake_to_mech</span><span class="p">(</span><span class="n">rake</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert rake to mechanism. </span>
+
+<span class="sd">    :param rake: </span>
+<span class="sd">        Rake angle in degrees. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mech</span> <span class="o">=</span> <span class="s1">&#39;ALL&#39;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rake</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">180</span> <span class="ow">and</span> <span class="n">rake</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">150</span><span class="p">)</span> <span class="ow">or</span> \
        <span class="p">(</span><span class="n">rake</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">30</span>  <span class="ow">and</span> <span class="n">rake</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">)</span> <span class="ow">or</span> \
@@ -548,7 +598,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

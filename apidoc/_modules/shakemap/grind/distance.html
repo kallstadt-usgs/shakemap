@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.distance &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.grind.distance &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -138,8 +138,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="c1"># third party imports</span>
-<span class="kn">from</span> <span class="nn">.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span>
-<span class="kn">from</span> <span class="nn">.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span>
+<span class="kn">from</span> <span class="nn">..utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
 <span class="kn">from</span> <span class="nn">.fault</span> <span class="kn">import</span> <span class="n">get_quad_length</span>
 <span class="kn">from</span> <span class="nn">.source</span> <span class="kn">import</span> <span class="n">rake_to_mech</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span><span class="p">,</span> <span class="n">geodetic</span>
@@ -158,30 +158,39 @@
 
 <div class="viewcode-block" id="Distance"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance">[docs]</a><span class="k">class</span> <span class="nc">Distance</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class for distance calculations.</span>
+<span class="sd">    Class for distance calculations. Primary method is &#39;get_distance&#39;. </span>
+<span class="sd">    To gracefully handle multiple segment ruptures, many of the distances</span>
+<span class="sd">    are based on the Spudich and Chiou (2015) GC2 coordinate system. </span>
+
+
+<span class="sd">    References: </span>
+<span class="sd">        Spudich, Paul and Chiou, Brian, 2015, Strike-parallel and strike-normal</span>
+<span class="sd">        coordinate system around geometrically complicated rupture traces—Use by</span>
+<span class="sd">        NGA-West2 and further improvements: U.S. Geological Survey Open-File</span>
+<span class="sd">        Report 2015-1028, 20 p., http://dx.doi.org/10.3133/ofr20151028.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construct a Distance object.</span>
 <span class="sd">        :param gmpe:</span>
 <span class="sd">            Concrete subclass of GMPE</span>
-<span class="sd">            https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__;</span>
 <span class="sd">            can be individual instance or list of instances.</span>
 <span class="sd">        :param source:</span>
-<span class="sd">            Source instance. For point-source distances (Repi, Rhyp) the hypocenter</span>
-<span class="sd">            is taken from the source instance. The finite-fault distances (Rrup,</span>
-<span class="sd">            Rjb, ...), are based on the fault representation in the source instance</span>
-<span class="sd">            if available. If a Fault instance is unavailalbe, the finite-fault</span>
-<span class="sd">            distances are computed from point-source distances, in which case the</span>
-<span class="sd">            earthquake manitude from the Source instance is required for median</span>
-<span class="sd">            distance corrections if use_median_distance is True.</span>
+<span class="sd">            Shakemap Source instance. For point-source distances (Repi, Rhyp) the</span>
+<span class="sd">            hypocenter is taken from the source instance. The finite-fault </span>
+<span class="sd">            distances (Rrup, Rjb, ...), are based on the fault representation in</span>
+<span class="sd">            the source instance if available. If a Fault instance is unavailalbe, </span>
+<span class="sd">            the finite-fault distances are computed from point-source distances, </span>
+<span class="sd">            in which case the earthquake manitude from the Source instance is </span>
+<span class="sd">            required for median distance corrections if use_median_distance is </span>
+<span class="sd">            True.</span>
 <span class="sd">        :param lat:</span>
 <span class="sd">            A numpy array of site latitudes.</span>
 <span class="sd">        :param lon:</span>
 <span class="sd">            A numpy array of site longitudes.</span>
 <span class="sd">        :param dep:</span>
-<span class="sd">            A numpy array of site depths (km).</span>
+<span class="sd">            A numpy array of site depths (km); down is positive. </span>
 <span class="sd">        :param use_median_distance:</span>
 <span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
 <span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
@@ -198,14 +207,15 @@
 <div class="viewcode-block" id="Distance.fromSites"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance.fromSites">[docs]</a>    <span class="k">def</span> <span class="nf">fromSites</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience class method to construct a Distance object from a sites object.</span>
+
 <span class="sd">        :param gmpe:</span>
 <span class="sd">            Concrete subclass of GMPE</span>
-<span class="sd">            https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__;</span>
 <span class="sd">            can be individual instance or list of instances.</span>
 <span class="sd">        :param source:</span>
-<span class="sd">            Source object.</span>
+<span class="sd">            Shakeamp Source object.</span>
 <span class="sd">        :param sites:</span>
-<span class="sd">            Site object.</span>
+<span class="sd">            Shakemap Sites object.</span>
 <span class="sd">        :param use_median_distance:</span>
 <span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
 <span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
@@ -213,7 +223,7 @@
 <span class="sd">        :returns:</span>
 <span class="sd">            Distance object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sm_dict</span> <span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">GeoDict</span>
+        <span class="n">sm_dict</span> <span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">_GeoDict</span>
         <span class="n">west</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">xmin</span>
         <span class="n">east</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">xmax</span>
         <span class="n">south</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">ymin</span>
@@ -226,42 +236,26 @@
         <span class="n">dep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="p">)</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Distance.fromPoints"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance.fromPoints">[docs]</a>    <span class="k">def</span> <span class="nf">fromPoints</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convenience class method to construct a Distance object from an array of</span>
-<span class="sd">        lons, lats, and depths.</span>
-<span class="sd">        :param gmpe:</span>
-<span class="sd">            Concrete subclass of GMPE</span>
-<span class="sd">            https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py</span>
-<span class="sd">            can be individual instance or list of instances.</span>
-<span class="sd">        :param source:</span>
-<span class="sd">            Source object.</span>
-<span class="sd">        :param lon:</span>
-<span class="sd">            Numpy array of longitudes.</span>
-<span class="sd">        :param lat:</span>
-<span class="sd">            Numpy array of latitudes.</span>
-<span class="sd">        :param dep:</span>
-<span class="sd">            Numpy array of depths.</span>
-<span class="sd">        :param use_median_distance:</span>
-<span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
-<span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
-<span class="sd">            adjusted based on magnitude to get the median fault distance.</span>
-<span class="sd">        :returns:</span>
-<span class="sd">            Distance object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="Distance.getDistanceContext"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance.getDistanceContext">[docs]</a>    <span class="k">def</span> <span class="nf">getDistanceContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Openquake distance context</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html?highlight=distancescontext#openquake.hazardlib.gsim.base.DistancesContext&gt;`__.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_distance_context</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Distance.getSource"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.Distance.getSource">[docs]</a>    <span class="k">def</span> <span class="nf">getSource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Shakemap Source object. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_calcDistanceContext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span>
                              <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a DistancesContext object</span>
+<span class="sd">        Create a DistancesContext object.</span>
+
 <span class="sd">        :param gmpe:</span>
 <span class="sd">            Concrete subclass of GMPE</span>
 <span class="sd">            (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py)</span>
@@ -309,25 +303,38 @@
                  <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate distance using any one of a number of distance measures.</span>
-<span class="sd">    One of quadlist OR hypo must be specified.</span>
-<span class="sd">    :param methods:</span>
-<span class="sd">       List of strings (or just a string) of distances to compute;</span>
-<span class="sd">       can include: &#39;repi&#39;, &#39;rhypo&#39;, &#39;rjb&#39;, &#39;rrup&#39;, &#39;rx&#39;, &#39;ry&#39;, &#39;ry0&#39;</span>
-<span class="sd">         repi:  Distance to epicenter.</span>
-<span class="sd">         rhypo: Distance to hypocenter.</span>
-<span class="sd">         rjb:   Joyner-Boore distance; this is closest distance to the</span>
-<span class="sd">                surface projection of the rupture plane.</span>
-<span class="sd">         rrup:  Rupture distance; closest distance to the rupture plane.</span>
-<span class="sd">         rx:    Strike-normal distance; same as GC2 coordiante T.</span>
-<span class="sd">         ry:    Strike-parallel distance; same as GC2 coordiante U, but</span>
-<span class="sd">                with a shift in origin definition. See Spudich and Chiou</span>
-<span class="sd">                (2015) http://dx.doi.org/10.3133/ofr20151028.</span>
-<span class="sd">         ry0:   Horizontal distance off the end of the rupture measured</span>
-<span class="sd">                parallel to strike. Can only be zero or positive. We</span>
-<span class="sd">                compute this as a function of GC2 coordinate U.</span>
-<span class="sd">         U:     GC2 coordinate U.</span>
-<span class="sd">         T:     GC2 coordinate T.</span>
+<span class="sd">    One of quadlist OR hypo must be specified. The following table gives</span>
+<span class="sd">    the allowed distance strings and a description of each. </span>
 
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | String | Description                                              |</span>
+<span class="sd">    +========+==========================================================+</span>
+<span class="sd">    | repi   | Distance to epicenter.                                   |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rhypo  | Distance to hypocenter.                                  |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rjb    | Joyner-Boore distance; this is closest distance to the   |</span>
+<span class="sd">    |        | surface projection of the rupture plane.                 |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rrup   | Rupture distance; closest distance to the rupture plane. |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rx     | Strike-normal distance; same as GC2 coordiante T.        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | ry     | Strike-parallel distance; same as GC2 coordiante U, but  |</span>
+<span class="sd">    |        | with a shift in origin definition. See Spudich and Chiou |</span>
+<span class="sd">    |        | (2015) http://dx.doi.org/10.3133/ofr20151028.            |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | ry0    | Horizontal distance off the end of the rupture measured  |</span>
+<span class="sd">    |        | parallel to strike. Can only be zero or positive. We     |</span>
+<span class="sd">    |        | compute this as a function of GC2 coordinate U.          |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | U      | GC2 coordinate U.                                        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | T      | GC2 coordinate T.                                        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+
+<span class="sd">    :param methods:</span>
+<span class="sd">        List of strings (or just a string) of distances to compute.</span>
 <span class="sd">    :param lat:</span>
 <span class="sd">       A numpy array of latitudes.</span>
 <span class="sd">    :param lon:</span>
@@ -336,17 +343,12 @@
 <span class="sd">       A numpy array of depths (km).</span>
 <span class="sd">    :param source:</span>
 <span class="sd">       source instance.</span>
-<span class="sd">    https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
 <span class="sd">    :param use_median_distance:</span>
 <span class="sd">        Boolean; only used if GMPE requests fault distances and not fault is</span>
 <span class="sd">        availalbe. Default is True, meaning that point-source distances are</span>
 <span class="sd">        adjusted based on magnitude to get the median fault distance.</span>
 <span class="sd">    :returns:</span>
 <span class="sd">       dictionary of numpy array of distances, size of lon.shape</span>
-<span class="sd">    :raises ShakeMapException:</span>
-<span class="sd">       if a fault distance method is called without quadlist</span>
-<span class="sd">    :raises NotImplementedError:</span>
-<span class="sd">       for unknown distance measures or ones not yet implemented.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fault</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">getFault</span><span class="p">()</span>
     <span class="n">hypo</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">getHypo</span><span class="p">()</span>
@@ -433,7 +435,7 @@
             <span class="c1"># For these distances, we need to sort out strike discordance and nominal</span>
             <span class="c1"># strike prior to starting the loop if there are more than one</span>
             <span class="c1"># segments</span>
-            <span class="n">segind</span> <span class="o">=</span> <span class="n">fault</span><span class="o">.</span><span class="n">getSegmentIndex</span><span class="p">()</span>
+            <span class="n">segind</span> <span class="o">=</span> <span class="n">fault</span><span class="o">.</span><span class="n">_getSegmentIndex</span><span class="p">()</span>
             <span class="n">segindnp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">segind</span><span class="p">)</span>
             <span class="n">uind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">segind</span><span class="p">)</span>
             <span class="n">nseg</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uind</span><span class="p">)</span>
@@ -508,7 +510,7 @@
             <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
-                <span class="n">rrupdist</span> <span class="o">=</span> <span class="n">calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
+                <span class="n">rrupdist</span> <span class="o">=</span> <span class="n">_calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
                 <span class="n">minrrup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">minrrup</span><span class="p">,</span> <span class="n">rrupdist</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
@@ -520,7 +522,7 @@
                 <span class="n">S1</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">S2</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">S3</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-                <span class="n">rjbdist</span> <span class="o">=</span> <span class="n">calc_rupture_distance</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">S2</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
+                <span class="n">rjbdist</span> <span class="o">=</span> <span class="n">_calc_rupture_distance</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">S2</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
                 <span class="n">minrjb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">minrjb</span><span class="p">,</span> <span class="n">rjbdist</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;ry&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
@@ -534,8 +536,8 @@
                 <span class="c1"># http://dx.doi.org/10.3133/ofr20151028.</span>
 
                 <span class="c1"># Compute u_i and t_i for this segment</span>
-                <span class="n">t_i</span> <span class="o">=</span> <span class="n">calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
-                <span class="n">u_i</span> <span class="o">=</span> <span class="n">calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+                <span class="n">t_i</span> <span class="o">=</span> <span class="n">__calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+                <span class="n">u_i</span> <span class="o">=</span> <span class="n">__calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
 
                 <span class="c1"># Quad length</span>
                 <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_quad_length</span><span class="p">(</span><span class="n">quadlist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -831,11 +833,14 @@
     <span class="k">return</span> <span class="n">distdict</span></div>
 
 
-<div class="viewcode-block" id="distance_sq_to_segment"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.distance_sq_to_segment">[docs]</a><span class="k">def</span> <span class="nf">distance_sq_to_segment</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the distance^2 from the origin to a segment defined by two vectors</span>
-<span class="sd">    :param p0: numpy array Nx3 (ECEF)</span>
-<span class="sd">    :param p1: numpy array Nx3 (ECEF)</span>
+
+<span class="sd">    :param p0: </span>
+<span class="sd">        Numpy array Nx3 (ECEF).</span>
+<span class="sd">    :param p1: </span>
+<span class="sd">        Numpy array Nx3 (ECEF).</span>
 <span class="sd">    :returns:</span>
 <span class="sd">        The squared distance from the origin to a segment.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -881,14 +886,15 @@
     <span class="n">dist</span><span class="p">[</span><span class="n">idx_other</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> \
         <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
 
-    <span class="k">return</span> <span class="n">dist</span></div>
+    <span class="k">return</span> <span class="n">dist</span>
 
 <span class="c1"># call this once per quad</span>
 
 
-<div class="viewcode-block" id="calc_rupture_distance"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.calc_rupture_distance">[docs]</a><span class="k">def</span> <span class="nf">calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the shortest distance from a set of points to a rupture surface.</span>
+
 <span class="sd">    :param P0:</span>
 <span class="sd">        Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
 <span class="sd">    :param P1:</span>
@@ -934,10 +940,10 @@
         <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p0d</span><span class="p">[</span><span class="n">inside_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">normalVector</span><span class="o">.</span><span class="n">getArray</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="n">outside_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">inside_idx</span><span class="p">)</span>
-    <span class="n">s0</span> <span class="o">=</span> <span class="n">distance_sq_to_segment</span><span class="p">(</span><span class="n">p0d</span><span class="p">,</span> <span class="n">p1d</span><span class="p">)</span>
-    <span class="n">s1</span> <span class="o">=</span> <span class="n">distance_sq_to_segment</span><span class="p">(</span><span class="n">p1d</span><span class="p">,</span> <span class="n">p2d</span><span class="p">)</span>
-    <span class="n">s2</span> <span class="o">=</span> <span class="n">distance_sq_to_segment</span><span class="p">(</span><span class="n">p2d</span><span class="p">,</span> <span class="n">p3d</span><span class="p">)</span>
-    <span class="n">s3</span> <span class="o">=</span> <span class="n">distance_sq_to_segment</span><span class="p">(</span><span class="n">p3d</span><span class="p">,</span> <span class="n">p0d</span><span class="p">)</span>
+    <span class="n">s0</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p0d</span><span class="p">,</span> <span class="n">p1d</span><span class="p">)</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p1d</span><span class="p">,</span> <span class="n">p2d</span><span class="p">)</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p2d</span><span class="p">,</span> <span class="n">p3d</span><span class="p">)</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p3d</span><span class="p">,</span> <span class="n">p0d</span><span class="p">)</span>
 
     <span class="n">smin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">))</span>
     <span class="n">dist</span><span class="p">[</span><span class="n">outside_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">smin</span><span class="p">[</span><span class="n">outside_idx</span><span class="p">]</span>
@@ -948,10 +954,10 @@
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">dist</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s2">&quot;Could not calculate some distances!&quot;</span><span class="p">)</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dist</span></div>
+    <span class="k">return</span> <span class="n">dist</span>
 
 
-<div class="viewcode-block" id="calc_u_i"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.calc_u_i">[docs]</a><span class="k">def</span> <span class="nf">calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">__calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate u_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance</span>
 <span class="sd">    along strike from the first vertex (P0) of the i-th segment.</span>
@@ -1002,14 +1008,15 @@
         <span class="n">u_i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">u_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">u_i</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">u_i</span></div>
+    <span class="k">return</span> <span class="n">u_i</span>
 
 
-<div class="viewcode-block" id="calc_t_i"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.distance.calc_t_i">[docs]</a><span class="k">def</span> <span class="nf">calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">__calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate t_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance</span>
 <span class="sd">    measured normal to strike from the i-th segment. Values on the hanging-wall are</span>
 <span class="sd">    positive and those on the foot-wall are negative.</span>
+
 <span class="sd">    :param P0:</span>
 <span class="sd">        Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
 <span class="sd">    :param P1:</span>
@@ -1051,7 +1058,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">t_i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">t_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">t_i</span></div>
+    <span class="k">return</span> <span class="n">t_i</span>
 </pre></div>
 
            </div>
@@ -1085,7 +1092,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

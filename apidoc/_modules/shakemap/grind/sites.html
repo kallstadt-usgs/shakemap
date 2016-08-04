@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.sites &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.grind.sites &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -180,7 +180,9 @@
     <span class="k">return</span> <span class="n">geodict</span>
 
 
-<div class="viewcode-block" id="calculate_z1p0"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.calculate_z1p0">[docs]</a><span class="k">def</span> <span class="nf">calculate_z1p0</span><span class="p">(</span><span class="n">vs30</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_calculate_z1p0</span><span class="p">(</span><span class="n">vs30</span><span class="p">):</span>
+    <span class="c1"># I think these are older generation equations (c2008). Probably need to be</span>
+    <span class="c1"># more careful about what version of these equations are used. </span>
     <span class="n">c1</span> <span class="o">=</span> <span class="mf">6.745</span>
     <span class="n">c2</span> <span class="o">=</span> <span class="mf">1.35</span>
     <span class="n">c3</span> <span class="o">=</span> <span class="mf">5.394</span>
@@ -191,47 +193,53 @@
     <span class="n">Z1Pt0</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs30</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">))</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">vs30</span> <span class="o">&gt;</span> <span class="mi">500</span>
     <span class="n">Z1Pt0</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c3</span> <span class="o">-</span> <span class="n">c4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs30</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">Z1Pt0</span></div>
+    <span class="k">return</span> <span class="n">Z1Pt0</span>
 
 
-<div class="viewcode-block" id="calculate_z2p5"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.calculate_z2p5">[docs]</a><span class="k">def</span> <span class="nf">calculate_z2p5</span><span class="p">(</span><span class="n">z1pt0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_calculate_z2p5</span><span class="p">(</span><span class="n">z1pt0</span><span class="p">):</span>
+    <span class="c1"># I think these are older generation equations (c2008). Probably need to be</span>
+    <span class="c1"># more careful about what version of these equations are used. </span>
     <span class="n">c1</span> <span class="o">=</span> <span class="mi">519</span>
     <span class="n">c2</span> <span class="o">=</span> <span class="mf">3.595</span>
     <span class="n">Z2Pt5</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">+</span> <span class="n">z1pt0</span> <span class="o">*</span> <span class="n">c2</span>
-    <span class="k">return</span> <span class="n">Z2Pt5</span></div>
+    <span class="k">return</span> <span class="n">Z2Pt5</span>
 
 
 <div class="viewcode-block" id="Sites"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites">[docs]</a><span class="k">class</span> <span class="nc">Sites</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;An object to encapsulate information used to generate a GEM SitesContext.</span>
-<span class="sd">    (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An object to encapsulate information used to generate a GEM </span>
+<span class="sd">    `SitesContext &lt;https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py&gt;`__.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vs30grid</span><span class="p">,</span> <span class="n">vs30measured_grid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">backarc</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">defaultVs30</span><span class="o">=</span><span class="mf">686.0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vs30grid</span><span class="p">,</span> <span class="n">vs30measured_grid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">backarc</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">defaultVs30</span><span class="o">=</span><span class="mf">686.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a Sites object.</span>
+
 <span class="sd">        :param vs30grid:</span>
 <span class="sd">            MapIO Grid2D object containing Vs30 values.</span>
 <span class="sd">        :param vs30measured_grid:</span>
-<span class="sd">            Boolean grid indicating whether Vs30 values were measured or derived (i.e., from slope)</span>
+<span class="sd">            Boolean grid indicating whether Vs30 values were measured or derived</span>
+<span class="sd">            (i.e., from slope)</span>
 <span class="sd">        :param backarc:</span>
-<span class="sd">            Boolean indicating whether event is on the backarc as defined here: </span>
-<span class="sd">            http://earthquake.usgs.gov/learn/glossary/?term=backarc</span>
+<span class="sd">            Boolean indicating whether event is on the backarc as defined </span>
+<span class="sd">            `here &lt;http://earthquake.usgs.gov/learn/glossary/?term=backarc&gt;`__.</span>
 <span class="sd">        :param defaultVs30:</span>
 <span class="sd">          Default Vs30 value to use in locations where Vs30Grid is not specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Vs30</span> <span class="o">=</span> <span class="n">vs30grid</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">backarc</span> <span class="o">=</span> <span class="n">backarc</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">defaultVs30</span> <span class="o">=</span> <span class="n">defaultVs30</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vs30measured_grid</span> <span class="o">=</span> <span class="n">vs30measured_grid</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span> <span class="o">=</span> <span class="n">vs30grid</span><span class="o">.</span><span class="n">getGeoDict</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">nx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">ymin</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">ymax</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">GeoDict</span><span class="o">.</span><span class="n">ny</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Z1Pt0</span> <span class="o">=</span> <span class="n">calculate_z1p0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Vs30</span><span class="o">.</span><span class="n">getData</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Z2Pt5</span> <span class="o">=</span> <span class="n">calculate_z2p5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Z1Pt0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Vs30</span> <span class="o">=</span> <span class="n">vs30grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backarc</span> <span class="o">=</span> <span class="n">backarc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_defaultVs30</span> <span class="o">=</span> <span class="n">defaultVs30</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vs30measured_grid</span> <span class="o">=</span> <span class="n">vs30measured_grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span> <span class="o">=</span> <span class="n">vs30grid</span><span class="o">.</span><span class="n">getGeoDict</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">nx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">ymin</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">ymax</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_GeoDict</span><span class="o">.</span><span class="n">ny</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Z1Pt0</span> <span class="o">=</span> <span class="n">_calculate_z1p0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_Vs30</span><span class="o">.</span><span class="n">getData</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Z2Pt5</span> <span class="o">=</span> <span class="n">_calculate_z2p5</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_Z1Pt0</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_create</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">geodict</span><span class="p">,</span> <span class="n">defaultVs30</span><span class="p">,</span> <span class="n">vs30File</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">resample</span><span class="p">):</span>
@@ -255,35 +263,38 @@
 <div class="viewcode-block" id="Sites.createFromBounds"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites.createFromBounds">[docs]</a>    <span class="k">def</span> <span class="nf">createFromBounds</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">defaultVs30</span><span class="o">=</span><span class="mf">686.0</span><span class="p">,</span>
                          <span class="n">vs30File</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs30measured_grid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                          <span class="n">backarc</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a Sites object by defining a center point, resolution, extent, </span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Sites object by defining a center point, resolution, extent, </span>
 <span class="sd">        and Vs30 values.</span>
 
 <span class="sd">        :param xmin:</span>
-<span class="sd">          X coordinate of left edge of bounds.</span>
+<span class="sd">            X coordinate of left edge of bounds.</span>
 <span class="sd">        :param xmax:</span>
-<span class="sd">          X coordinate of right edge of bounds.</span>
+<span class="sd">            X coordinate of right edge of bounds.</span>
 <span class="sd">        :param ymin:</span>
-<span class="sd">          Y coordinate of bottom edge of bounds.</span>
+<span class="sd">            Y coordinate of bottom edge of bounds.</span>
 <span class="sd">        :param ymax:</span>
-<span class="sd">          Y coordinate of top edge of bounds.</span>
+<span class="sd">            Y coordinate of top edge of bounds.</span>
 <span class="sd">        :param dx:</span>
-<span class="sd">          Resolution of desired grid in X direction.</span>
+<span class="sd">            Resolution of desired grid in X direction.</span>
 <span class="sd">        :param dy:</span>
-<span class="sd">          Resolution of desired grid in Y direction.</span>
+<span class="sd">            Resolution of desired grid in Y direction.</span>
 <span class="sd">        :param defaultVs30:</span>
-<span class="sd">          Default Vs30 value to use if vs30File not specified.</span>
+<span class="sd">            Default Vs30 value to use if vs30File not specified.</span>
 <span class="sd">        :param vs30File:</span>
-<span class="sd">          Name of GMT or GDAL format grid file containing Vs30 values.</span>
+<span class="sd">            Name of GMT or GDAL format grid file containing Vs30 values.</span>
 <span class="sd">        :param vs30measured_grid:</span>
-<span class="sd">          Boolean grid indicating whether Vs30 values were measured or derived (i.e., from slope)</span>
+<span class="sd">            Boolean grid indicating whether Vs30 values were measured or derived </span>
+<span class="sd">            (i.e., from slope)</span>
 <span class="sd">        :param backarc:</span>
-<span class="sd">          Boolean indicating whether event is on the backarc as defined here: </span>
-<span class="sd">          http://earthquake.usgs.gov/learn/glossary/?term=backarc</span>
+<span class="sd">            Boolean indicating whether event is on the backarc as defined</span>
+<span class="sd">            `here &lt;http://earthquake.usgs.gov/learn/glossary/?term=backarc&gt;`__.</span>
 <span class="sd">        :param padding:</span>
-<span class="sd">          Boolean indicating whether or not to pad resulting Vs30 grid out to edges of input</span>
-<span class="sd">          bounds.  If False, grid will be clipped to the extent of the input file.</span>
+<span class="sd">            Boolean indicating whether or not to pad resulting Vs30 grid out to</span>
+<span class="sd">            edges of input bounds. If False, grid will be clipped to the extent</span>
+<span class="sd">            of the input file.</span>
 <span class="sd">        :param resample:</span>
-<span class="sd">          Boolean indicating whether or not the grid should be resampled.</span>
+<span class="sd">            Boolean indicating whether or not the grid should be resampled.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">geodict</span> <span class="o">=</span> <span class="n">GeoDict</span><span class="o">.</span><span class="n">createDictFromBox</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vs30File</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -300,35 +311,38 @@
 <div class="viewcode-block" id="Sites.createFromCenter"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites.createFromCenter">[docs]</a>    <span class="k">def</span> <span class="nf">createFromCenter</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">xspan</span><span class="p">,</span> <span class="n">yspan</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">defaultVs30</span><span class="o">=</span><span class="mf">686.0</span><span class="p">,</span>
                          <span class="n">vs30File</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs30measured_grid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                          <span class="n">backarc</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a Sites object by defining a center point, resolution, extent, </span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Sites object by defining a center point, resolution, extent, </span>
 <span class="sd">        and Vs30 values.</span>
 
 <span class="sd">        :param cx:</span>
-<span class="sd">          X coordinate of desired center point.</span>
+<span class="sd">            X coordinate of desired center point.</span>
 <span class="sd">        :param cy:</span>
-<span class="sd">          X coordinate of desired center point.</span>
+<span class="sd">            Y coordinate of desired center point.</span>
 <span class="sd">        :param xspan:</span>
-<span class="sd">          Width of desired grid.</span>
+<span class="sd">            Width of desired grid.</span>
 <span class="sd">        :param yspan:</span>
-<span class="sd">          Height of desired grid.</span>
+<span class="sd">            Height of desired grid.</span>
 <span class="sd">        :param dx:</span>
-<span class="sd">          Resolution of desired grid in X direction.</span>
+<span class="sd">            Resolution of desired grid in X direction.</span>
 <span class="sd">        :param dy:</span>
-<span class="sd">          Resolution of desired grid in Y direction.</span>
+<span class="sd">            Resolution of desired grid in Y direction.</span>
 <span class="sd">        :param defaultVs30:</span>
-<span class="sd">          Default Vs30 value to use if vs30File not specified.</span>
+<span class="sd">            Default Vs30 value to use if vs30File not specified.</span>
 <span class="sd">        :param vs30File:</span>
-<span class="sd">          Name of GMT or GDAL format grid file containing Vs30 values.</span>
+<span class="sd">            Name of GMT or GDAL format grid file containing Vs30 values.</span>
 <span class="sd">        :param vs30measured_grid:</span>
-<span class="sd">          Boolean grid indicating whether Vs30 values were measured or derived (i.e., from slope)</span>
+<span class="sd">            Boolean grid indicating whether Vs30 values were measured or derived </span>
+<span class="sd">            (i.e., from slope)</span>
 <span class="sd">        :param backarc:</span>
-<span class="sd">          Boolean indicating whether event is on the backarc as defined here: </span>
-<span class="sd">          http://earthquake.usgs.gov/learn/glossary/?term=backarc</span>
+<span class="sd">            Boolean indicating whether event is on the backarc as defined</span>
+<span class="sd">            `here &lt;http://earthquake.usgs.gov/learn/glossary/?term=backarc&gt;`__.</span>
 <span class="sd">        :param padding:</span>
-<span class="sd">          Boolean indicating whether or not to pad resulting Vs30 grid out to edges of input</span>
-<span class="sd">          bounds.  If False, grid will be clipped to the extent of the input file.</span>
+<span class="sd">            Boolean indicating whether or not to pad resulting Vs30 grid out to</span>
+<span class="sd">            edges of input bounds. If False, grid will be clipped to the extent</span>
+<span class="sd">            of the input file.</span>
 <span class="sd">        :param resample:</span>
-<span class="sd">          Boolean indicating whether or not the grid should be resampled.</span>
+<span class="sd">            Boolean indicating whether or not the grid should be resampled.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">geodict</span> <span class="o">=</span> <span class="n">GeoDict</span><span class="o">.</span><span class="n">createDictFromCenter</span><span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">xspan</span><span class="p">,</span> <span class="n">yspan</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vs30File</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -342,19 +356,21 @@
                    <span class="n">backarc</span><span class="o">=</span><span class="n">backarc</span><span class="p">,</span> <span class="n">defaultVs30</span><span class="o">=</span><span class="n">defaultVs30</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Sites.sampleFromSites"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites.sampleFromSites">[docs]</a>    <span class="k">def</span> <span class="nf">sampleFromSites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="n">lons</span><span class="p">,</span> <span class="n">vs30measured_grid</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a SitesContext object by sampling the current Sites object.</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a SitesContext object by sampling the current Sites object.</span>
 
 <span class="sd">        :param lats:</span>
-<span class="sd">          Sequence of latitudes.</span>
+<span class="sd">            Sequence of latitudes.</span>
 <span class="sd">        :param lons:</span>
-<span class="sd">          Sequence of longitudes.</span>
+<span class="sd">            Sequence of longitudes.</span>
 <span class="sd">        :param vs30measured_grid:</span>
-<span class="sd">          Sequence of booleans of the same shape as lats/lons indicating whether</span>
-<span class="sd">          the vs30 values are measured or inferred.</span>
+<span class="sd">            Sequence of booleans of the same shape as lats/lons indicating </span>
+<span class="sd">            whether the vs30 values are measured or inferred.</span>
 <span class="sd">        :returns:</span>
-<span class="sd">          SitesContext object where data are sampled from the current Sites object.</span>
+<span class="sd">            SitesContext object where data are sampled from the current Sites</span>
+<span class="sd">            object.</span>
 <span class="sd">        :raises ShakeMapException:</span>
-<span class="sd">           When lat/lon input sequences do not share dimensionality.</span>
+<span class="sd">             When lat/lon input sequences do not share dimensionality.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lats</span><span class="p">)</span>
         <span class="n">lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lons</span><span class="p">)</span>
@@ -366,42 +382,43 @@
 
         <span class="n">site</span> <span class="o">=</span> <span class="n">SitesContext</span><span class="p">()</span>
         <span class="c1"># use default vs30 if outside grid</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">vs30</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vs30</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">lats</span><span class="p">,</span> <span class="n">lons</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">defaultVs30</span><span class="p">)</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">vs30</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Vs30</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">lats</span><span class="p">,</span> <span class="n">lons</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_defaultVs30</span><span class="p">)</span>
         <span class="n">site</span><span class="o">.</span><span class="n">lats</span> <span class="o">=</span> <span class="n">lats</span>
         <span class="n">site</span><span class="o">.</span><span class="n">lons</span> <span class="o">=</span> <span class="n">lons</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="n">calculate_z1p0</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">vs30</span><span class="p">)</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">z2pt5</span> <span class="o">=</span> <span class="n">calculate_z2p5</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">z1pt0</span><span class="p">)</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="n">_calculate_z1p0</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">vs30</span><span class="p">)</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">z2pt5</span> <span class="o">=</span> <span class="n">_calculate_z2p5</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">z1pt0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vs30measured_grid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># If we don&#39;t know, then use false</span>
             <span class="n">site</span><span class="o">.</span><span class="n">vs30measured</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">site</span><span class="o">.</span><span class="n">vs30measured</span> <span class="o">=</span> <span class="n">vs30measured_grid</span>
-        <span class="n">site</span><span class="o">.</span><span class="n">backarc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backarc</span>
+        <span class="n">site</span><span class="o">.</span><span class="n">backarc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backarc</span>
 
         <span class="k">return</span> <span class="n">site</span></div>
 
 <div class="viewcode-block" id="Sites.getVs30Grid"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites.getVs30Grid">[docs]</a>    <span class="k">def</span> <span class="nf">getVs30Grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the Grid2D object containing Vs30 values for this Sites object.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Grid2D object containing Vs30 values for this Sites object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vs30</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Vs30</span></div>
 
 <div class="viewcode-block" id="Sites.getSitesContext"><a class="viewcode-back" href="../../../shakemap.grind.html#shakemap.grind.sites.Sites.getSitesContext">[docs]</a>    <span class="k">def</span> <span class="nf">getSitesContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a SitesContext object appropriate for GMPE use.</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">           SitesContext object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sctx</span> <span class="o">=</span> <span class="n">SitesContext</span><span class="p">()</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">vs30</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Vs30</span><span class="o">.</span><span class="n">getData</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z1Pt0</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">z2pt5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z2Pt5</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">backarc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backarc</span>  <span class="c1"># zoneconfig might have this info</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs30measured_grid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># If we don&#39;t know, then use false</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">vs30</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Vs30</span><span class="o">.</span><span class="n">getData</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Z1Pt0</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">z2pt5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Z2Pt5</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">backarc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backarc</span>  <span class="c1"># zoneconfig might have this info</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vs30measured_grid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># If we don&#39;t know, then use false</span>
             <span class="n">sctx</span><span class="o">.</span><span class="n">vs30measured</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span>
                 <span class="n">sctx</span><span class="o">.</span><span class="n">vs30</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">sctx</span><span class="o">.</span><span class="n">vs30measured</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs30measured_grid</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">lons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lons</span>
-        <span class="n">sctx</span><span class="o">.</span><span class="n">lats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lats</span>
+            <span class="n">sctx</span><span class="o">.</span><span class="n">vs30measured</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vs30measured_grid</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">lons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lons</span>
+        <span class="n">sctx</span><span class="o">.</span><span class="n">lats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lats</span>
         <span class="k">return</span> <span class="n">sctx</span></div></div>
 </pre></div>
 
@@ -436,7 +453,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

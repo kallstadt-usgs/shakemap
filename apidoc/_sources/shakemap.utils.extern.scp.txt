@@ -1,0 +1,22 @@
+shakemap.utils.extern.scp package
+=================================
+
+Submodules
+----------
+
+shakemap.utils.extern.scp.scp module
+------------------------------------
+
+.. automodule:: shakemap.utils.extern.scp.scp
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: shakemap.utils.extern.scp
+    :members:
+    :undoc-members:
+    :show-inheritance:

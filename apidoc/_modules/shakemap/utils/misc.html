@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.utils.misc &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.utils.misc &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -134,10 +134,13 @@
 
 <div class="viewcode-block" id="getCommandOutput"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.misc.getCommandOutput">[docs]</a><span class="k">def</span> <span class="nf">getCommandOutput</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Internal method for calling external command.</span>
-<span class="sd">    @param cmd: String command (&#39;ls -l&#39;, etc.)</span>
-<span class="sd">    @return: Three-element tuple containing a boolean indicating success or failure, </span>
-<span class="sd">    the stdout from running the command, and stderr.</span>
+<span class="sd">    Method for calling external system command.</span>
+
+<span class="sd">    :param cmd: </span>
+<span class="sd">        String command (e.g., &#39;ls -l&#39;, etc.). </span>
+<span class="sd">    :returns: </span>
+<span class="sd">        Three-element tuple containing a boolean indicating success or failure, </span>
+<span class="sd">        the stdout from running the command, and stderr.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span>
                             <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
@@ -184,7 +187,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

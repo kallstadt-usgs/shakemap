@@ -1,37 +1,22 @@
 shakemap.grind package
 ======================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shakemap.grind.conversions
+    shakemap.grind.correlation
+    shakemap.grind.directivity
+
 Submodules
 ----------
-
-shakemap.grind.BeyerBommer2006 module
--------------------------------------
-
-.. automodule:: shakemap.grind.BeyerBommer2006
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.grind.conversions module
----------------------------------
-
-.. automodule:: shakemap.grind.conversions
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 shakemap.grind.distance module
 ------------------------------
 
 .. automodule:: shakemap.grind.distance
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.grind.ecef module
---------------------------
-
-.. automodule:: shakemap.grind.ecef
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,6 +33,14 @@ shakemap.grind.gmpe2shakemap module
 -----------------------------------
 
 .. automodule:: shakemap.grind.gmpe2shakemap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.grind.multigmpe module
+-------------------------------
+
+.. automodule:: shakemap.grind.multigmpe
     :members:
     :undoc-members:
     :show-inheritance:
@@ -72,14 +65,6 @@ shakemap.grind.station module
 -----------------------------
 
 .. automodule:: shakemap.grind.station
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.grind.vector module
-----------------------------
-
-.. automodule:: shakemap.grind.vector
     :members:
     :undoc-members:
     :show-inheritance:

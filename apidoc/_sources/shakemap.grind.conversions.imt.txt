@@ -1,0 +1,30 @@
+shakemap.grind.conversions.imt package
+======================================
+
+Submodules
+----------
+
+shakemap.grind.conversions.imt.bommer_alarcon_2006 module
+---------------------------------------------------------
+
+.. automodule:: shakemap.grind.conversions.imt.bommer_alarcon_2006
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shakemap.grind.conversions.imt.newmark_hall_1982 module
+-------------------------------------------------------
+
+.. automodule:: shakemap.grind.conversions.imt.newmark_hall_1982
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: shakemap.grind.conversions.imt
+    :members:
+    :undoc-members:
+    :show-inheritance:

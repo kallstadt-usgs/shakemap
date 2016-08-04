@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.utils.conf &mdash; shakemap 0.1 documentation</title>
+  <title>shakemap.utils.conf &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap 0.1 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.1
+                v0.1dev-147-gc048d93
               </div>
             
           
@@ -269,112 +269,6 @@
         <span class="k">return</span> <span class="n">config</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">False</span></div>
-
-
-<span class="k">def</span> <span class="nf">_test_validate</span><span class="p">():</span>
-    <span class="n">dummydir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
-    <span class="n">dummyfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s1">&#39;.bash_profile&#39;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;[grind]</span>
-<span class="s1">    smVs30default = 686.0</span>
-<span class="s1">    use_gmpe_sc = False</span>
-<span class="s1">    basin_module = Field2000</span>
-<span class="s1">    x_grid_interval = 0.025</span>
-<span class="s1">    y_grid_interval = 0.025</span>
-<span class="s1">    lonspan = 2.5</span>
-<span class="s1">    gmroi = 10.0</span>
-<span class="s1">    iroi = 10.0</span>
-<span class="s1">    gmdecay = 0.5</span>
-<span class="s1">    [[gmpe]]</span>
-<span class="s1">         Zhao06_surface = 0.0,9.9,0,60</span>
-<span class="s1">         Zhao06_intraslab = 0.0,9.9,60,999</span>
-<span class="s1">    [[ipe]]</span>
-<span class="s1">         AW07_CEUS = 0.0,9.9,0,999</span>
-<span class="s1">    idecay = 0.5</span>
-<span class="s1">    outlier_deviation_level = 3</span>
-<span class="s1">    outlier_max_mag = 7.0</span>
-<span class="s1">    bias_norm = l1</span>
-<span class="s1">    bias_max_range = 120.0</span>
-<span class="s1">    bias_min_stations = 6</span>
-<span class="s1">    bias_max_mag = 7.0</span>
-<span class="s1">    bias_max_bias = 2.0</span>
-<span class="s1">    bias_min_bias = -2.0</span>
-<span class="s1">    bias_log_amp = True</span>
-<span class="s1">    direct_patch_size = 1000.0</span>
-<span class="s1">    mi2pgm = WGRW11</span>
-<span class="s1">    pgm2mi = WGRW11</span>
-
-<span class="s1">    [transfer_ftp]</span>
-<span class="s1">      [[dest1]]</span>
-<span class="s1">        category = &#39;webcopy&#39;</span>
-<span class="s1">        files = *.jpg,</span>
-<span class="s1">        sendDone = false</span>
-<span class="s1">        username = user</span>
-<span class="s1">        password = thispass</span>
-<span class="s1">        remotehost = ftp.ftptest.org</span>
-<span class="s1">        remotedirectory = /pub/shakemap</span>
-<span class="s1">    [transfer_copy]</span>
-<span class="s1">      [[dest2]]</span>
-<span class="s1">        category = &#39;webcopy&#39;</span>
-<span class="s1">        files = *.jpg,</span>
-<span class="s1">        sendDone = false</span>
-<span class="s1">        directory = </span><span class="si">%s</span><span class="s1"></span>
-<span class="s1">    [transfer_rsync]</span>
-<span class="s1">      [[dest2]]</span>
-<span class="s1">        category = &#39;webcopy&#39;</span>
-<span class="s1">        files = *.jpg,</span>
-<span class="s1">        sendDone = true</span>
-<span class="s1">        username = fred</span>
-<span class="s1">        password = password</span>
-<span class="s1">        privatekey = </span><span class="si">%s</span><span class="s1"></span>
-<span class="s1">        remotehost = remotehost.org</span>
-<span class="s1">        remotedirectory = /home/user/data</span>
-<span class="s1">    [transfer_pdl]</span>
-<span class="s1">      [[dest2]]</span>
-<span class="s1">        category = &#39;webcopy&#39;</span>
-<span class="s1">        files = *.jpg,</span>
-<span class="s1">        sendDone = true</span>
-<span class="s1">        java = /usr/bin/java</span>
-<span class="s1">        configfile = </span><span class="si">%s</span><span class="s1"></span>
-<span class="s1">        client = </span><span class="si">%s</span><span class="s1"></span>
-<span class="s1">        productsource = &lt;SHAKEMAP_NETWORK&gt;</span>
-<span class="s1">        producttype = shakemap</span>
-<span class="s1">        productcode = &lt;EVENT_CODE&gt;</span>
-<span class="s1">        eventsource = &lt;EVENT_NETWORK&gt;</span>
-<span class="s1">        eventsourcecode = &lt;EVENT_ID&gt;</span>
-<span class="s1">        privatekey = </span><span class="si">%s</span><span class="s1"></span>
-<span class="s1">    &#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dummydir</span><span class="p">,</span> <span class="n">dummyfile</span><span class="p">,</span> <span class="n">dummyfile</span><span class="p">,</span> <span class="n">dummyfile</span><span class="p">,</span> <span class="n">dummyfile</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">fh</span><span class="p">,</span> <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">()</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">homedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
-            <span class="n">__file__</span><span class="p">))</span>  <span class="c1"># where is this script?</span>
-        <span class="n">configspec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">homedir</span><span class="p">,</span> <span class="s1">&#39;configspec.ini&#39;</span><span class="p">)</span>
-        <span class="n">macros</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;shakemap_network&#39;</span><span class="p">:</span> <span class="s1">&#39;us&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;event_code&#39;</span><span class="p">:</span> <span class="s1">&#39;2015abcd&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;event_network&#39;</span><span class="p">:</span> <span class="s1">&#39;us&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;event_id&#39;</span><span class="p">:</span> <span class="s1">&#39;us2015abcd&#39;</span><span class="p">}</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span> <span class="n">tfile</span><span class="p">,</span> <span class="n">macros</span><span class="o">=</span><span class="n">macros</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
-        <span class="k">pass</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;_test_validate() failed with error &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">_test_validate</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">homedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
-        <span class="n">__file__</span><span class="p">))</span>  <span class="c1"># where is this script?</span>
-    <span class="n">configspec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">homedir</span><span class="p">,</span> <span class="s1">&#39;configspec.ini&#39;</span><span class="p">)</span>
-    <span class="n">configfile</span> <span class="o">=</span> <span class="n">createDefaultConfig</span><span class="p">(</span><span class="n">configspec</span><span class="p">)</span>
-
-    <span class="k">print</span><span class="p">(</span><span class="n">whatIs</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span> <span class="s1">&#39;pgm2mi&#39;</span><span class="p">))</span>
-
-    <span class="k">print</span><span class="p">(</span><span class="n">validate</span><span class="p">(</span><span class="n">configspec</span><span class="p">,</span> <span class="n">configfile</span><span class="p">))</span>
 </pre></div>
 
            </div>
@@ -408,7 +302,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.1',
+            VERSION:'v0.1dev-147-gc048d93',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
