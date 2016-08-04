@@ -4,14 +4,9 @@ shakemap.grind.conversions.imc package
 Submodules
 ----------
 
-shakemap.grind.conversions.imc.beyer_bommer_2006 module
--------------------------------------------------------
+.. toctree::
 
-.. automodule:: shakemap.grind.conversions.imc.beyer_bommer_2006
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.grind.conversions.imc.beyer_bommer_2006
 
 Module contents
 ---------------

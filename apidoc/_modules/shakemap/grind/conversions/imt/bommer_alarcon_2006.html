@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.conversions.imt.bommer_alarcon_2006 &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.grind.conversions.imt.bommer_alarcon_2006 &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -128,7 +161,7 @@
             
   <h1>Source code for shakemap.grind.conversions.imt.bommer_alarcon_2006</h1><div class="highlight"><pre>
 <span></span>
-<div class="viewcode-block" id="BommerAlarcon2006"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006">[docs]</a><span class="k">class</span> <span class="nc">BommerAlarcon2006</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="BommerAlarcon2006"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.bommer_alarcon_2006.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006">[docs]</a><span class="k">class</span> <span class="nc">BommerAlarcon2006</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for conversion between PGV (units of cm/s) and PSA05 (units of g)</span>
@@ -137,10 +170,10 @@
 <span class="sd">    - PSA05 stands for spectral acceleration with oscillator period of 0.5 sec</span>
 <span class="sd">    - PGV is peak ground velocity. </span>
 
-<span class="sd">    Todo: </span>
+<span class="sd">    Todo:</span>
 <span class="sd">        Inherit from ConvertIMT class. </span>
 
-<span class="sd">    References: </span>
+<span class="sd">    References:</span>
 <span class="sd">        Bommer, J. J., &amp; Alarcon, J. E. (2006). The prediction and use of peak </span>
 <span class="sd">        ground velocity. Journal of Earthquake Engineering, 10(01), 1-31.</span>
 <span class="sd">        `[link] &lt;http://www.worldscientific.com/doi/abs/10.1142/S1363246906002463&gt;`__</span>
@@ -149,33 +182,35 @@
     <span class="n">__vfact</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">20.0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="mf">9.81</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="BommerAlarcon2006.pgv2psa05"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.pgv2psa05">[docs]</a>    <span class="k">def</span> <span class="nf">pgv2psa05</span><span class="p">(</span><span class="n">pgv</span><span class="p">):</span>
+<div class="viewcode-block" id="BommerAlarcon2006.pgv2psa05"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.bommer_alarcon_2006.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.pgv2psa05">[docs]</a>    <span class="k">def</span> <span class="nf">pgv2psa05</span><span class="p">(</span><span class="n">pgv</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert PGV in cm/s to PSA05 in g.</span>
 <span class="sd">        **Important:** PGV must be linear units.</span>
+
 <span class="sd">        :param pgv:</span>
 <span class="sd">            Numpy array or float of PGV values; linear units.</span>
-<span class="sd">        : returns:</span>
+<span class="sd">        :returns:</span>
 <span class="sd">            Numpy array or float of PSA05 (spectral acceleration with oscillator</span>
 <span class="sd">            period of 0.5 sec) converted from PGV.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pgv</span> <span class="o">/</span> <span class="n">BommerAlarcon2006</span><span class="o">.</span><span class="n">__vfact</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="BommerAlarcon2006.psa052pgv"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.psa052pgv">[docs]</a>    <span class="k">def</span> <span class="nf">psa052pgv</span><span class="p">(</span><span class="n">psa05</span><span class="p">):</span>
+<div class="viewcode-block" id="BommerAlarcon2006.psa052pgv"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.bommer_alarcon_2006.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.psa052pgv">[docs]</a>    <span class="k">def</span> <span class="nf">psa052pgv</span><span class="p">(</span><span class="n">psa05</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert PSA05 (spectral acceleration with oscillator period of 0.5 sec)</span>
 <span class="sd">        in g to PGV cm/s.</span>
 <span class="sd">        **Important:** PSA10 must be linear units.</span>
+
 <span class="sd">        :param psa05:</span>
 <span class="sd">            Numpy array or float of PSA05 values; linear units.</span>
-<span class="sd">        : returns:</span>
+<span class="sd">        :returns:</span>
 <span class="sd">            Numpy array or float of PGV converted from psa05.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">psa05</span> <span class="o">*</span> <span class="n">BommerAlarcon2006</span><span class="o">.</span><span class="n">__vfact</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="BommerAlarcon2006.getVfact"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.getVfact">[docs]</a>    <span class="k">def</span> <span class="nf">getVfact</span><span class="p">():</span>
+<div class="viewcode-block" id="BommerAlarcon2006.getVfact"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.bommer_alarcon_2006.html#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.getVfact">[docs]</a>    <span class="k">def</span> <span class="nf">getVfact</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns: </span>
 <span class="sd">            The Bommer and Alarcon (2006) conversion factor. </span>
@@ -192,7 +227,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -214,7 +248,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

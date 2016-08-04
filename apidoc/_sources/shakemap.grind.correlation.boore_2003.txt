@@ -1,0 +1,7 @@
+shakemap.grind.correlation.boore_2003 module
+============================================
+
+.. automodule:: shakemap.grind.correlation.boore_2003
+    :members:
+    :undoc-members:
+    :show-inheritance:

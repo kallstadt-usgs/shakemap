@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.utils.vector &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.utils.vector &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,7 +167,7 @@
 <span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span><span class="p">,</span> <span class="n">ecef2latlon</span>
 
 
-<div class="viewcode-block" id="Vector"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector">[docs]</a><span class="k">class</span> <span class="nc">Vector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector">[docs]</a><span class="k">class</span> <span class="nc">Vector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Three-dimensional vector object, stored as three floats of x,y,z.</span>
 
@@ -161,7 +194,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Vector.fromPoint"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.fromPoint">[docs]</a>    <span class="k">def</span> <span class="nf">fromPoint</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">oqpoint</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.fromPoint"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.fromPoint">[docs]</a>    <span class="k">def</span> <span class="nf">fromPoint</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">oqpoint</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class method which allows user to create a Vector from a GEM Hazardlib </span>
 <span class="sd">        Point object.  The Point lat, lon, depth values are converted to </span>
@@ -179,7 +212,7 @@
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Vector.fromTuple"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.fromTuple">[docs]</a>    <span class="k">def</span> <span class="nf">fromTuple</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.fromTuple"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.fromTuple">[docs]</a>    <span class="k">def</span> <span class="nf">fromTuple</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class method which allows user to create a Vector from an x/y/z tuple.</span>
 
@@ -280,7 +313,7 @@
             <span class="k">return</span> <span class="bp">True</span>
         <span class="k">return</span> <span class="bp">False</span>
 
-<div class="viewcode-block" id="Vector.distance"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.distance"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate distance between this Vector and another.</span>
 
@@ -298,7 +331,7 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
                        <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Vector.cross"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.cross">[docs]</a>    <span class="k">def</span> <span class="nf">cross</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.cross"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.cross">[docs]</a>    <span class="k">def</span> <span class="nf">cross</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate cross product between this Vector and another.</span>
 
@@ -316,7 +349,7 @@
         <span class="n">cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getArray</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">getArray</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Vector.dot"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.dot">[docs]</a>    <span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.dot"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.dot">[docs]</a>    <span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate dot product between this Vector and another.</span>
 
@@ -334,21 +367,21 @@
         <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getArray</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">getArray</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">dp</span></div>
 
-<div class="viewcode-block" id="Vector.getArray"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.getArray">[docs]</a>    <span class="k">def</span> <span class="nf">getArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.getArray"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.getArray">[docs]</a>    <span class="k">def</span> <span class="nf">getArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            3 element Numpy array of [x,y,z]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Vector.getTuple"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.getTuple">[docs]</a>    <span class="k">def</span> <span class="nf">getTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.getTuple"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.getTuple">[docs]</a>    <span class="k">def</span> <span class="nf">getTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            3 element tuple of (x,y,z)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Vector.norm"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.norm">[docs]</a>    <span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.norm"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.norm">[docs]</a>    <span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Normalized Vector.</span>
@@ -359,7 +392,7 @@
         <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">length</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Vector.mag"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.mag">[docs]</a>    <span class="k">def</span> <span class="nf">mag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.mag"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.mag">[docs]</a>    <span class="k">def</span> <span class="nf">mag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Length of Vector (float).</span>
@@ -367,7 +400,7 @@
         <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">length</span></div>
 
-<div class="viewcode-block" id="Vector.toPoint"><a class="viewcode-back" href="../../../shakemap.utils.html#shakemap.utils.vector.Vector.toPoint">[docs]</a>    <span class="k">def</span> <span class="nf">toPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Vector.toPoint"><a class="viewcode-back" href="../../../shakemap.utils.vector.html#shakemap.utils.vector.Vector.toPoint">[docs]</a>    <span class="k">def</span> <span class="nf">toPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the Vector to a hazardlib Point object, after translating </span>
 <span class="sd">        back to lat, lon, depth.</span>
@@ -395,7 +428,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -417,7 +449,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

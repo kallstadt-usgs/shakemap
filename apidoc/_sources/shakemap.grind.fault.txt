@@ -1,0 +1,7 @@
+shakemap.grind.fault module
+===========================
+
+.. automodule:: shakemap.grind.fault
+    :members:
+    :undoc-members:
+    :show-inheritance:

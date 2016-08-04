@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.utils.extern.scp package &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.utils.extern.scp package &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,8 +30,9 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
         <link rel="up" title="shakemap.utils.extern package" href="shakemap.utils.extern.html"/>
+        <link rel="next" title="shakemap.utils.extern.scp.scp module" href="shakemap.utils.extern.scp.scp.html"/>
         <link rel="prev" title="shakemap.utils.extern package" href="shakemap.utils.extern.html"/> 
 
   
@@ -60,7 +61,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -84,19 +85,30 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.conf">shakemap.utils.conf module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.ecef">shakemap.utils.ecef module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.exception">shakemap.utils.exception module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.misc">shakemap.utils.misc module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.timeutils">shakemap.utils.timeutils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils.vector">shakemap.utils.vector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
 </ul>
 </li>
@@ -127,7 +139,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -159,120 +171,11 @@
 <h1>shakemap.utils.extern.scp package<a class="headerlink" href="#shakemap-utils-extern-scp-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shakemap.utils.extern.scp.scp.html">shakemap.utils.extern.scp.scp module</a></li>
+</ul>
 </div>
-<div class="section" id="module-shakemap.utils.extern.scp.scp">
-<span id="shakemap-utils-extern-scp-scp-module"></span><h2>shakemap.utils.extern.scp.scp module<a class="headerlink" href="#module-shakemap.utils.extern.scp.scp" title="Permalink to this headline">¶</a></h2>
-<p>Utilities for sending files over ssh using the scp1 protocol.</p>
-<dl class="class">
-<dt id="shakemap.utils.extern.scp.scp.SCPClient">
-<em class="property">class </em><code class="descclassname">shakemap.utils.extern.scp.scp.</code><code class="descname">SCPClient</code><span class="sig-paren">(</span><em>transport</em>, <em>buff_size=16384</em>, <em>socket_timeout=5.0</em>, <em>progress=None</em>, <em>sanitize=&lt;function _sh_quote&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#SCPClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.SCPClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>An scp1 implementation, compatible with openssh scp.
-Raises SCPException for all transport related errors. Local filesystem
-and OS errors pass through.</p>
-<p>Main public methods are .put and .get
-The get method is controlled by the remote scp instance, and behaves
-accordingly. This means that symlinks are resolved, and the transfer is
-halted after too many levels of symlinks are detected.
-The put method uses os.walk for recursion, and sends files accordingly.
-Since scp doesn&#8217;t support symlinks, we send file symlinks as the file
-(matching scp behaviour), but we make no attempt at symlinked directories.</p>
-<p>Create an scp1 client.</p>
-<p>&#64;param transport: an existing paramiko L{Transport}
-&#64;type transport: L{Transport}
-&#64;param buff_size: size of the scp send buffer.
-&#64;type buff_size: int
-&#64;param socket_timeout: channel socket timeout in seconds
-&#64;type socket_timeout: float
-&#64;param progress: callback - called with (filename, size, sent) during</p>
-<blockquote>
-<div>transfers</div></blockquote>
-<dl class="docutils">
-<dt>&#64;param sanitize: function - called with filename, should return</dt>
-<dd>safe or escaped string.  Uses _sh_quote by default.</dd>
-</dl>
-<p>&#64;type progress: function(string, int, int)</p>
-<dl class="method">
-<dt id="shakemap.utils.extern.scp.scp.SCPClient.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#SCPClient.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.SCPClient.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>close scp channel</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.utils.extern.scp.scp.SCPClient.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>remote_path</em>, <em>local_path=''</em>, <em>recursive=False</em>, <em>preserve_times=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#SCPClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.SCPClient.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer files from remote host to localhost.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>remote_path</strong> &#8211; path to retreive from remote host. since this is
-evaluated by scp on the remote host, shell wildcards and
-environment variables may be used.</li>
-<li><strong>local_path</strong> &#8211; path in which to receive files locally</li>
-<li><strong>recursive</strong> &#8211; boolean transfer files and directories recursively</li>
-<li><strong>preserve_times</strong> &#8211; boolean preserve mtime and atime of transfered files
-and directories.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.utils.extern.scp.scp.SCPClient.put">
-<code class="descname">put</code><span class="sig-paren">(</span><em>files</em>, <em>remote_path=b'.'</em>, <em>recursive=False</em>, <em>preserve_times=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#SCPClient.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.SCPClient.put" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transfer files to remote host.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> &#8211; A single path, or a list of paths to be transfered.
-recursive must be True to transfer directories.</li>
-<li><strong>remote_path</strong> &#8211; path in which to receive the files on the remote
-host. defaults to &#8216;.&#8217;</li>
-<li><strong>recursive</strong> &#8211; boolean transfer files and directories recursively</li>
-<li><strong>preserve_times</strong> &#8211; boolean preserve mtime and atime of transfered files
-and directories.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="shakemap.utils.extern.scp.scp.SCPException">
-<em class="property">exception </em><code class="descclassname">shakemap.utils.extern.scp.scp.</code><code class="descname">SCPException</code><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#SCPException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.SCPException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
-<p>SCP exception class</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.utils.extern.scp.scp.asbytes">
-<code class="descclassname">shakemap.utils.extern.scp.scp.</code><code class="descname">asbytes</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#asbytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.asbytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns unicode into bytes, if needed.</p>
-<p>Assumes UTF-8.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.utils.extern.scp.scp.asunicode">
-<code class="descclassname">shakemap.utils.extern.scp.scp.</code><code class="descname">asunicode</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#asunicode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.asunicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns bytes into unicode, if needed.</p>
-<p>Uses UTF-8.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.utils.extern.scp.scp.asunicode_win">
-<code class="descclassname">shakemap.utils.extern.scp.scp.</code><code class="descname">asunicode_win</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/utils/extern/scp/scp.html#asunicode_win"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.utils.extern.scp.scp.asunicode_win" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns bytes into unicode, if needed.</p>
-</dd></dl>
-
 </div>
 <div class="section" id="module-shakemap.utils.extern.scp">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shakemap.utils.extern.scp" title="Permalink to this headline">¶</a></h2>
@@ -286,6 +189,8 @@ and directories.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="shakemap.utils.extern.scp.scp.html" class="btn btn-neutral float-right" title="shakemap.utils.extern.scp.scp module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="shakemap.utils.extern.html" class="btn btn-neutral" title="shakemap.utils.extern package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -296,7 +201,6 @@ and directories.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -318,7 +222,7 @@ and directories.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

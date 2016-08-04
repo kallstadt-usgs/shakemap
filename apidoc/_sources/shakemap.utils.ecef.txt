@@ -1,0 +1,7 @@
+shakemap.utils.ecef module
+==========================
+
+.. automodule:: shakemap.utils.ecef
+    :members:
+    :undoc-members:
+    :show-inheritance:

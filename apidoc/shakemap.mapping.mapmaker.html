@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.mapping.mapmaker module &mdash; shakemap 0.6.20 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
+        <link rel="up" title="shakemap.mapping package" href="shakemap.mapping.html"/>
+        <link rel="next" title="shakemap.mapping.sm_colordict module" href="shakemap.mapping.sm_colordict.html"/>
+        <link rel="prev" title="shakemap.mapping.gmtcolormap module" href="shakemap.mapping.gmtcolormap.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+          <li><a href="shakemap.mapping.html">shakemap.mapping package</a> &raquo;</li>
+      
+    <li>shakemap.mapping.mapmaker module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.mapping.mapmaker.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shakemap.mapping.mapmaker">
+<span id="shakemap-mapping-mapmaker-module"></span><h1>shakemap.mapping.mapmaker module<a class="headerlink" href="#module-shakemap.mapping.mapmaker" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="shakemap.mapping.mapmaker.MapMaker">
+<em class="property">class </em><code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">MapMaker</code><span class="sig-paren">(</span><em>shakemap</em>, <em>topofile</em>, <em>stations</em>, <em>fault</em>, <em>layerdict</em>, <em>source</em>, <em>cities=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.drawContourMap">
+<code class="descname">drawContourMap</code><span class="sig-paren">(</span><em>outfolder</em>, <em>cmin=None</em>, <em>cmax=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.drawContourMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.drawContourMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.drawIntensityMap">
+<code class="descname">drawIntensityMap</code><span class="sig-paren">(</span><em>outfolder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.drawIntensityMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.drawIntensityMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.getContourLevels">
+<code class="descname">getContourLevels</code><span class="sig-paren">(</span><em>dmin</em>, <em>dmax</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.getContourLevels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.getContourLevels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.round_to">
+<code class="descname">round_to</code><span class="sig-paren">(</span><em>n</em>, <em>precision</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.round_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.round_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setCityGrid">
+<code class="descname">setCityGrid</code><span class="sig-paren">(</span><em>nx=2</em>, <em>ny=2</em>, <em>cities_per_grid=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setCityGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setCityGrid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setCityList">
+<code class="descname">setCityList</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setCityList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setCityList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap">
+<code class="descname">setContourGMTColorMap</code><span class="sig-paren">(</span><em>colormap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setContourGMTColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setContourLayer">
+<code class="descname">setContourLayer</code><span class="sig-paren">(</span><em>contour_layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setContourLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setContourLayer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setFigureSize">
+<code class="descname">setFigureSize</code><span class="sig-paren">(</span><em>figwidth</em>, <em>figheight</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setFigureSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setFigureSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap">
+<code class="descname">setIntensityGMTColorMap</code><span class="sig-paren">(</span><em>colormap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setIntensityGMTColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.mapmaker.MapMaker.setIntensityLayer">
+<code class="descname">setIntensityLayer</code><span class="sig-paren">(</span><em>imt_layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setIntensityLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setIntensityLayer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.mapping.mapmaker.getProjectedPatches">
+<code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">getProjectedPatches</code><span class="sig-paren">(</span><em>polygon</em>, <em>m</em>, <em>edgecolor='#7AA1DA'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#getProjectedPatches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.getProjectedPatches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="shakemap.mapping.mapmaker.getProjectedPolygon">
+<code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">getProjectedPolygon</code><span class="sig-paren">(</span><em>polygon</em>, <em>m</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#getProjectedPolygon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.getProjectedPolygon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.mapping.sm_colordict.html" class="btn btn-neutral float-right" title="shakemap.mapping.sm_colordict module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.mapping.gmtcolormap.html" class="btn btn-neutral" title="shakemap.mapping.gmtcolormap module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.6.20',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

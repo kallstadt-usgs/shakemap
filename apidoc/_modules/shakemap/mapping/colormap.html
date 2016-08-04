@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.mapping.colormap &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.mapping.colormap &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +163,7 @@
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="gmtColormap"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.colormap.gmtColormap">[docs]</a><span class="k">def</span> <span class="nf">gmtColormap</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">GMTPath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="gmtColormap"><a class="viewcode-back" href="../../../shakemap.mapping.colormap.html#shakemap.mapping.colormap.gmtColormap">[docs]</a><span class="k">def</span> <span class="nf">gmtColormap</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">GMTPath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">colorsys</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">GMTPath</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">filePath</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/cmaps/&quot;</span> <span class="o">+</span> <span class="n">fileName</span> <span class="o">+</span> <span class="s2">&quot;.cpt&quot;</span>
@@ -218,7 +251,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -240,7 +272,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

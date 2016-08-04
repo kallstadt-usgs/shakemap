@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.utils.extern.scp.scp &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.utils.extern.scp.scp &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -160,7 +193,7 @@
 
 <span class="c1"># Unicode conversion functions; assume UTF-8</span>
 
-<div class="viewcode-block" id="asbytes"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.asbytes">[docs]</a><span class="k">def</span> <span class="nf">asbytes</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="asbytes"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.asbytes">[docs]</a><span class="k">def</span> <span class="nf">asbytes</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turns unicode into bytes, if needed.</span>
 
 <span class="sd">    Assumes UTF-8.</span>
@@ -171,7 +204,7 @@
         <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="asunicode"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.asunicode">[docs]</a><span class="k">def</span> <span class="nf">asunicode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="asunicode"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.asunicode">[docs]</a><span class="k">def</span> <span class="nf">asunicode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turns bytes into unicode, if needed.</span>
 
 <span class="sd">    Uses UTF-8.</span>
@@ -189,7 +222,7 @@
 <span class="c1"># Unicode conversion function for Windows</span>
 <span class="c1"># Used to convert local paths if the local machine is Windows</span>
 
-<div class="viewcode-block" id="asunicode_win"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.asunicode_win">[docs]</a><span class="k">def</span> <span class="nf">asunicode_win</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="asunicode_win"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.asunicode_win">[docs]</a><span class="k">def</span> <span class="nf">asunicode_win</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turns bytes into unicode, if needed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
@@ -198,7 +231,7 @@
         <span class="k">return</span> <span class="n">s</span></div>
 
 
-<div class="viewcode-block" id="SCPClient"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.SCPClient">[docs]</a><span class="k">class</span> <span class="nc">SCPClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SCPClient"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.SCPClient">[docs]</a><span class="k">class</span> <span class="nc">SCPClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An scp1 implementation, compatible with openssh scp.</span>
 <span class="sd">    Raises SCPException for all transport related errors. Local filesystem</span>
 <span class="sd">    and OS errors pass through.</span>
@@ -248,7 +281,7 @@
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SCPClient.put"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.SCPClient.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=</span><span class="n">b</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="SCPClient.put"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.SCPClient.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=</span><span class="n">b</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
             <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">preserve_times</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Transfer files to remote host.</span>
 
@@ -279,7 +312,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="SCPClient.get"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.SCPClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="SCPClient.get"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.SCPClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
             <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">preserve_times</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Transfer files from remote host to localhost.</span>
 
@@ -324,7 +357,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span>
 
-<div class="viewcode-block" id="SCPClient.close"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.SCPClient.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SCPClient.close"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.SCPClient.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;close scp channel&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -584,7 +617,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_dirtimes</span> <span class="o">=</span> <span class="p">{}</span></div>
 
 
-<div class="viewcode-block" id="SCPException"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.html#shakemap.utils.extern.scp.scp.SCPException">[docs]</a><span class="k">class</span> <span class="nc">SCPException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="SCPException"><a class="viewcode-back" href="../../../../../shakemap.utils.extern.scp.scp.html#shakemap.utils.extern.scp.scp.SCPException">[docs]</a><span class="k">class</span> <span class="nc">SCPException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;SCP exception class&quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 </pre></div>
@@ -598,7 +631,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -620,7 +652,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

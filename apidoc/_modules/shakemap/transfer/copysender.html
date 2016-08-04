@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.transfer.copysender &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.transfer.copysender &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -141,11 +174,11 @@
 <span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>
 
 
-<div class="viewcode-block" id="CopySender"><a class="viewcode-back" href="../../../shakemap.transfer.html#shakemap.transfer.copysender.CopySender">[docs]</a><span class="k">class</span> <span class="nc">CopySender</span><span class="p">(</span><span class="n">Sender</span><span class="p">):</span>
+<div class="viewcode-block" id="CopySender"><a class="viewcode-back" href="../../../shakemap.transfer.copysender.html#shakemap.transfer.copysender.CopySender">[docs]</a><span class="k">class</span> <span class="nc">CopySender</span><span class="p">(</span><span class="n">Sender</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;(Really simple) Class for sending and deleting files and directories via system copy and delete.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-<div class="viewcode-block" id="CopySender.send"><a class="viewcode-back" href="../../../shakemap.transfer.html#shakemap.transfer.copysender.CopySender.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CopySender.send"><a class="viewcode-back" href="../../../shakemap.transfer.copysender.html#shakemap.transfer.copysender.CopySender.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Send any files or folders that have been passed to constructor.</span>
 <span class="sd">        :returns:</span>
 <span class="sd">          Number of files sent to local directory.</span>
@@ -169,7 +202,7 @@
 
         <span class="k">return</span> <span class="n">nfiles</span></div>
 
-<div class="viewcode-block" id="CopySender.delete"><a class="viewcode-back" href="../../../shakemap.transfer.html#shakemap.transfer.copysender.CopySender.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CopySender.delete"><a class="viewcode-back" href="../../../shakemap.transfer.copysender.html#shakemap.transfer.copysender.CopySender.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Delete any files and folders that have been passed to constructor.</span>
 <span class="sd">        :returns:</span>
 <span class="sd">          The number of files deleted from local directory.</span>
@@ -201,7 +234,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -223,7 +255,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

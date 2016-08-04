@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.mapping.gmtcolormap module &mdash; shakemap 0.6.20 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
+        <link rel="up" title="shakemap.mapping package" href="shakemap.mapping.html"/>
+        <link rel="next" title="shakemap.mapping.mapmaker module" href="shakemap.mapping.mapmaker.html"/>
+        <link rel="prev" title="shakemap.mapping.colormap module" href="shakemap.mapping.colormap.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+          <li><a href="shakemap.mapping.html">shakemap.mapping package</a> &raquo;</li>
+      
+    <li>shakemap.mapping.gmtcolormap module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.mapping.gmtcolormap.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shakemap.mapping.gmtcolormap">
+<span id="shakemap-mapping-gmtcolormap-module"></span><h1>shakemap.mapping.gmtcolormap module<a class="headerlink" href="#module-shakemap.mapping.gmtcolormap" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap">
+<em class="property">class </em><code class="descclassname">shakemap.mapping.gmtcolormap.</code><code class="descname">GMTColorMap</code><span class="sig-paren">(</span><em>cmap</em>, <em>vmin</em>, <em>vmax</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class to encapsulate linear segmented color maps with accompanying data min/max values,
+such as those found in GMT color palette table files, described here:
+<a class="reference external" href="http://gmt.soest.hawaii.edu/doc/5.1.0/GMT_Docs.html#b-gmt-file-formats">http://gmt.soest.hawaii.edu/doc/5.1.0/GMT_Docs.html#b-gmt-file-formats</a></p>
+<p>Create a GMTColorMap from an existing colormap and data min/max values.
+:param cmap:</p>
+<blockquote>
+<div>Matplotlib Colormap object.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vmin</strong> &#8211; Minimum data value (associated with cmap(0.0))</li>
+<li><strong>vmax</strong> &#8211; Minimum data value (associated with cmap(1.0))</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.cmap">
+<code class="descname">cmap</code><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.cmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the matplotlib colormap.
+:returns:</p>
+<blockquote>
+<div>LinearSegmentedColormap derived from CPT file (or similar input).</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.getHexColor">
+<code class="descname">getHexColor</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.getHexColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.getHexColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.getNorm">
+<code class="descname">getNorm</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.getNorm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.getNorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the normalized (0-1) values associated with input physical values.
+:param values:</p>
+<blockquote>
+<div>Scalar or array-like set of physical values (height in meters, intensity in MMI, etc.)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Normalized (0-1) value(s) corresponding to input physical values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.getNormColor">
+<code class="descname">getNormColor</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.getNormColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.getNormColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get normalized (0-1) RGBA values associated with input physical values.
+:param values:</p>
+<blockquote>
+<div>Scalar or array-like set of physical values (height in meters, intensity in MMI, etc.)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of normalized RGBA values corresponding to input physical values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.getRGBColor">
+<code class="descname">getRGBColor</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.getRGBColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.getRGBColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get non-normalized (0-255) RGBA values associated with input physical values.
+:param values:</p>
+<blockquote>
+<div>Scalar or array-like set of physical values (height in meters, intensity in MMI, etc.)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of non-normalized (0-255) RGBA values corresponding to input physical values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.loadFromCPT">
+<em class="property">classmethod </em><code class="descname">loadFromCPT</code><span class="sig-paren">(</span><em>cptfile</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.loadFromCPT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.loadFromCPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a GMT-style color palette table (cpt) file.
+:param cptfile:</p>
+<blockquote>
+<div>Valid GMT cpt file.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Desired Colormap name - if None, filename (without extension) will be used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">GMTColorMap object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.saveToCPT">
+<code class="descname">saveToCPT</code><span class="sig-paren">(</span><em>filename</em>, <em>nsegments=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#GMTColorMap.saveToCPT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.saveToCPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save GMTColorMap object to a GMT cpt format.
+:param filename:</p>
+<blockquote>
+<div>Output file where colormap data should be written.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nsegments</strong> &#8211; Number of desired segments (default is number in Colormap).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.vmax">
+<code class="descname">vmax</code><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.vmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maximum data value.
+:returns:</p>
+<blockquote>
+<div>vmax value.</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="shakemap.mapping.gmtcolormap.GMTColorMap.vmin">
+<code class="descname">vmin</code><a class="headerlink" href="#shakemap.mapping.gmtcolormap.GMTColorMap.vmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the minimum data value.
+:returns:</p>
+<blockquote>
+<div>vmin value.</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.mapping.gmtcolormap.read_cpt">
+<code class="descclassname">shakemap.mapping.gmtcolormap.</code><code class="descname">read_cpt</code><span class="sig-paren">(</span><em>cptfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/gmtcolormap.html#read_cpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.gmtcolormap.read_cpt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.mapping.mapmaker.html" class="btn btn-neutral float-right" title="shakemap.mapping.mapmaker module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.mapping.colormap.html" class="btn btn-neutral" title="shakemap.mapping.colormap module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.6.20',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

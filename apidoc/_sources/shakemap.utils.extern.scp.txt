@@ -4,14 +4,9 @@ shakemap.utils.extern.scp package
 Submodules
 ----------
 
-shakemap.utils.extern.scp.scp module
-------------------------------------
+.. toctree::
 
-.. automodule:: shakemap.utils.extern.scp.scp
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.utils.extern.scp.scp
 
 Module contents
 ---------------

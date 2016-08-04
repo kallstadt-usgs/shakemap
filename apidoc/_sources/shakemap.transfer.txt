@@ -4,46 +4,13 @@ shakemap.transfer package
 Submodules
 ----------
 
-shakemap.transfer.copysender module
------------------------------------
+.. toctree::
 
-.. automodule:: shakemap.transfer.copysender
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.transfer.ftpsender module
-----------------------------------
-
-.. automodule:: shakemap.transfer.ftpsender
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.transfer.pdlsender module
-----------------------------------
-
-.. automodule:: shakemap.transfer.pdlsender
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.transfer.securesender module
--------------------------------------
-
-.. automodule:: shakemap.transfer.securesender
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.transfer.sender module
--------------------------------
-
-.. automodule:: shakemap.transfer.sender
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.transfer.copysender
+   shakemap.transfer.ftpsender
+   shakemap.transfer.pdlsender
+   shakemap.transfer.securesender
+   shakemap.transfer.sender
 
 Module contents
 ---------------

@@ -1,0 +1,7 @@
+shakemap.grind.directivity.rowshandel2013 module
+================================================
+
+.. automodule:: shakemap.grind.directivity.rowshandel2013
+    :members:
+    :undoc-members:
+    :show-inheritance:

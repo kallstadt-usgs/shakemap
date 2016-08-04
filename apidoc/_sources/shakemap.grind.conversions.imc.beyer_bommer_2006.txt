@@ -1,0 +1,7 @@
+shakemap.grind.conversions.imc.beyer_bommer_2006 module
+=======================================================
+
+.. automodule:: shakemap.grind.conversions.imc.beyer_bommer_2006
+    :members:
+    :undoc-members:
+    :show-inheritance:

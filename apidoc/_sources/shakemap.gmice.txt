@@ -4,14 +4,9 @@ shakemap.gmice package
 Submodules
 ----------
 
-shakemap.gmice.wgrw12 module
-----------------------------
+.. toctree::
 
-.. automodule:: shakemap.gmice.wgrw12
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.gmice.wgrw12
 
 Module contents
 ---------------

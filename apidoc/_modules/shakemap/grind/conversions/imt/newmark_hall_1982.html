@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.conversions.imt.newmark_hall_1982 &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.grind.conversions.imt.newmark_hall_1982 &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -128,7 +161,7 @@
             
   <h1>Source code for shakemap.grind.conversions.imt.newmark_hall_1982</h1><div class="highlight"><pre>
 <span></span>
-<div class="viewcode-block" id="NewmarkHall1982"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982">[docs]</a><span class="k">class</span> <span class="nc">NewmarkHall1982</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="NewmarkHall1982"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.newmark_hall_1982.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982">[docs]</a><span class="k">class</span> <span class="nc">NewmarkHall1982</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for conversion between PGA and PSA10 by Newmark and Hall (1982). </span>
@@ -158,7 +191,7 @@
 
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="NewmarkHall1982.pgv2psa10"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.pgv2psa10">[docs]</a>    <span class="k">def</span> <span class="nf">pgv2psa10</span><span class="p">(</span><span class="n">pgv</span><span class="p">):</span>
+<div class="viewcode-block" id="NewmarkHall1982.pgv2psa10"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.newmark_hall_1982.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.pgv2psa10">[docs]</a>    <span class="k">def</span> <span class="nf">pgv2psa10</span><span class="p">(</span><span class="n">pgv</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert PGV in cm/s to PSA10 (spectral acceleration with oscillator</span>
 <span class="sd">        period of 1.0 sec) in g.</span>
@@ -167,13 +200,13 @@
 
 <span class="sd">        :param pgv:</span>
 <span class="sd">            Numpy array or float of PGV values; linear units.</span>
-<span class="sd">        : returns:</span>
+<span class="sd">        :returns:</span>
 <span class="sd">            Values converted to PSA10.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pgv</span> <span class="o">/</span> <span class="n">NewmarkHall1982</span><span class="o">.</span><span class="n">__vfact</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="NewmarkHall1982.psa102pgv"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.psa102pgv">[docs]</a>    <span class="k">def</span> <span class="nf">psa102pgv</span><span class="p">(</span><span class="n">psa10</span><span class="p">):</span>
+<div class="viewcode-block" id="NewmarkHall1982.psa102pgv"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.newmark_hall_1982.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.psa102pgv">[docs]</a>    <span class="k">def</span> <span class="nf">psa102pgv</span><span class="p">(</span><span class="n">psa10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert PSA10 (spectral acceleration with oscillator period of 1.0 sec)</span>
 <span class="sd">        in g to PGV cm/s.</span>
@@ -188,7 +221,7 @@
         <span class="k">return</span> <span class="n">psa10</span> <span class="o">*</span> <span class="n">NewmarkHall1982</span><span class="o">.</span><span class="n">__vfact</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="NewmarkHall1982.getVfact"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.getVfact">[docs]</a>    <span class="k">def</span> <span class="nf">getVfact</span><span class="p">():</span>
+<div class="viewcode-block" id="NewmarkHall1982.getVfact"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imt.newmark_hall_1982.html#shakemap.grind.conversions.imt.newmark_hall_1982.NewmarkHall1982.getVfact">[docs]</a>    <span class="k">def</span> <span class="nf">getVfact</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns: </span>
 <span class="sd">            The Newmark and Hall (1982) conversion factor. </span>
@@ -206,7 +239,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -228,7 +260,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

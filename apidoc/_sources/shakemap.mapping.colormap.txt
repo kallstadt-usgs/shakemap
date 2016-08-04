@@ -1,0 +1,7 @@
+shakemap.mapping.colormap module
+================================
+
+.. automodule:: shakemap.mapping.colormap
+    :members:
+    :undoc-members:
+    :show-inheritance:

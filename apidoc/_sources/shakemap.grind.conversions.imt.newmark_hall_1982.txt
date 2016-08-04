@@ -1,0 +1,7 @@
+shakemap.grind.conversions.imt.newmark_hall_1982 module
+=======================================================
+
+.. automodule:: shakemap.grind.conversions.imt.newmark_hall_1982
+    :members:
+    :undoc-members:
+    :show-inheritance:

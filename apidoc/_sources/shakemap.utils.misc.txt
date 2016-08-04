@@ -1,0 +1,7 @@
+shakemap.utils.misc module
+==========================
+
+.. automodule:: shakemap.utils.misc
+    :members:
+    :undoc-members:
+    :show-inheritance:

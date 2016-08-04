@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.source module &mdash; shakemap 0.6.20 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
+        <link rel="up" title="shakemap.grind package" href="shakemap.grind.html"/>
+        <link rel="next" title="shakemap.grind.station module" href="shakemap.grind.station.html"/>
+        <link rel="prev" title="shakemap.grind.sites module" href="shakemap.grind.sites.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+          <li><a href="shakemap.grind.html">shakemap.grind package</a> &raquo;</li>
+      
+    <li>shakemap.grind.source module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.grind.source.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shakemap.grind.source">
+<span id="shakemap-grind-source-module"></span><h1>shakemap.grind.source module<a class="headerlink" href="#module-shakemap.grind.source" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="shakemap.grind.source.Source">
+<em class="property">class </em><code class="descclassname">shakemap.grind.source.</code><code class="descname">Source</code><span class="sig-paren">(</span><em>event</em>, <em>fault=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Encapsulate everything we need to know about an earthquake source.
+Primary purose of this is to construct the OpenQuake 
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext">RuptureContext</a>.</p>
+<p>Construct a Source object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event</strong> &#8211; Dictionary of values (see read_event_file() and read_source())</li>
+<li><strong>fault</strong> &#8211; A Fault object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getEventDict">
+<code class="descname">getEventDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getEventDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getEventDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the event dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Copy of dictionary of event keys/values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getEventParam">
+<code class="descname">getEventParam</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getEventParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getEventParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a parameter from the internal event dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> &#8211; String key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Value (any object type).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getFault">
+<code class="descname">getFault</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getFault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getFault" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fault instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getFaultReference">
+<code class="descname">getFaultReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getFaultReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getFaultReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the citeable reference for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String citeable reference.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getHypo">
+<code class="descname">getHypo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getHypo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getHypo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Hypocenter point.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getQuadrilaterals">
+<code class="descname">getQuadrilaterals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getQuadrilaterals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getQuadrilaterals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of quadrilaterals defining the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of quadrilateral tuples (4 Point objects each).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getRuptureContext">
+<code class="descname">getRuptureContext</code><span class="sig-paren">(</span><em>gmpelist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getRuptureContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getRuptureContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an Openquake 
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.RuptureContext">RuptureContext</a>
+suitable for any GMPE (except for those requiring hypo_loc).</p>
+<p>If Source does not contain a Fault, strike, dip, ztor, and width will be
+filled with default values. Rake may not be known, or may be estimated
+from a focal mechanism.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>gmpelist</strong> &#8211; Sequence of hazardlib GMPE objects.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">ShakeMapException when a GMPE requiring &#8216;hypo_loc&#8217; is passed in.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">RuptureContext object with all known parameters filled in.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.getTectonicRegion">
+<code class="descname">getTectonicRegion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.getTectonicRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.getTectonicRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get tectonic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT">TRT</a>
+object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.grind.source.Source.readFromFile">
+<em class="property">classmethod </em><code class="descname">readFromFile</code><span class="sig-paren">(</span><em>eventxmlfile</em>, <em>faultfile=None</em>, <em>sourcefile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.readFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.readFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method to create a Source object by specifying an event.xml file,
+a fault file, and a source.txt file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>eventxmlfile</strong> &#8211; Event xml file (see read_event_file())</li>
+<li><strong>faultfile</strong> &#8211; Fault text file (see fault.py)</li>
+<li><strong>sourcefile</strong> &#8211; source.txt file (see read_source())</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.setEventParam">
+<code class="descname">setEventParam</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setEventParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setEventParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a parameter in the internal event dictionary
+:param key:</p>
+<blockquote>
+<div>string key</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; value (any object type)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.setFaultReference">
+<code class="descname">setFaultReference</code><span class="sig-paren">(</span><em>reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setFaultReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setFaultReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the citeable reference for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reference</strong> &#8211; String citeable reference.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.setMechanism">
+<code class="descname">setMechanism</code><span class="sig-paren">(</span><em>mech</em>, <em>rake=None</em>, <em>dip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setMechanism"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setMechanism" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the earthquake mechanism manually (overriding any values read 
+in from event.xml or source.txt. If rake and dip are not specified, 
+they will be assigned by mechanism as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="40%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mech</th>
+<th class="head">Rake</th>
+<th class="head">Dip</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RS</td>
+<td>90</td>
+<td>40</td>
+</tr>
+<tr class="row-odd"><td>NM</td>
+<td>-90</td>
+<td>50</td>
+</tr>
+<tr class="row-even"><td>SS</td>
+<td>0</td>
+<td>90</td>
+</tr>
+<tr class="row-odd"><td>ALL</td>
+<td>45</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mech</strong> &#8211; String - one of &#8216;RS&#8217; (reverse), &#8216;NM&#8217; (normal), &#8216;SS&#8217; (strike slip), 
+or &#8216;ALL&#8217; (unknown).</li>
+<li><strong>rake</strong> &#8211; Value between -360 and 360 degrees. If set, will override default
+value for mechanism (see table above).</li>
+<li><strong>dip</strong> &#8211; Value betweeen 0 and 90 degrees. If set, will override default value
+for mechanism (see table above). Value will be converted to range 
+between -180 and 180 degrees.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.source.Source.setTectonicRegion">
+<code class="descname">setTectonicRegion</code><span class="sig-paren">(</span><em>region</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#Source.setTectonicRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.Source.setTectonicRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tectonic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>region</strong> &#8211; <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html#openquake.hazardlib.const.TRT">TRT</a> 
+object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.source.rake_to_mech">
+<code class="descclassname">shakemap.grind.source.</code><code class="descname">rake_to_mech</code><span class="sig-paren">(</span><em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#rake_to_mech"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.rake_to_mech" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert rake to mechanism.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rake</strong> &#8211; Rake angle in degrees.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.source.read_event_file">
+<code class="descclassname">shakemap.grind.source.</code><code class="descname">read_event_file</code><span class="sig-paren">(</span><em>eventxml</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#read_event_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.read_event_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read event.xml file from disk, returning a dictionary of attributes.
+Input XML format looks like this:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;earthquake</span> 
+    <span class="na">id=</span><span class="s">&quot;2008ryan&quot;</span> 
+    <span class="na">lat=</span><span class="s">&quot;30.9858&quot;</span> 
+    <span class="na">lon=</span><span class="s">&quot;103.3639&quot;</span> 
+    <span class="na">mag=</span><span class="s">&quot;7.9&quot;</span> 
+    <span class="na">year=</span><span class="s">&quot;2008&quot;</span> 
+    <span class="na">month=</span><span class="s">&quot;05&quot;</span> 
+    <span class="na">day=</span><span class="s">&quot;12&quot;</span> 
+    <span class="na">hour=</span><span class="s">&quot;06&quot;</span> 
+    <span class="na">minute=</span><span class="s">&quot;28&quot;</span> 
+    <span class="na">second=</span><span class="s">&quot;01&quot;</span> 
+    <span class="na">timezone=</span><span class="s">&quot;GMT&quot;</span> 
+    <span class="na">depth=</span><span class="s">&quot;19.0&quot;</span> 
+    <span class="na">locstring=</span><span class="s">&quot;EASTERN SICHUAN, CHINA&quot;</span> 
+    <span class="na">created=</span><span class="s">&quot;1211173621&quot;</span> 
+    <span class="na">otime=</span><span class="s">&quot;1210573681&quot;</span> 
+    <span class="na">type=</span><span class="s">&quot;&quot;</span> 
+<span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eventxml</strong> &#8211; Path to event XML file OR file-like object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with keys as indicated above in earthquake element attributes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.source.read_source">
+<code class="descclassname">shakemap.grind.source.</code><code class="descname">read_source</code><span class="sig-paren">(</span><em>sourcefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/source.html#read_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.source.read_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read source.txt file, which has lines like key=value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sourcefile</strong> &#8211; Path to source.txt file OR file-like object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary containing key/value pairs from file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.grind.station.html" class="btn btn-neutral float-right" title="shakemap.grind.station module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.grind.sites.html" class="btn btn-neutral" title="shakemap.grind.sites module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.6.20',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

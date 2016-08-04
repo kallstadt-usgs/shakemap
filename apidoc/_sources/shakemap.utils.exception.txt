@@ -1,0 +1,7 @@
+shakemap.utils.exception module
+===============================
+
+.. automodule:: shakemap.utils.exception
+    :members:
+    :undoc-members:
+    :show-inheritance:

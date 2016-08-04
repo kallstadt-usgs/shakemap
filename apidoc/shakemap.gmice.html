@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.gmice package &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.gmice package &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,9 +30,9 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
         <link rel="up" title="shakemap package" href="shakemap.html"/>
-        <link rel="next" title="shakemap.grind package" href="shakemap.grind.html"/>
+        <link rel="next" title="shakemap.gmice.wgrw12 module" href="shakemap.gmice.wgrw12.html"/>
         <link rel="prev" title="shakemap package" href="shakemap.html"/> 
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -85,16 +85,33 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">shakemap.gmice package</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">shakemap.gmice package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-shakemap.gmice.wgrw12">shakemap.gmice.wgrw12 module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-shakemap.gmice">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
@@ -122,7 +139,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -150,62 +167,11 @@
 <h1>shakemap.gmice package<a class="headerlink" href="#shakemap-gmice-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shakemap.gmice.wgrw12.html">shakemap.gmice.wgrw12 module</a></li>
+</ul>
 </div>
-<div class="section" id="module-shakemap.gmice.wgrw12">
-<span id="shakemap-gmice-wgrw12-module"></span><h2>shakemap.gmice.wgrw12 module<a class="headerlink" href="#module-shakemap.gmice.wgrw12" title="Permalink to this headline">¶</a></h2>
-<p>Implements the GMICE of Worden et al., 2013, BSSA, 102(1), pp. 204-221</p>
-<dl class="class">
-<dt id="shakemap.gmice.wgrw12.WGRW12">
-<em class="property">class </em><code class="descclassname">shakemap.gmice.wgrw12.</code><code class="descname">WGRW12</code><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getDistanceType">
-<code class="descname">getDistanceType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getDistanceType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getDistanceType" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getGM2MIsd">
-<code class="descname">getGM2MIsd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getGM2MIsd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getGM2MIsd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return dictionary of GM to MI sigmas (in MMI units)</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getGMfromMI">
-<code class="descname">getGMfromMI</code><span class="sig-paren">(</span><em>mmi</em>, <em>imt</em>, <em>dists=None</em>, <em>mag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getGMfromMI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getGMfromMI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function getGMfromMI
-Put some documentation here.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getMI2GMsd">
-<code class="descname">getMI2GMsd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getMI2GMsd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getMI2GMsd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return dictionary of MI to GM sigmas (in linear PGM units)</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getMIfromGM">
-<code class="descname">getMIfromGM</code><span class="sig-paren">(</span><em>amps</em>, <em>imt</em>, <em>dists=None</em>, <em>mag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getMIfromGM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getMIfromGM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function getMIfromGM
-Put some documentation here.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getMinMax">
-<code class="descname">getMinMax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getMinMax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getMinMax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getName">
-<code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getName" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.gmice.wgrw12.WGRW12.getScale">
-<code class="descname">getScale</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/gmice/wgrw12.html#WGRW12.getScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.gmice.wgrw12.WGRW12.getScale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="module-shakemap.gmice">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-shakemap.gmice" title="Permalink to this headline">¶</a></h2>
@@ -219,7 +185,7 @@ Put some documentation here.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shakemap.grind.html" class="btn btn-neutral float-right" title="shakemap.grind package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shakemap.gmice.wgrw12.html" class="btn btn-neutral float-right" title="shakemap.gmice.wgrw12 module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="shakemap.html" class="btn btn-neutral" title="shakemap package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -231,7 +197,6 @@ Put some documentation here.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -253,7 +218,7 @@ Put some documentation here.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

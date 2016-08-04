@@ -4,22 +4,10 @@ shakemap.grind.correlation package
 Submodules
 ----------
 
-shakemap.grind.correlation.boore_2003 module
---------------------------------------------
+.. toctree::
 
-.. automodule:: shakemap.grind.correlation.boore_2003
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.grind.correlation.goda_atkinson_2010 module
-----------------------------------------------------
-
-.. automodule:: shakemap.grind.correlation.goda_atkinson_2010
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.grind.correlation.boore_2003
+   shakemap.grind.correlation.goda_atkinson_2010
 
 Module contents
 ---------------

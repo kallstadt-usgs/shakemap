@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.mapping.mapmaker &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.mapping.mapmaker &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -184,7 +217,7 @@
 <span class="n">BORDER_ZORDER</span> <span class="o">=</span> <span class="mi">1001</span>
 
 
-<div class="viewcode-block" id="getProjectedPolygon"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.getProjectedPolygon">[docs]</a><span class="k">def</span> <span class="nf">getProjectedPolygon</span><span class="p">(</span><span class="n">polygon</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<div class="viewcode-block" id="getProjectedPolygon"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.getProjectedPolygon">[docs]</a><span class="k">def</span> <span class="nf">getProjectedPolygon</span><span class="p">(</span><span class="n">polygon</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
     <span class="n">extlon</span><span class="p">,</span> <span class="n">extlat</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">polygon</span><span class="o">.</span><span class="n">exterior</span><span class="o">.</span><span class="n">coords</span><span class="p">[:])</span>
     <span class="n">extx</span><span class="p">,</span> <span class="n">exty</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">extlon</span><span class="p">,</span> <span class="n">extlat</span><span class="p">)</span>
     <span class="n">extpts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">extx</span><span class="p">,</span> <span class="n">exty</span><span class="p">))</span>
@@ -200,7 +233,7 @@
     <span class="k">return</span> <span class="n">ppolygon</span></div>
 
 
-<div class="viewcode-block" id="getProjectedPatches"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.getProjectedPatches">[docs]</a><span class="k">def</span> <span class="nf">getProjectedPatches</span><span class="p">(</span><span class="n">polygon</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">WATERCOLOR</span><span class="p">):</span>
+<div class="viewcode-block" id="getProjectedPatches"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.getProjectedPatches">[docs]</a><span class="k">def</span> <span class="nf">getProjectedPatches</span><span class="p">(</span><span class="n">polygon</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">WATERCOLOR</span><span class="p">):</span>
     <span class="n">patches</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">polygon</span><span class="p">,</span> <span class="n">MultiPolygon</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">polygon</span><span class="p">:</span>
@@ -217,7 +250,7 @@
     <span class="k">return</span> <span class="n">patches</span></div>
 
 
-<div class="viewcode-block" id="MapMaker"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker">[docs]</a><span class="k">class</span> <span class="nc">MapMaker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker">[docs]</a><span class="k">class</span> <span class="nc">MapMaker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shakemap</span><span class="p">,</span> <span class="n">topofile</span><span class="p">,</span> <span class="n">stations</span><span class="p">,</span> <span class="n">fault</span><span class="p">,</span> <span class="n">layerdict</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">cities</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">req_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;coast&#39;</span><span class="p">,</span> <span class="s1">&#39;ocean&#39;</span><span class="p">,</span> <span class="s1">&#39;lake&#39;</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;roads&#39;</span><span class="p">])</span>
@@ -266,31 +299,31 @@
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vectors</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">vshapes</span>
 
-<div class="viewcode-block" id="MapMaker.setCityGrid"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setCityGrid">[docs]</a>    <span class="k">def</span> <span class="nf">setCityGrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cities_per_grid</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setCityGrid"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setCityGrid">[docs]</a>    <span class="k">def</span> <span class="nf">setCityGrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cities_per_grid</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">city_cols</span> <span class="o">=</span> <span class="n">nx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">city_rows</span> <span class="o">=</span> <span class="n">ny</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cities_per_grid</span> <span class="o">=</span> <span class="n">cities_per_grid</span></div>
 
-<div class="viewcode-block" id="MapMaker.setFigureSize"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setFigureSize">[docs]</a>    <span class="k">def</span> <span class="nf">setFigureSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figwidth</span><span class="p">,</span> <span class="n">figheight</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setFigureSize"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setFigureSize">[docs]</a>    <span class="k">def</span> <span class="nf">setFigureSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figwidth</span><span class="p">,</span> <span class="n">figheight</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fig_width</span> <span class="o">=</span> <span class="n">figwidth</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fig_height</span> <span class="o">=</span> <span class="n">figheight</span></div>
 
-<div class="viewcode-block" id="MapMaker.setCityList"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setCityList">[docs]</a>    <span class="k">def</span> <span class="nf">setCityList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setCityList"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setCityList">[docs]</a>    <span class="k">def</span> <span class="nf">setCityList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cities</span> <span class="o">=</span> <span class="n">BaseMapCities</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>  <span class="c1"># may raise exception</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">city_rows</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">city_cols</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cities_per_grid</span> <span class="o">=</span> <span class="bp">None</span></div>
 
-<div class="viewcode-block" id="MapMaker.setIntensityLayer"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setIntensityLayer">[docs]</a>    <span class="k">def</span> <span class="nf">setIntensityLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imt_layer</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setIntensityLayer"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setIntensityLayer">[docs]</a>    <span class="k">def</span> <span class="nf">setIntensityLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imt_layer</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imt_layer</span> <span class="o">=</span> <span class="n">imt_layer</span></div>
 
-<div class="viewcode-block" id="MapMaker.setContourLayer"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setContourLayer">[docs]</a>    <span class="k">def</span> <span class="nf">setContourLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contour_layer</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setContourLayer"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setContourLayer">[docs]</a>    <span class="k">def</span> <span class="nf">setContourLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contour_layer</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">contour_layer</span> <span class="o">=</span> <span class="n">contour_layer</span></div>
 
-<div class="viewcode-block" id="MapMaker.setIntensityGMTColorMap"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap">[docs]</a>    <span class="k">def</span> <span class="nf">setIntensityGMTColorMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colormap</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setIntensityGMTColorMap"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap">[docs]</a>    <span class="k">def</span> <span class="nf">setIntensityGMTColorMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colormap</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">intensity_colormap</span> <span class="o">=</span> <span class="n">colormap</span></div>
 
-<div class="viewcode-block" id="MapMaker.setContourGMTColorMap"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap">[docs]</a>    <span class="k">def</span> <span class="nf">setContourGMTColorMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colormap</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.setContourGMTColorMap"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap">[docs]</a>    <span class="k">def</span> <span class="nf">setContourGMTColorMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colormap</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">contour_colormap</span> <span class="o">=</span> <span class="n">colormap</span></div>
 
     <span class="k">def</span> <span class="nf">_setMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gd</span><span class="p">):</span>
@@ -500,7 +533,7 @@
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">)</span>
         <span class="n">m</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="n">FAULT_ZORDER</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MapMaker.drawIntensityMap"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.drawIntensityMap">[docs]</a>    <span class="k">def</span> <span class="nf">drawIntensityMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.drawIntensityMap"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.drawIntensityMap">[docs]</a>    <span class="k">def</span> <span class="nf">drawIntensityMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity_colormap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
                 <span class="s1">&#39;MapMaker.setGMTColormap() has not been called.&#39;</span><span class="p">)</span>
@@ -616,11 +649,11 @@
 
         <span class="k">return</span> <span class="n">draped_hsv</span>
 
-<div class="viewcode-block" id="MapMaker.round_to"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.round_to">[docs]</a>    <span class="k">def</span> <span class="nf">round_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">precision</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.round_to"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.round_to">[docs]</a>    <span class="k">def</span> <span class="nf">round_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">precision</span><span class="p">):</span>
         <span class="n">correction</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">0.5</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="n">precision</span> <span class="o">+</span> <span class="n">correction</span><span class="p">)</span> <span class="o">*</span> <span class="n">precision</span></div>
 
-<div class="viewcode-block" id="MapMaker.getContourLevels"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.getContourLevels">[docs]</a>    <span class="k">def</span> <span class="nf">getContourLevels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.getContourLevels"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.getContourLevels">[docs]</a>    <span class="k">def</span> <span class="nf">getContourLevels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
         <span class="c1"># groupings taken from table on</span>
         <span class="c1"># https://en.wikipedia.org/wiki/Peak_ground_acceleration</span>
         <span class="k">if</span> <span class="n">imt</span> <span class="o">==</span> <span class="s1">&#39;pgv&#39;</span><span class="p">:</span>
@@ -655,7 +688,7 @@
         <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">newdmin</span><span class="p">,</span> <span class="n">newdmax</span> <span class="o">+</span> <span class="n">dinc</span><span class="p">,</span> <span class="n">dinc</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">levels</span></div>
 
-<div class="viewcode-block" id="MapMaker.drawContourMap"><a class="viewcode-back" href="../../../shakemap.mapping.html#shakemap.mapping.mapmaker.MapMaker.drawContourMap">[docs]</a>    <span class="k">def</span> <span class="nf">drawContourMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">,</span> <span class="n">cmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMaker.drawContourMap"><a class="viewcode-back" href="../../../shakemap.mapping.mapmaker.html#shakemap.mapping.mapmaker.MapMaker.drawContourMap">[docs]</a>    <span class="k">def</span> <span class="nf">drawContourMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">,</span> <span class="n">cmin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contour_colormap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
                 <span class="s1">&#39;MapMaker.setGMTColormap() has not been called.&#39;</span><span class="p">)</span>
@@ -787,7 +820,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -809,7 +841,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

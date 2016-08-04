@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.distance module &mdash; shakemap 0.6.20 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="shakemap 0.6.20 documentation" href="index.html"/>
+        <link rel="up" title="shakemap.grind package" href="shakemap.grind.html"/>
+        <link rel="next" title="shakemap.grind.fault module" href="shakemap.grind.fault.html"/>
+        <link rel="prev" title="shakemap.grind.directivity.rowshandel2013 module" href="shakemap.grind.directivity.rowshandel2013.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> shakemap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="shakemap.html">shakemap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">shakemap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap package</a> &raquo;</li>
+      
+          <li><a href="shakemap.grind.html">shakemap.grind package</a> &raquo;</li>
+      
+    <li>shakemap.grind.distance module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.grind.distance.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shakemap.grind.distance">
+<span id="shakemap-grind-distance-module"></span><h1>shakemap.grind.distance module<a class="headerlink" href="#module-shakemap.grind.distance" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="shakemap.grind.distance.Distance">
+<em class="property">class </em><code class="descclassname">shakemap.grind.distance.</code><code class="descname">Distance</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for distance calculations. Primary method is &#8216;get_distance&#8217;. 
+To gracefully handle multiple segment ruptures, many of the distances
+are based on the Spudich and Chiou (2015) GC2 coordinate system.</p>
+<dl class="docutils">
+<dt>References: </dt>
+<dd>Spudich, Paul and Chiou, Brian, 2015, Strike-parallel and strike-normal
+coordinate system around geometrically complicated rupture traces—Use by
+NGA-West2 and further improvements: U.S. Geological Survey Open-File
+Report 2015-1028, 20 p., <a class="reference external" href="http://dx.doi.org/10.3133/ofr20151028">http://dx.doi.org/10.3133/ofr20151028</a>.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gmpe</strong> &#8211; Concrete subclass of GMPE
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">[link]</a>;
+can be individual instance or list of instances.</li>
+<li><strong>source</strong> &#8211; Shakemap Source instance. For point-source distances (Repi, Rhyp) the
+hypocenter is taken from the source instance. The finite-fault 
+distances (Rrup, Rjb, ...), are based on the fault representation in
+the source instance if available. If a Fault instance is unavailalbe, 
+the finite-fault distances are computed from point-source distances, 
+in which case the earthquake manitude from the Source instance is 
+required for median distance corrections if use_median_distance is 
+True.</li>
+<li><strong>lat</strong> &#8211; A numpy array of site latitudes.</li>
+<li><strong>lon</strong> &#8211; A numpy array of site longitudes.</li>
+<li><strong>dep</strong> &#8211; A numpy array of site depths (km); down is positive.</li>
+<li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
+availalbe. Default is True, meaning that point-source distances are
+adjusted based on magnitude to get the median fault distance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Distance object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="shakemap.grind.distance.Distance.fromSites">
+<em class="property">classmethod </em><code class="descname">fromSites</code><span class="sig-paren">(</span><em>gmpe</em>, <em>source</em>, <em>sites</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.fromSites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.fromSites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience class method to construct a Distance object from a sites object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gmpe</strong> &#8211; Concrete subclass of GMPE
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">[link]</a>;
+can be individual instance or list of instances.</li>
+<li><strong>source</strong> &#8211; Shakeamp Source object.</li>
+<li><strong>sites</strong> &#8211; Shakemap Sites object.</li>
+<li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
+availalbe. Default is True, meaning that point-source distances are
+adjusted based on magnitude to get the median fault distance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Distance object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.distance.Distance.getDistanceContext">
+<code class="descname">getDistanceContext</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.getDistanceContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.getDistanceContext" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Openquake distance context
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html?highlight=distancescontext#openquake.hazardlib.gsim.base.DistancesContext">[link]</a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.distance.Distance.getSource">
+<code class="descname">getSource</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#Distance.getSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.Distance.getSource" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Shakemap Source object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.distance.get_distance">
+<code class="descclassname">shakemap.grind.distance.</code><code class="descname">get_distance</code><span class="sig-paren">(</span><em>methods</em>, <em>lat</em>, <em>lon</em>, <em>dep</em>, <em>source</em>, <em>use_median_distance=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/distance.html#get_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.distance.get_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distance using any one of a number of distance measures.
+One of quadlist OR hypo must be specified. The following table gives
+the allowed distance strings and a description of each.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">String</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>repi</td>
+<td>Distance to epicenter.</td>
+</tr>
+<tr class="row-odd"><td>rhypo</td>
+<td>Distance to hypocenter.</td>
+</tr>
+<tr class="row-even"><td>rjb</td>
+<td>Joyner-Boore distance; this is closest distance to the
+surface projection of the rupture plane.</td>
+</tr>
+<tr class="row-odd"><td>rrup</td>
+<td>Rupture distance; closest distance to the rupture plane.</td>
+</tr>
+<tr class="row-even"><td>rx</td>
+<td>Strike-normal distance; same as GC2 coordiante T.</td>
+</tr>
+<tr class="row-odd"><td>ry</td>
+<td>Strike-parallel distance; same as GC2 coordiante U, but
+with a shift in origin definition. See Spudich and Chiou
+(2015) <a class="reference external" href="http://dx.doi.org/10.3133/ofr20151028">http://dx.doi.org/10.3133/ofr20151028</a>.</td>
+</tr>
+<tr class="row-even"><td>ry0</td>
+<td>Horizontal distance off the end of the rupture measured
+parallel to strike. Can only be zero or positive. We
+compute this as a function of GC2 coordinate U.</td>
+</tr>
+<tr class="row-odd"><td>U</td>
+<td>GC2 coordinate U.</td>
+</tr>
+<tr class="row-even"><td>T</td>
+<td>GC2 coordinate T.</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>methods</strong> &#8211; List of strings (or just a string) of distances to compute.</li>
+<li><strong>lat</strong> &#8211; A numpy array of latitudes.</li>
+<li><strong>lon</strong> &#8211; A numpy array of longidues.</li>
+<li><strong>dep</strong> &#8211; A numpy array of depths (km).</li>
+<li><strong>source</strong> &#8211; source instance.</li>
+<li><strong>use_median_distance</strong> &#8211; Boolean; only used if GMPE requests fault distances and not fault is
+availalbe. Default is True, meaning that point-source distances are
+adjusted based on magnitude to get the median fault distance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary of numpy array of distances, size of lon.shape</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.grind.fault.html" class="btn btn-neutral float-right" title="shakemap.grind.fault module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.grind.directivity.rowshandel2013.html" class="btn btn-neutral" title="shakemap.grind.directivity.rowshandel2013 module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.6.20',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

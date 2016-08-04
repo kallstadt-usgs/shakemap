@@ -11,54 +11,14 @@ Subpackages
 Submodules
 ----------
 
-shakemap.utils.conf module
---------------------------
+.. toctree::
 
-.. automodule:: shakemap.utils.conf
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.utils.ecef module
---------------------------
-
-.. automodule:: shakemap.utils.ecef
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.utils.exception module
--------------------------------
-
-.. automodule:: shakemap.utils.exception
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.utils.misc module
---------------------------
-
-.. automodule:: shakemap.utils.misc
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.utils.timeutils module
--------------------------------
-
-.. automodule:: shakemap.utils.timeutils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.utils.vector module
-----------------------------
-
-.. automodule:: shakemap.utils.vector
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.utils.conf
+   shakemap.utils.ecef
+   shakemap.utils.exception
+   shakemap.utils.misc
+   shakemap.utils.timeutils
+   shakemap.utils.vector
 
 Module contents
 ---------------

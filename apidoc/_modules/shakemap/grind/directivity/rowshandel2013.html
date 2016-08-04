@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shakemap.grind.directivity.rowshandel2013 &mdash; shakemap v0.1dev-147-gc048d93 documentation</title>
+  <title>shakemap.grind.directivity.rowshandel2013 &mdash; shakemap 0.6.20 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="shakemap v0.1dev-147-gc048d93 documentation" href="../../../../index.html"/>
+    <link rel="top" title="shakemap 0.6.20 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                v0.1dev-147-gc048d93
+                0.6.20
               </div>
             
           
@@ -81,7 +81,40 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../shakemap.html">shakemap package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shakemap.html">shakemap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../shakemap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../shakemap.gmice.html">shakemap.gmice package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.gmice.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.gmice.html#module-shakemap.gmice">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../shakemap.grind.html">shakemap.grind package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.grind.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.grind.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.grind.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../shakemap.mapping.html">shakemap.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.mapping.html#module-shakemap.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../shakemap.transfer.html">shakemap.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.transfer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.transfer.html#module-shakemap.transfer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../shakemap.utils.html">shakemap.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../shakemap.utils.html#module-shakemap.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../shakemap.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -144,7 +177,7 @@
 <span class="kn">from</span> <span class="nn">shakemap.utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
 
 
-<div class="viewcode-block" id="Rowshandel2013"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013">[docs]</a><span class="k">class</span> <span class="nc">Rowshandel2013</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013">[docs]</a><span class="k">class</span> <span class="nc">Rowshandel2013</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements the Rowshandel (2013) directivity model. Note that the report</span>
 <span class="sd">    provides many options for computing the directivity factor and we have </span>
@@ -263,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__computeFd</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Rowshandel2013.fromSites"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.fromSites">[docs]</a>    <span class="k">def</span> <span class="nf">fromSites</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">a_weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<div class="viewcode-block" id="Rowshandel2013.fromSites"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.fromSites">[docs]</a>    <span class="k">def</span> <span class="nf">fromSites</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">a_weight</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                   <span class="n">mtype</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">simpleDT</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">centered</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Construct a rowshandel2013 instance from a sites instance.</span>
 
@@ -306,7 +339,7 @@
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span>
                    <span class="n">a_weight</span><span class="p">,</span> <span class="n">mtype</span><span class="p">,</span> <span class="n">simpleDT</span><span class="p">,</span> <span class="n">centered</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rowshandel2013.getFd"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getFd">[docs]</a>    <span class="k">def</span> <span class="nf">getFd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013.getFd"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getFd">[docs]</a>    <span class="k">def</span> <span class="nf">getFd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Numpy array of Fd; this is the directivity amplification factor</span>
@@ -314,7 +347,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rowshandel2013.getXiPrime"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getXiPrime">[docs]</a>    <span class="k">def</span> <span class="nf">getXiPrime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013.getXiPrime"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getXiPrime">[docs]</a>    <span class="k">def</span> <span class="nf">getXiPrime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns: </span>
 <span class="sd">            Numpy array of Xi&#39;; this is the variable that accounts for geometric</span>
@@ -322,21 +355,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xi_prime</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rowshandel2013.getDT"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getDT">[docs]</a>    <span class="k">def</span> <span class="nf">getDT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013.getDT"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getDT">[docs]</a>    <span class="k">def</span> <span class="nf">getDT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">           Numpy array of the distance taper factor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_DT</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rowshandel2013.getWP"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getWP">[docs]</a>    <span class="k">def</span> <span class="nf">getWP</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013.getWP"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getWP">[docs]</a>    <span class="k">def</span> <span class="nf">getWP</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Numpy array of the narrow-band multiplier. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_WP</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rowshandel2013.getLD"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getLD">[docs]</a>    <span class="k">def</span> <span class="nf">getLD</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rowshandel2013.getLD"><a class="viewcode-back" href="../../../../shakemap.grind.directivity.rowshandel2013.html#shakemap.grind.directivity.rowshandel2013.Rowshandel2013.getLD">[docs]</a>    <span class="k">def</span> <span class="nf">getLD</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:</span>
 <span class="sd">            Numpy array of the rupture length de-normalization factor. </span>
@@ -834,7 +867,6 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Bruce Worden, Eric Thompson, Mike Hearne.
 
     </p>
   </div>
@@ -856,7 +888,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'v0.1dev-147-gc048d93',
+            VERSION:'0.6.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -1,0 +1,7 @@
+shakemap.utils.timeutils module
+===============================
+
+.. automodule:: shakemap.utils.timeutils
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -4,22 +4,10 @@ shakemap.grind.directivity package
 Submodules
 ----------
 
-shakemap.grind.directivity.bayless2013 module
----------------------------------------------
+.. toctree::
 
-.. automodule:: shakemap.grind.directivity.bayless2013
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shakemap.grind.directivity.rowshandel2013 module
-------------------------------------------------
-
-.. automodule:: shakemap.grind.directivity.rowshandel2013
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   shakemap.grind.directivity.bayless2013
+   shakemap.grind.directivity.rowshandel2013
 
 Module contents
 ---------------

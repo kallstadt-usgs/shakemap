@@ -1,0 +1,7 @@
+shakemap.transfer.ftpsender module
+==================================
+
+.. automodule:: shakemap.transfer.ftpsender
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+shakemap.grind.correlation.goda_atkinson_2010 module
+====================================================
+
+.. automodule:: shakemap.grind.correlation.goda_atkinson_2010
+    :members:
+    :undoc-members:
+    :show-inheritance:
