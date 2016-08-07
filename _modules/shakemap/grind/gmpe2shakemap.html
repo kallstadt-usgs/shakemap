@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.gmpe2shakemap &mdash; ShakeMap Documentation  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ShakeMap Documentation  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ShakeMap Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual_index.html">ShakeMap Manual 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html">ShakeMap 4.0 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">ShakeMap Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.grind.gmpe2shakemap</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.grind.gmpe2shakemap</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Routines to convert GMPE amps to/from ShakeMap values</span>
+<span class="sd">GMPE amps are in ln(g), in an IMC of their choosing</span>
+<span class="sd">ShakeMap amps are %g and max horizontal</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">shakemap.grind.conversions.imc.beyer_bommer_2006</span> <span class="kn">import</span> <span class="n">BeyerBommer2006</span> <span class="k">as</span> <span class="n">bb06</span>
+
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.imt</span> <span class="kn">import</span> <span class="n">PGA</span><span class="p">,</span> <span class="n">PGV</span><span class="p">,</span> <span class="n">SA</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib</span> <span class="kn">import</span> <span class="n">const</span>
+
+
+<div class="viewcode-block" id="ampShakeMapToGMPE"><a class="viewcode-back" href="../../../shakemap.grind.gmpe2shakemap.html#shakemap.grind.gmpe2shakemap.ampShakeMapToGMPE">[docs]</a><span class="k">def</span> <span class="nf">ampShakeMapToGMPE</span><span class="p">(</span><span class="n">sm_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert Shakemap ground motion amplitudes to match the </span>
+<span class="sd">    and intensity measure component</span>
+<span class="sd">    (`IMC &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__)</span>
+<span class="sd">    of a GMPE and convert from linear to natural log units. </span>
+
+<span class="sd">    :param sa_amps:</span>
+<span class="sd">        Numpy array of ground motion amplitudes. </span>
+<span class="sd">    :param gmpe:</span>
+<span class="sd">        An Openquake `GMPE &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__. </span>
+<span class="sd">    :param imt:</span>
+<span class="sd">        An Openquake `IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__. </span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Numpy array of converted ground motion amplitudes. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">PGV</span><span class="p">):</span>
+        <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">sm_amps</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">sm_amps</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">bb06</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span>
+                                 <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+    <span class="n">gmpe_amps</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_distribution_values</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gmpe_amps</span></div>
+
+
+<div class="viewcode-block" id="ampGmpeToShakeMap"><a class="viewcode-back" href="../../../shakemap.grind.gmpe2shakemap.html#shakemap.grind.gmpe2shakemap.ampGmpeToShakeMap">[docs]</a><span class="k">def</span> <span class="nf">ampGmpeToShakeMap</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert ground motion amplitudes from a GMPE to match the </span>
+<span class="sd">    and intensity measure component</span>
+<span class="sd">    (`IMC &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__)</span>
+<span class="sd">    used by Shakemap and convert from natural log to linear units. </span>
+
+<span class="sd">    :param gmpe_amps:</span>
+<span class="sd">        Numpy array of ground motion amplitudes from a GMPE. </span>
+<span class="sd">    :param gmpe:</span>
+<span class="sd">        An Openquake `GMPE &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__. </span>
+<span class="sd">    :param imt:</span>
+<span class="sd">        An Openquake `IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__. </span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Numpy array of converted ground motion amplitudes. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sm_amps</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_imt_unit_values</span><span class="p">(</span><span class="n">gmpe_amps</span><span class="p">)</span>
+    <span class="n">sm_amps</span> <span class="o">=</span> <span class="n">bb06</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">sm_amps</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span>
+                               <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">PGV</span><span class="p">):</span>
+        <span class="n">sm_amps</span> <span class="o">*=</span> <span class="mi">100</span>
+
+    <span class="k">return</span> <span class="n">sm_amps</span></div>
+
+
+<div class="viewcode-block" id="sigmaShakeMapToGMPE"><a class="viewcode-back" href="../../../shakemap.grind.gmpe2shakemap.html#shakemap.grind.gmpe2shakemap.sigmaShakeMapToGMPE">[docs]</a><span class="k">def</span> <span class="nf">sigmaShakeMapToGMPE</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert Shakemap ground motion standard deviations to match the </span>
+<span class="sd">    intensity measure type </span>
+<span class="sd">    (`IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__)</span>
+<span class="sd">    and intensity measure component</span>
+<span class="sd">    (`IMC &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__)</span>
+<span class="sd">    of a GMPE. </span>
+
+<span class="sd">    :param sa_sigmas:</span>
+<span class="sd">        Numpy array of ground motion standard deviations. </span>
+<span class="sd">    :param gmpe:</span>
+<span class="sd">        An Openquake `GMPE &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__. </span>
+<span class="sd">    :param imt:</span>
+<span class="sd">        An Openquake `IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__. </span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Numpy array of converted ground motion standard deviations. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">gmpe_sigmas</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_distribution_values</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">)</span>
+    <span class="n">gmpe_sigmas</span> <span class="o">=</span> <span class="n">bb06</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span>
+                                     <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gmpe_sigmas</span></div>
+
+
+<div class="viewcode-block" id="sigmaGmpeToShakeMap"><a class="viewcode-back" href="../../../shakemap.grind.gmpe2shakemap.html#shakemap.grind.gmpe2shakemap.sigmaGmpeToShakeMap">[docs]</a><span class="k">def</span> <span class="nf">sigmaGmpeToShakeMap</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert ground motion standard deviations from a GMPE to match the </span>
+<span class="sd">    intensity measure type </span>
+<span class="sd">    (`IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__)</span>
+<span class="sd">    and intensity measure component</span>
+<span class="sd">    (`IMC &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__)</span>
+<span class="sd">    used by Shakemap. </span>
+
+<span class="sd">    :param gmpe_sigmas:</span>
+<span class="sd">        Numpy array of ground motion standard deviations from a GMPE. </span>
+<span class="sd">    :param gmpe:</span>
+<span class="sd">        An Openquake `GMPE &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__. </span>
+<span class="sd">    :param imt:</span>
+<span class="sd">        An Openquake `IMT &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`__. </span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Numpy array of converted ground motion standard deviations. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sm_sigmas</span> <span class="o">=</span> <span class="n">bb06</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">gmpe_sigmas</span><span class="p">,</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span><span class="p">,</span>
+                                   <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+    <span class="n">sm_sigmas</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">to_imt_unit_values</span><span class="p">(</span><span class="n">sm_sigmas</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sm_sigmas</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+shakemap.transfer
+=========================
+
+Submodules
+
+.. toctree::
+
+   shakemap.transfer.copysender
+   shakemap.transfer.ftpsender
+   shakemap.transfer.pdlsender
+   shakemap.transfer.securesender
+   shakemap.transfer.sender
+
+Module contents
+
+.. automodule:: shakemap.transfer
+    :members:
+    :undoc-members:
+    :show-inheritance:

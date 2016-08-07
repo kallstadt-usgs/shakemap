@@ -1,0 +1,1119 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.distance &mdash; ShakeMap Documentation  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ShakeMap Documentation  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ShakeMap Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual_index.html">ShakeMap Manual 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html">ShakeMap 4.0 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">ShakeMap Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.grind.distance</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.grind.distance</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># stdlib imports</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="kn">as</span> <span class="nn">it</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># third party imports</span>
+<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span>
+<span class="kn">from</span> <span class="nn">..utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">.fault</span> <span class="kn">import</span> <span class="n">get_quad_length</span>
+<span class="kn">from</span> <span class="nn">.source</span> <span class="kn">import</span> <span class="n">rake_to_mech</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span><span class="p">,</span> <span class="n">geodetic</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.utils</span> <span class="kn">import</span> <span class="n">get_orthographic_projection</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim.base</span> <span class="kn">import</span> <span class="n">GMPE</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="kn">as</span> <span class="nn">spint</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># local imports</span>
+<span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>
+
+
+<div class="viewcode-block" id="Distance"><a class="viewcode-back" href="../../../shakemap.grind.distance.html#shakemap.grind.distance.Distance">[docs]</a><span class="k">class</span> <span class="nc">Distance</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for distance calculations. Primary method is &#39;get_distance&#39;. </span>
+<span class="sd">    To gracefully handle multiple segment ruptures, many of the distances</span>
+<span class="sd">    are based on the Spudich and Chiou (2015) GC2 coordinate system. </span>
+
+
+<span class="sd">    References: </span>
+<span class="sd">        Spudich, Paul and Chiou, Brian, 2015, Strike-parallel and strike-normal</span>
+<span class="sd">        coordinate system around geometrically complicated rupture traces—Use by</span>
+<span class="sd">        NGA-West2 and further improvements: U.S. Geological Survey Open-File</span>
+<span class="sd">        Report 2015-1028, 20 p., http://dx.doi.org/10.3133/ofr20151028.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param gmpe:</span>
+<span class="sd">            Concrete subclass of GMPE</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__;</span>
+<span class="sd">            can be individual instance or list of instances.</span>
+<span class="sd">        :param source:</span>
+<span class="sd">            Shakemap Source instance. For point-source distances (Repi, Rhyp) the</span>
+<span class="sd">            hypocenter is taken from the source instance. The finite-fault </span>
+<span class="sd">            distances (Rrup, Rjb, ...), are based on the fault representation in</span>
+<span class="sd">            the source instance if available. If a Fault instance is unavailalbe, </span>
+<span class="sd">            the finite-fault distances are computed from point-source distances, </span>
+<span class="sd">            in which case the earthquake manitude from the Source instance is </span>
+<span class="sd">            required for median distance corrections if use_median_distance is </span>
+<span class="sd">            True.</span>
+<span class="sd">        :param lat:</span>
+<span class="sd">            A numpy array of site latitudes.</span>
+<span class="sd">        :param lon:</span>
+<span class="sd">            A numpy array of site longitudes.</span>
+<span class="sd">        :param dep:</span>
+<span class="sd">            A numpy array of site depths (km); down is positive. </span>
+<span class="sd">        :param use_median_distance:</span>
+<span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
+<span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
+<span class="sd">            adjusted based on magnitude to get the median fault distance.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Distance object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distance_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calcDistanceContext</span><span class="p">(</span>
+            <span class="n">gmpe</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Distance.fromSites"><a class="viewcode-back" href="../../../shakemap.grind.distance.html#shakemap.grind.distance.Distance.fromSites">[docs]</a>    <span class="k">def</span> <span class="nf">fromSites</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience class method to construct a Distance object from a sites object.</span>
+
+<span class="sd">        :param gmpe:</span>
+<span class="sd">            Concrete subclass of GMPE</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__;</span>
+<span class="sd">            can be individual instance or list of instances.</span>
+<span class="sd">        :param source:</span>
+<span class="sd">            Shakeamp Source object.</span>
+<span class="sd">        :param sites:</span>
+<span class="sd">            Shakemap Sites object.</span>
+<span class="sd">        :param use_median_distance:</span>
+<span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
+<span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
+<span class="sd">            adjusted based on magnitude to get the median fault distance.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Distance object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sm_dict</span> <span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">_GeoDict</span>
+        <span class="n">west</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">xmin</span>
+        <span class="n">east</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">xmax</span>
+        <span class="n">south</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">ymin</span>
+        <span class="n">north</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">ymax</span>
+        <span class="n">nx</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">nx</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="n">sm_dict</span><span class="o">.</span><span class="n">ny</span>
+        <span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+        <span class="n">lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">west</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">)</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">gmpe</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">use_median_distance</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Distance.getDistanceContext"><a class="viewcode-back" href="../../../shakemap.grind.distance.html#shakemap.grind.distance.Distance.getDistanceContext">[docs]</a>    <span class="k">def</span> <span class="nf">getDistanceContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Openquake distance context</span>
+<span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html?highlight=distancescontext#openquake.hazardlib.gsim.base.DistancesContext&gt;`__.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_distance_context</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Distance.getSource"><a class="viewcode-back" href="../../../shakemap.grind.distance.html#shakemap.grind.distance.Distance.getSource">[docs]</a>    <span class="k">def</span> <span class="nf">getSource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Shakemap Source object. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_calcDistanceContext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmpe</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span>
+                             <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a DistancesContext object.</span>
+
+<span class="sd">        :param gmpe:</span>
+<span class="sd">            Concrete subclass of GMPE</span>
+<span class="sd">            (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/gsim/base.py)</span>
+<span class="sd">            can be individual instance or list of instances.</span>
+<span class="sd">        :param lat:</span>
+<span class="sd">            Numpy array of latitudes.</span>
+<span class="sd">        :param lon:</span>
+<span class="sd">            Numpy array of longitudes.</span>
+<span class="sd">        :param dep:</span>
+<span class="sd">            Numpy array of depths (km).</span>
+<span class="sd">        :param use_median_distance:</span>
+<span class="sd">            Boolean; only used if GMPE requests fault distances and not fault is</span>
+<span class="sd">            availalbe. Default is True, meaning that point-source distances are</span>
+<span class="sd">            adjusted based on magnitude to get the median fault distance.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            DistancesContext object with distance grids required by input gmpe(s).</span>
+<span class="sd">        :raises TypeError:</span>
+<span class="sd">            if gmpe is not a subclass of GMPE</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gmpe</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">gmpe</span> <span class="o">=</span> <span class="p">[</span><span class="n">gmpe</span><span class="p">]</span>
+
+        <span class="c1"># require rhypo always</span>
+        <span class="n">requires</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;rhypo&#39;</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ig</span> <span class="ow">in</span> <span class="n">gmpe</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">GMPE</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s1">&#39;getDistanceContext() cannot work with objects of type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">ig</span><span class="p">))</span>
+            <span class="n">requires</span> <span class="o">=</span> <span class="n">requires</span> <span class="o">|</span> <span class="n">ig</span><span class="o">.</span><span class="n">REQUIRES_DISTANCES</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">DistancesContext</span><span class="p">()</span>
+
+        <span class="n">ddict</span> <span class="o">=</span> <span class="n">get_distance</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">requires</span><span class="p">),</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">,</span>
+                             <span class="n">use_median_distance</span><span class="o">=</span><span class="n">use_median_distance</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">requires</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)[</span><span class="n">method</span><span class="p">]</span> <span class="o">=</span> <span class="n">ddict</span><span class="p">[</span><span class="n">method</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="get_distance"><a class="viewcode-back" href="../../../shakemap.grind.distance.html#shakemap.grind.distance.get_distance">[docs]</a><span class="k">def</span> <span class="nf">get_distance</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span>
+                 <span class="n">use_median_distance</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate distance using any one of a number of distance measures.</span>
+<span class="sd">    One of quadlist OR hypo must be specified. The following table gives</span>
+<span class="sd">    the allowed distance strings and a description of each. </span>
+
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | String | Description                                              |</span>
+<span class="sd">    +========+==========================================================+</span>
+<span class="sd">    | repi   | Distance to epicenter.                                   |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rhypo  | Distance to hypocenter.                                  |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rjb    | Joyner-Boore distance; this is closest distance to the   |</span>
+<span class="sd">    |        | surface projection of the rupture plane.                 |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rrup   | Rupture distance; closest distance to the rupture plane. |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | rx     | Strike-normal distance; same as GC2 coordiante T.        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | ry     | Strike-parallel distance; same as GC2 coordiante U, but  |</span>
+<span class="sd">    |        | with a shift in origin definition. See Spudich and Chiou |</span>
+<span class="sd">    |        | (2015) http://dx.doi.org/10.3133/ofr20151028.            |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | ry0    | Horizontal distance off the end of the rupture measured  |</span>
+<span class="sd">    |        | parallel to strike. Can only be zero or positive. We     |</span>
+<span class="sd">    |        | compute this as a function of GC2 coordinate U.          |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | U      | GC2 coordinate U.                                        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+<span class="sd">    | T      | GC2 coordinate T.                                        |</span>
+<span class="sd">    +--------+----------------------------------------------------------+</span>
+
+<span class="sd">    :param methods:</span>
+<span class="sd">        List of strings (or just a string) of distances to compute.</span>
+<span class="sd">    :param lat:</span>
+<span class="sd">       A numpy array of latitudes.</span>
+<span class="sd">    :param lon:</span>
+<span class="sd">       A numpy array of longidues.</span>
+<span class="sd">    :param dep:</span>
+<span class="sd">       A numpy array of depths (km).</span>
+<span class="sd">    :param source:</span>
+<span class="sd">       source instance.</span>
+<span class="sd">    :param use_median_distance:</span>
+<span class="sd">        Boolean; only used if GMPE requests fault distances and not fault is</span>
+<span class="sd">        availalbe. Default is True, meaning that point-source distances are</span>
+<span class="sd">        adjusted based on magnitude to get the median fault distance.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">       dictionary of numpy array of distances, size of lon.shape</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fault</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">getFault</span><span class="p">()</span>
+    <span class="n">hypo</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">getHypo</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">fault</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">quadlist</span> <span class="o">=</span> <span class="n">fault</span><span class="o">.</span><span class="n">getQuadrilaterals</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">quadlist</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c1"># Dictionary for holding the distances</span>
+    <span class="n">distdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">methods</span><span class="p">]</span>
+
+    <span class="n">methods_available</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">,</span> <span class="s1">&#39;rhypo&#39;</span><span class="p">,</span> <span class="s1">&#39;rjb&#39;</span><span class="p">,</span> <span class="s1">&#39;rrup&#39;</span><span class="p">,</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;ry0&#39;</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">methods_available</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;One or more requested distance method is not &#39;</span>
+            <span class="s1">&#39;valid or is not implemented yet&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">dep</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s1">&#39;lat, lon, and dep must have the same shape.&#39;</span><span class="p">)</span>
+
+    <span class="n">oldshape</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">newshape</span> <span class="o">=</span> <span class="p">(</span><span class="n">oldshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">oldshape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">newshape</span> <span class="o">=</span> <span class="p">(</span><span class="n">oldshape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">latlon2ecef</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">dep</span><span class="p">)</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">newshape</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">newshape</span>
+        <span class="n">z</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">newshape</span>
+        <span class="n">sites_ecef</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+
+    <span class="c1"># ---------------------------------------------</span>
+    <span class="c1"># Distances that do not require loop over quads</span>
+    <span class="c1"># ---------------------------------------------</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;repi&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">))</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">))</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;ry0&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">))</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">))</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;T&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">))</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;U&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">hypo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s1">&#39;Cannot calculate epicentral distance &#39;</span>
+                                    <span class="s1">&#39;without a point object&#39;</span><span class="p">)</span>
+        <span class="n">repidist</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">hypo</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">hypo</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                                     <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">dep</span><span class="p">)</span>
+        <span class="n">repidist</span> <span class="o">=</span> <span class="n">repidist</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+        <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">repidist</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rhypo&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
+       <span class="p">((</span><span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">quadlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">hypo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s1">&#39;Cannot calculate epicentral distance &#39;</span>
+                                    <span class="s1">&#39;without a point object&#39;</span><span class="p">)</span>
+        <span class="n">rhypodist</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span>
+            <span class="n">hypo</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">hypo</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">hypo</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">dep</span><span class="p">)</span>
+        <span class="n">rhypodist</span> <span class="o">=</span> <span class="n">rhypodist</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+        <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rhypo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rhypodist</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Loop over quadlist for those distances that require loop</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="k">if</span> <span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+        <span class="n">minrrup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">newshape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e16</span>
+    <span class="k">if</span> <span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+        <span class="n">minrjb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">newshape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e16</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;ry&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
+       <span class="p">(</span><span class="s1">&#39;ry0&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;U&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;T&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">):</span>
+        <span class="n">totweight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">newshape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">GC2T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">newshape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">GC2U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">newshape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">quadlist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># For these distances, we need to sort out strike discordance and nominal</span>
+            <span class="c1"># strike prior to starting the loop if there are more than one</span>
+            <span class="c1"># segments</span>
+            <span class="n">segind</span> <span class="o">=</span> <span class="n">fault</span><span class="o">.</span><span class="n">_getSegmentIndex</span><span class="p">()</span>
+            <span class="n">segindnp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">segind</span><span class="p">)</span>
+            <span class="n">uind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">segind</span><span class="p">)</span>
+            <span class="n">nseg</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uind</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nseg</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">quadlist</span> <span class="o">=</span> <span class="n">fault</span><span class="o">.</span><span class="n">getQuadrilaterals</span><span class="p">()</span>
+                <span class="c1"># Need to get index of first and last quad</span>
+                <span class="c1"># for each segment</span>
+                <span class="n">iq0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nseg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+                <span class="n">iq1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nseg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">uind</span><span class="p">:</span>
+                    <span class="n">ii</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">segind</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">uind</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+                    <span class="n">iq0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ii</span><span class="p">))</span>
+                    <span class="n">iq1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ii</span><span class="p">))</span>
+
+                <span class="n">it_seg</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">uind</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                    <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+                <span class="n">dist_save</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">it_seg</span><span class="p">:</span>
+                    <span class="n">s0ind</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">s1ind</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">p0ind</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">p1ind</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">p0ind</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">P0</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq0</span><span class="p">[</span><span class="n">s0ind</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">P0</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq1</span><span class="p">[</span><span class="n">s0ind</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">p1ind</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">P1</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq1</span><span class="p">[</span><span class="n">s1ind</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">P1</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq0</span><span class="p">[</span><span class="n">s1ind</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                                             <span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="n">dist_save</span><span class="p">:</span>
+                        <span class="n">dist_save</span> <span class="o">=</span> <span class="n">dist</span>
+                        <span class="n">A0</span> <span class="o">=</span> <span class="n">P0</span>
+                        <span class="n">A1</span> <span class="o">=</span> <span class="n">P1</span>
+
+                <span class="n">A0</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">A1</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">p_origin</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">A0</span><span class="p">)</span>
+                <span class="n">a0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">A0</span><span class="p">)</span>
+                <span class="n">a1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">A1</span><span class="p">)</span>
+                <span class="n">ahat</span> <span class="o">=</span> <span class="p">(</span><span class="n">a1</span> <span class="o">-</span> <span class="n">a0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+                <span class="c1"># Loop over traces</span>
+                <span class="n">e_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nseg</span><span class="p">)</span>
+                <span class="n">b_prime</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">nseg</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nseg</span><span class="p">):</span>
+                    <span class="n">P0</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq0</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">P1</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">iq1</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">P0</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">P1</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+                    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+                    <span class="n">b_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+                    <span class="n">e_j</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ahat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b_prime</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">e_j</span><span class="p">)</span>
+                <span class="c1"># List of discordancy</span>
+                <span class="n">dc</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">e_j</span><span class="p">]</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nseg</span><span class="p">):</span>
+                    <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">b_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">dc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">b_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">dc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">b</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">b_prime</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">dc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">bhat</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">quadlist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="c1"># Length of prior segments</span>
+        <span class="n">s_i</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">l_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">quadlist</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">quadlist</span><span class="p">)):</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quadlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+                <span class="n">rrupdist</span> <span class="o">=</span> <span class="n">_calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
+                <span class="n">minrrup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">minrrup</span><span class="p">,</span> <span class="n">rrupdist</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+                <span class="n">S0</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+                <span class="n">S1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+                <span class="n">S2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+                <span class="n">S3</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+                <span class="n">S0</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">S1</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">S2</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">S3</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">rjbdist</span> <span class="o">=</span> <span class="n">_calc_rupture_distance</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">S2</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">sites_ecef</span><span class="p">)</span>
+                <span class="n">minrjb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">minrjb</span><span class="p">,</span> <span class="n">rjbdist</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;ry&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
+               <span class="p">(</span><span class="s1">&#39;ry0&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;U&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;T&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">):</span>
+                <span class="c1"># Rx, Ry, and Ry0 are all computed if one is requested since</span>
+                <span class="c1"># they all require similar information for the weights. This</span>
+                <span class="c1"># isn&#39;t necessary for a single segment fault though.</span>
+                <span class="c1"># Note, we are basing these calculations on GC2 coordinates U</span>
+                <span class="c1"># and T as described in:</span>
+                <span class="c1"># Spudich and Chiou (2015)</span>
+                <span class="c1"># http://dx.doi.org/10.3133/ofr20151028.</span>
+
+                <span class="c1"># Compute u_i and t_i for this segment</span>
+                <span class="n">t_i</span> <span class="o">=</span> <span class="n">__calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+                <span class="n">u_i</span> <span class="o">=</span> <span class="n">__calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+
+                <span class="c1"># Quad length</span>
+                <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_quad_length</span><span class="p">(</span><span class="n">quadlist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+                <span class="c1"># Weight of segment, three cases</span>
+                <span class="c1"># Case 3: t_i == 0 and 0 &lt;= u_i &lt;= l_i</span>
+                <span class="n">w_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span>
+                <span class="c1"># Case 1:</span>
+                <span class="n">ix</span> <span class="o">=</span> <span class="n">t_i</span> <span class="o">!=</span> <span class="mi">0</span>
+                <span class="n">w_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">((</span><span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span>
+                                                        <span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="o">-</span><span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">/</span> <span class="n">t_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]))</span>
+                <span class="c1"># Case 2:</span>
+                <span class="n">ix</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">u_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">u_i</span> <span class="o">&gt;</span> <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">w_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">-</span> <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">u_i</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+
+                <span class="n">totweight</span> <span class="o">=</span> <span class="n">totweight</span> <span class="o">+</span> <span class="n">w_i</span>
+                <span class="n">GC2T</span> <span class="o">=</span> <span class="n">GC2T</span> <span class="o">+</span> <span class="n">w_i</span> <span class="o">*</span> <span class="n">t_i</span>
+                <span class="k">if</span> <span class="n">nseg</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">GC2U</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">+</span> <span class="n">w_i</span> <span class="o">*</span> <span class="p">(</span><span class="n">u_i</span> <span class="o">+</span> <span class="n">s_i</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">qind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">quadlist</span><span class="p">)))</span>
+                        <span class="n">l_kj</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">s_ij_1</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">l_kj</span> <span class="o">=</span> <span class="n">l_i</span><span class="p">[(</span><span class="n">segindnp</span> <span class="o">==</span> <span class="n">segindnp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">qind</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)]</span>
+                        <span class="n">s_ij_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">l_kj</span><span class="p">)</span>
+
+                    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">quadlist</span><span class="p">[</span><span class="n">iq0</span><span class="p">[</span><span class="n">segind</span><span class="p">[</span><span class="n">i</span><span class="p">]]][</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">s_ij_2</span> <span class="o">=</span> <span class="p">((</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p_origin</span><span class="p">)</span> <span class="o">*</span>
+                              <span class="n">dc</span><span class="p">[</span><span class="n">segind</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">bhat</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+                    <span class="n">s_ij</span> <span class="o">=</span> <span class="n">s_ij_1</span> <span class="o">+</span> <span class="n">s_ij_2</span>
+                    <span class="n">GC2U</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">+</span> <span class="n">w_i</span> <span class="o">*</span> <span class="p">(</span><span class="n">u_i</span> <span class="o">+</span> <span class="n">s_ij</span><span class="p">)</span>
+                <span class="n">s_i</span> <span class="o">=</span> <span class="n">s_i</span> <span class="o">+</span> <span class="n">l_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Collect distances from loop into the distance dict</span>
+        <span class="k">if</span> <span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">minrjb</span> <span class="o">=</span> <span class="n">minrjb</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rjb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">minrjb</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;ry&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> \
+           <span class="p">(</span><span class="s1">&#39;ry0&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;U&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;T&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">):</span>
+            <span class="c1"># Normalize by sum of quad weights</span>
+            <span class="n">GC2T</span> <span class="o">=</span> <span class="n">GC2T</span> <span class="o">/</span> <span class="n">totweight</span>
+            <span class="n">GC2U</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">/</span> <span class="n">totweight</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">GC2T</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">GC2U</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+
+            <span class="c1"># Take care of Rx</span>
+            <span class="n">Rx</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">GC2T</span><span class="p">)</span>  <span class="c1"># preserve sign (no absolute value)</span>
+            <span class="n">Rx</span> <span class="o">=</span> <span class="n">Rx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rx</span>
+
+            <span class="c1"># Ry</span>
+            <span class="n">Ry</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">-</span> <span class="n">s_i</span> <span class="o">/</span> <span class="mf">2.0</span>
+            <span class="n">Ry</span> <span class="o">=</span> <span class="n">Ry</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ry</span>
+
+            <span class="c1"># Ry0</span>
+            <span class="n">Ry0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">GC2U</span><span class="p">)</span>
+            <span class="n">ix</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="n">Ry0</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">GC2U</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">nseg</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">s_i</span> <span class="o">=</span> <span class="n">s_ij</span> <span class="o">+</span> <span class="n">l_i</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ix</span> <span class="o">=</span> <span class="n">GC2U</span> <span class="o">&gt;</span> <span class="n">s_i</span>
+            <span class="n">Ry0</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">GC2U</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">-</span> <span class="n">s_i</span>
+            <span class="n">Ry0</span> <span class="o">=</span> <span class="n">Ry0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;ry0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ry0</span>
+
+        <span class="k">if</span> <span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">minrrup</span> <span class="o">=</span> <span class="n">minrrup</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">oldshape</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rrup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">minrrup</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;rjb&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">use_median_distance</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;No fault; Replacing rjb with median rjb given M and repi.&#39;</span><span class="p">)</span>
+                <span class="n">cdir</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+
+                <span class="c1"># -------------------</span>
+                <span class="c1"># Sort out file names</span>
+                <span class="c1"># -------------------</span>
+                <span class="n">mech</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">getEventParam</span><span class="p">(</span><span class="s1">&#39;mech&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s1">&#39;_tectonic_region&#39;</span><span class="p">):</span>
+                    <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p0_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                    <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p0_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">source</span><span class="o">.</span><span class="n">_tectonic_region</span> <span class="o">==</span> <span class="s1">&#39;Active Shallow Crust&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;ALL&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p7_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p7_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;RS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechR_ar1p7_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechR_ar1p7_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;NM&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechN_ar1p7_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechN_ar1p7_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;SS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechSS_ar1p7_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechSS_ar1p7_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">source</span><span class="o">.</span><span class="n">_tectonic_region</span> <span class="o">==</span> <span class="s1">&#39;Stable Shallow Crust&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;ALL&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechA_ar1p0_seis0_15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechA_ar1p0_seis0_15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;RS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechR_ar1p0_seis0_15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechR_ar1p0_seis0_15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;NM&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechN_ar1p0_seis0_15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechN_ar1p0_seis0_15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;SS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechSS_ar1p0_seis0_15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_S14_mechSS_ar1p0_seis0_15_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;Unsupported tectonic region; using coefficients for unknown&#39;</span>
+                        <span class="s1">&#39;tectonic region.&#39;</span><span class="p">)</span>
+                    <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p0_seis0_20_Ratios.csv&quot;</span><span class="p">)</span>
+                    <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rjb_WC94_mechA_ar1p0_seis0_20_Var.csv&quot;</span><span class="p">)</span>
+
+                <span class="c1"># -----------------</span>
+                <span class="c1"># Start with ratios</span>
+                <span class="c1"># -----------------</span>
+                <span class="n">repi2rjb_ratios_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">rf</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                <span class="n">r2rrt_cols</span> <span class="o">=</span> <span class="n">repi2rjb_ratios_tbl</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="n">mag_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">(</span><span class="n">r2rrt_cols</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;R\d+\.*\d*&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+                        <span class="n">magnitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                            <span class="s1">&#39;R(\d+\.*\d*)&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">mag_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="n">mag_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mag_list</span><span class="p">)</span>
+                <span class="n">dist_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">repi2rjb_ratios_tbl</span><span class="p">[</span><span class="s1">&#39;Repi_km&#39;</span><span class="p">]))</span>
+                <span class="n">repi2rjb_grid</span> <span class="o">=</span> <span class="n">repi2rjb_ratios_tbl</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">repi2rjb_obj</span> <span class="o">=</span> <span class="n">spint</span><span class="o">.</span><span class="n">RectBivariateSpline</span><span class="p">(</span>
+                    <span class="n">dist_list</span><span class="p">,</span> <span class="n">mag_list</span><span class="p">,</span> <span class="n">repi2rjb_grid</span><span class="p">,</span> <span class="n">kx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ky</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">def</span> <span class="nf">repi2rjb_tbl</span><span class="p">(</span><span class="n">repi</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+                    <span class="n">ratio</span> <span class="o">=</span> <span class="n">repi2rjb_obj</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">repi</span><span class="p">),</span> <span class="n">M</span><span class="p">)</span>
+                    <span class="n">rjb</span> <span class="o">=</span> <span class="n">repi</span> <span class="o">*</span> <span class="n">ratio</span>
+                    <span class="k">return</span> <span class="n">rjb</span>
+                <span class="n">repis</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span>
+                <span class="n">mags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">repis</span><span class="p">)</span> <span class="o">*</span> <span class="n">source</span><span class="o">.</span><span class="n">getEventParam</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">)</span>
+                <span class="n">rjb_hat</span> <span class="o">=</span> <span class="n">repi2rjb_tbl</span><span class="p">(</span><span class="n">repis</span><span class="p">,</span> <span class="n">mags</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rjb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rjb_hat</span>
+                <span class="c1"># -------------------</span>
+                <span class="c1"># Additional Variance</span>
+                <span class="c1"># -------------------</span>
+                <span class="n">repi2rjbvar_ratios_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">vf</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                <span class="n">repi2rjbvar_grid</span> <span class="o">=</span> <span class="n">repi2rjbvar_ratios_tbl</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">repi2rjbvar_obj</span> <span class="o">=</span> <span class="n">spint</span><span class="o">.</span><span class="n">RectBivariateSpline</span><span class="p">(</span>
+                    <span class="n">dist_list</span><span class="p">,</span> <span class="n">mag_list</span><span class="p">,</span> <span class="n">repi2rjbvar_grid</span><span class="p">,</span> <span class="n">kx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ky</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">rjbvar</span> <span class="o">=</span> <span class="n">repi2rjbvar_obj</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">repis</span><span class="p">),</span> <span class="n">mags</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rjbvar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rjbvar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fault; Replacing rjb with repi&#39;</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rjb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;rrup&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">use_median_distance</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;No fault; Replacing rrup with median rrup given M and repi.&#39;</span><span class="p">)</span>
+                <span class="n">cdir</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+
+                <span class="c1"># -------------------</span>
+                <span class="c1"># Sort out file names</span>
+                <span class="c1"># -------------------</span>
+                <span class="n">rake</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">_event_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rake&#39;</span><span class="p">)</span>
+                <span class="n">mech</span> <span class="o">=</span> <span class="n">rake_to_mech</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s1">&#39;_tectonic_region&#39;</span><span class="p">):</span>
+                    <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p0_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                    <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p0_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">source</span><span class="o">.</span><span class="n">_tectonic_region</span> <span class="o">==</span> <span class="s1">&#39;Active Shallow Crust&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;ALL&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p7_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p7_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;RS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechR_ar1p7_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechR_ar1p7_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;NM&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechN_ar1p7_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechN_ar1p7_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;SS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechSS_ar1p7_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechSS_ar1p7_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">source</span><span class="o">.</span><span class="n">_tectonic_region</span> <span class="o">==</span> <span class="s1">&#39;Stable Shallow Crust&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;ALL&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechA_ar1p0_seis0-15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechA_ar1p0_seis0-15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;RS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechR_ar1p0_seis0-15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechR_ar1p0_seis0-15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;NM&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechN_ar1p0_seis0-15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechN_ar1p0_seis0-15_Var.csv&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mech</span> <span class="o">==</span> <span class="s1">&#39;SS&#39;</span><span class="p">:</span>
+                        <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechSS_ar1p0_seis0-15_Ratios.csv&quot;</span><span class="p">)</span>
+                        <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_S14_mechSS_ar1p0_seis0-15_Var.csv&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;Unsupported tectonic region; using coefficients for unknown&#39;</span>
+                        <span class="s1">&#39;tectonic region.&#39;</span><span class="p">)</span>
+                    <span class="n">rf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p0_seis0-20_Ratios.csv&quot;</span><span class="p">)</span>
+                    <span class="n">vf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">cdir</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;ps2ff&quot;</span><span class="p">,</span> <span class="s2">&quot;Rrup_WC94_mechA_ar1p0_seis0-20_Var.csv&quot;</span><span class="p">)</span>
+
+                <span class="c1"># -----------------</span>
+                <span class="c1"># Start with ratios</span>
+                <span class="c1"># -----------------</span>
+                <span class="n">repi2rrup_ratios_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">rf</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                <span class="n">r2rrt_cols</span> <span class="o">=</span> <span class="n">repi2rrup_ratios_tbl</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="n">mag_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">(</span><span class="n">r2rrt_cols</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;R\d+\.*\d*&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+                        <span class="n">magnitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                            <span class="s1">&#39;R(\d+\.*\d*)&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">mag_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="n">mag_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mag_list</span><span class="p">)</span>
+                <span class="n">dist_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">repi2rrup_ratios_tbl</span><span class="p">[</span><span class="s1">&#39;Repi_km&#39;</span><span class="p">]))</span>
+                <span class="n">repi2rrup_grid</span> <span class="o">=</span> <span class="n">repi2rrup_ratios_tbl</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">repi2rrup_obj</span> <span class="o">=</span> <span class="n">spint</span><span class="o">.</span><span class="n">RectBivariateSpline</span><span class="p">(</span>
+                    <span class="n">dist_list</span><span class="p">,</span> <span class="n">mag_list</span><span class="p">,</span> <span class="n">repi2rrup_grid</span><span class="p">,</span> <span class="n">kx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ky</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">def</span> <span class="nf">repi2rrup_tbl</span><span class="p">(</span><span class="n">repi</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+                    <span class="n">ratio</span> <span class="o">=</span> <span class="n">repi2rrup_obj</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">repi</span><span class="p">),</span> <span class="n">M</span><span class="p">)</span>
+                    <span class="n">rrup</span> <span class="o">=</span> <span class="n">repi</span> <span class="o">*</span> <span class="n">ratio</span>
+                    <span class="k">return</span> <span class="n">rrup</span>
+                <span class="n">repis</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span>
+                <span class="n">mags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">repis</span><span class="p">)</span> <span class="o">*</span> <span class="n">source</span><span class="o">.</span><span class="n">getEventParam</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">)</span>
+                <span class="n">rrup_hat</span> <span class="o">=</span> <span class="n">repi2rrup_tbl</span><span class="p">(</span><span class="n">repis</span><span class="p">,</span> <span class="n">mags</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rrup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rrup_hat</span>
+
+                <span class="c1"># -------------------</span>
+                <span class="c1"># Additional Variance</span>
+                <span class="c1"># -------------------</span>
+                <span class="n">repi2rrupvar_ratios_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">vf</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                <span class="n">repi2rrupvar_grid</span> <span class="o">=</span> <span class="n">repi2rrupvar_ratios_tbl</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">repi2rrupvar_obj</span> <span class="o">=</span> <span class="n">spint</span><span class="o">.</span><span class="n">RectBivariateSpline</span><span class="p">(</span>
+                    <span class="n">dist_list</span><span class="p">,</span> <span class="n">mag_list</span><span class="p">,</span> <span class="n">repi2rrupvar_grid</span><span class="p">,</span> <span class="n">kx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ky</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">rrupvar</span> <span class="o">=</span> <span class="n">repi2rrupvar_obj</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">repis</span><span class="p">),</span> <span class="n">mags</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rrupvar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rrupvar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fault; Replacing rrup with rhypo&#39;</span><span class="p">)</span>
+                <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rrup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rhypo&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;rx&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fault; Setting Rx to zero.&#39;</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;ry0&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fault; Replacing ry0 with repi&#39;</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;ry0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;ry&#39;</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fault; Replacing ry with repi&#39;</span><span class="p">)</span>
+            <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distdict</span><span class="p">[</span><span class="s1">&#39;repi&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">distdict</span></div>
+
+
+<span class="k">def</span> <span class="nf">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the distance^2 from the origin to a segment defined by two vectors</span>
+
+<span class="sd">    :param p0: </span>
+<span class="sd">        Numpy array Nx3 (ECEF).</span>
+<span class="sd">    :param p1: </span>
+<span class="sd">        Numpy array Nx3 (ECEF).</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        The squared distance from the origin to a segment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># /*</span>
+    <span class="c1">#  * This algorithm is from (Vince&#39;s) CS1 class.</span>
+    <span class="c1">#  * It returns the distance^2 from the origin to a segment defined</span>
+    <span class="c1">#  * by two vectors</span>
+    <span class="c1">#  */</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">p1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># /* Are the two points equal? */</span>
+    <span class="n">idx_equal</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">p1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span>
+        <span class="n">p0</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">p1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">p0</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">p1</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">idx_equal</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="n">idx_equal</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+                              <span class="n">p0</span><span class="p">[</span><span class="n">idx_equal</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p0</span><span class="p">[</span><span class="n">idx_equal</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+
+    <span class="c1"># /*</span>
+    <span class="c1">#  * C1 = c1/|v| is the projection of the origin O on line (P0,P1).</span>
+    <span class="c1">#  * If C1 is negative, then O is outside the segment and</span>
+    <span class="c1">#  * closer to the P0 side.</span>
+    <span class="c1">#  * If C1 is positive and &gt;V then O is on the other side.</span>
+    <span class="c1">#  * If C1 is positive and &lt;V then O is inside.</span>
+    <span class="c1">#  */</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">idx_neg</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">idx_neg</span><span class="p">]</span> <span class="o">=</span> <span class="n">p0</span><span class="p">[</span><span class="n">idx_neg</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p0</span><span class="p">[</span><span class="n">idx_neg</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p0</span><span class="p">[</span><span class="n">idx_neg</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">idx_less_c1</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">&lt;=</span> <span class="n">c1</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">idx_less_c1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">idx_less_c1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> \
+        <span class="n">p1</span><span class="p">[</span><span class="n">idx_less_c1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p1</span><span class="p">[</span><span class="n">idx_less_c1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">idx_other</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">idx_neg</span> <span class="o">|</span> <span class="n">idx_equal</span> <span class="o">|</span> <span class="n">idx_less_c1</span><span class="p">)</span>
+
+    <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">/</span> <span class="n">c2</span>
+    <span class="n">t1</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">+</span> <span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">t1</span><span class="p">)</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">idx_other</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> \
+        <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">tmp</span><span class="p">[</span><span class="n">idx_other</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">dist</span>
+
+<span class="c1"># call this once per quad</span>
+
+
+<span class="k">def</span> <span class="nf">_calc_rupture_distance</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the shortest distance from a set of points to a rupture surface.</span>
+
+<span class="sd">    :param P0:</span>
+<span class="sd">        Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param P1:</span>
+<span class="sd">        Point object, representing the second top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param P2:</span>
+<span class="sd">        Point object, representing the first bottom-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param P3:</span>
+<span class="sd">        Point object, representing the second bottom-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param points:</span>
+<span class="sd">        Numpy array Nx3 of points (ECEF) to calculate distance from.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Array of size N of distances (in km) from input points to rupture surface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert to ecef</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+
+    <span class="c1"># Make a unit vector normal to the plane</span>
+    <span class="n">normalVector</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="n">p0d</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span> <span class="o">-</span> <span class="n">points</span>
+    <span class="n">p1d</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span> <span class="o">-</span> <span class="n">points</span>
+    <span class="n">p2d</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span> <span class="o">-</span> <span class="n">points</span>
+    <span class="n">p3d</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span> <span class="o">-</span> <span class="n">points</span>
+
+    <span class="c1"># Create 4 planes with normals pointing outside rectangle</span>
+    <span class="n">n0</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">normalVector</span><span class="p">)</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p1</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">normalVector</span><span class="p">)</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="p">(</span><span class="n">p3</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">normalVector</span><span class="p">)</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+    <span class="n">n3</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span> <span class="o">-</span> <span class="n">p3</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">normalVector</span><span class="p">)</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+
+    <span class="n">sgn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n0</span> <span class="o">*</span> <span class="n">p0d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">sgn1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n1</span> <span class="o">*</span> <span class="n">p1d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">sgn2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n2</span> <span class="o">*</span> <span class="n">p2d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">sgn3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n3</span> <span class="o">*</span> <span class="n">p3d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">inside_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">sgn0</span> <span class="o">==</span> <span class="n">sgn1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sgn1</span> <span class="o">==</span> <span class="n">sgn2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sgn2</span> <span class="o">==</span> <span class="n">sgn3</span><span class="p">)</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">inside_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p0d</span><span class="p">[</span><span class="n">inside_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">normalVector</span><span class="o">.</span><span class="n">getArray</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">outside_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">inside_idx</span><span class="p">)</span>
+    <span class="n">s0</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p0d</span><span class="p">,</span> <span class="n">p1d</span><span class="p">)</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p1d</span><span class="p">,</span> <span class="n">p2d</span><span class="p">)</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p2d</span><span class="p">,</span> <span class="n">p3d</span><span class="p">)</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">_distance_sq_to_segment</span><span class="p">(</span><span class="n">p3d</span><span class="p">,</span> <span class="n">p0d</span><span class="p">)</span>
+
+    <span class="n">smin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">))</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">outside_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">smin</span><span class="p">[</span><span class="n">outside_idx</span><span class="p">]</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+    <span class="n">shp</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">dist</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s2">&quot;Could not calculate some distances!&quot;</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span>
+
+
+<span class="k">def</span> <span class="nf">__calc_u_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate u_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance</span>
+<span class="sd">    along strike from the first vertex (P0) of the i-th segment.</span>
+
+<span class="sd">    :param P0:</span>
+<span class="sd">        Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param P1:</span>
+<span class="sd">        Point object, representing the second top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param lat:</span>
+<span class="sd">        A numpy array of latitude.</span>
+<span class="sd">    :param lon:</span>
+<span class="sd">        A numpy array of longitude.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Array of size lat.shape of distances (in km).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Project to Cartesian space</span>
+    <span class="n">west</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">east</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">south</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">north</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">get_orthographic_projection</span><span class="p">(</span><span class="n">west</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">)</span>
+
+    <span class="c1"># projected coordinates are in km</span>
+    <span class="n">p0x</span><span class="p">,</span> <span class="n">p0y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p1x</span><span class="p">,</span> <span class="n">p1y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># projected coordinates are in km</span>
+    <span class="n">p0x</span><span class="p">,</span> <span class="n">p0y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p1x</span><span class="p">,</span> <span class="n">p1y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Unit vector pointing along strike</span>
+    <span class="n">u_i_hat</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">p1x</span> <span class="o">-</span> <span class="n">p0x</span><span class="p">,</span> <span class="n">p1y</span> <span class="o">-</span> <span class="n">p0y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+
+    <span class="c1"># Convert sites to Cartesian</span>
+    <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="n">sx1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+    <span class="n">sy1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sy</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+
+    <span class="c1"># Vectors from P0 to sites</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">sx1d</span><span class="p">),</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">r</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sx1d</span> <span class="o">-</span> <span class="n">p0x</span>
+    <span class="n">r</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sy1d</span> <span class="o">-</span> <span class="n">p0y</span>
+
+    <span class="c1"># Dot product gives t_i</span>
+    <span class="n">u_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">u_i_hat</span><span class="o">.</span><span class="n">getArray</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">shp</span> <span class="o">=</span> <span class="n">u_i</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">u_i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">u_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">u_i</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">u_i</span>
+
+
+<span class="k">def</span> <span class="nf">__calc_t_i</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate t_i distance. See Spudich and Chiou OFR 2015-1028. This is the distance</span>
+<span class="sd">    measured normal to strike from the i-th segment. Values on the hanging-wall are</span>
+<span class="sd">    positive and those on the foot-wall are negative.</span>
+
+<span class="sd">    :param P0:</span>
+<span class="sd">        Point object, representing the first top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param P1:</span>
+<span class="sd">        Point object, representing the second top-edge vertex of a fault quadrilateral.</span>
+<span class="sd">    :param lat:</span>
+<span class="sd">        A numpy array of latitudes.</span>
+<span class="sd">    :param lon:</span>
+<span class="sd">        A numpy array of longitudes.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Array of size N of distances (in km) from input points to rupture surface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Project to Cartesian space</span>
+    <span class="n">west</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">east</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">south</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">north</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">get_orthographic_projection</span><span class="p">(</span><span class="n">west</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">)</span>
+
+    <span class="c1"># projected coordinates are in km</span>
+    <span class="n">p0x</span><span class="p">,</span> <span class="n">p0y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p1x</span><span class="p">,</span> <span class="n">p1y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Unit vector pointing normal to strike</span>
+    <span class="n">t_i_hat</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">p1y</span> <span class="o">-</span> <span class="n">p0y</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">p1x</span> <span class="o">-</span> <span class="n">p0x</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+
+    <span class="c1"># Convert sites to Cartesian</span>
+    <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="n">sx1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+    <span class="n">sy1d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sy</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+
+    <span class="c1"># Vectors from P0 to sites</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">sx1d</span><span class="p">),</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">r</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sx1d</span> <span class="o">-</span> <span class="n">p0x</span>
+    <span class="n">r</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sy1d</span> <span class="o">-</span> <span class="n">p0y</span>
+
+    <span class="c1"># Dot product gives t_i</span>
+    <span class="n">t_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">t_i_hat</span><span class="o">.</span><span class="n">getArray</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">shp</span> <span class="o">=</span> <span class="n">t_i</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">t_i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">t_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fliplr</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t_i</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

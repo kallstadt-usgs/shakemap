@@ -1,0 +1,15 @@
+shakemap.gmice
+======================
+
+Submodules
+
+.. toctree::
+
+   shakemap.gmice.wgrw12
+
+Module contents
+
+.. automodule:: shakemap.gmice
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,1377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.fault &mdash; ShakeMap Documentation  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ShakeMap Documentation  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ShakeMap Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual_index.html">ShakeMap Manual 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html">ShakeMap 4.0 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">ShakeMap Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>shakemap.grind.fault</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shakemap.grind.fault</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># stdlib modules</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="c1"># third party imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">mesh</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.utils</span> <span class="kn">import</span> <span class="n">get_orthographic_projection</span>
+<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span>
+<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">ecef2latlon</span>
+<span class="kn">from</span> <span class="nn">..utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># local imports</span>
+<span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>
+
+<span class="c1"># CONSTANTS</span>
+<span class="c1"># what is the maximum ratio of distance out of the plane defined by 3 points a</span>
+<span class="c1"># 4th point can be before being considered non-co-planar?</span>
+<span class="n">OFFPLANE_TOLERANCE</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+
+<div class="viewcode-block" id="Fault"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault">[docs]</a><span class="k">class</span> <span class="nc">Fault</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to handle fault files of various types and output fault data in </span>
+<span class="sd">    various ways.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor for Fault class.</span>
+
+<span class="sd">        :param lon:</span>
+<span class="sd">            Sequence of fault longitude vertices in clockwise order.</span>
+<span class="sd">        :param lat:</span>
+<span class="sd">            Sequence of fault latitude vertices in clockwise order.</span>
+<span class="sd">        :param depth:</span>
+<span class="sd">            Sequence of fault depth vertices in clockwise order.</span>
+<span class="sd">        :param reference:</span>
+<span class="sd">            String citeable reference for Fault.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span> <span class="o">=</span> <span class="n">lon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span> <span class="o">=</span> <span class="n">lat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span> <span class="o">=</span> <span class="n">depth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reference</span> <span class="o">=</span> <span class="n">reference</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setQuadrilaterals</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Fault.fromTrace"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.fromTrace">[docs]</a>    <span class="k">def</span> <span class="nf">fromTrace</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">xp0</span><span class="p">,</span> <span class="n">yp0</span><span class="p">,</span> <span class="n">xp1</span><span class="p">,</span> <span class="n">yp1</span><span class="p">,</span> <span class="n">zp</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">dips</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                  <span class="n">reference</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a fault object from a set of vertices that define the top of the</span>
+<span class="sd">        fault, and an array of widths/dips.</span>
+
+<span class="sd">        These top of rupture points are defined by specifying the x and y</span>
+<span class="sd">        coordinates of each of the two vertices, and then specifying an array of</span>
+<span class="sd">        depths,widths, and dips for each rectangle.</span>
+
+<span class="sd">        :param xp0:</span>
+<span class="sd">            Array of longitude coordinates for the first (top of rupture) vertex</span>
+<span class="sd">            of each rectangle (decimal degrees).</span>
+<span class="sd">        :param yp0:</span>
+<span class="sd">            Array of latitude coordinates for the first (top of rupture) vertex</span>
+<span class="sd">            of each rectangle (decimal degrees).</span>
+<span class="sd">        :param xp1:</span>
+<span class="sd">            Array of longitude coordinates for the second (top of rupture) vertex</span>
+<span class="sd">            of each rectangle (decimal degrees).</span>
+<span class="sd">        :param yp1:</span>
+<span class="sd">            Array of latitude coordinates for the second (top of rupture) vertex</span>
+<span class="sd">            of each rectangle (decimal degrees).</span>
+<span class="sd">        :param zp:</span>
+<span class="sd">            Array of depths for each of the top of rupture rectangles (km).</span>
+<span class="sd">        :param widths:</span>
+<span class="sd">            Array of widths for each of rectangle (km).</span>
+<span class="sd">        :param dips:</span>
+<span class="sd">            Array of dips for each of rectangle (degrees).</span>
+<span class="sd">        :param strike:</span>
+<span class="sd">            If None then strike is computed from verticies of top edge of each</span>
+<span class="sd">            quadrilateral. If a scalar, then all quadrilaterals are constructed</span>
+<span class="sd">            assuming this strike direction. If a vector with the same length as</span>
+<span class="sd">            the trace coordinates then it specifies the strike for each </span>
+<span class="sd">            quadrilateral.</span>
+<span class="sd">        :param reference:</span>
+<span class="sd">            String explaining where the fault definition came from (publication</span>
+<span class="sd">            style reference, etc.)</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Fault object, where the fault is modeled as a series of rectangles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">yp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="n">yp1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dips</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                <span class="s1">&#39;Number of xp0,yp0,xp1,yp1,zp,widths,dips points must be equal.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strike</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">strike</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                    <span class="s1">&#39;Strike must be None, scalar, or same length as trace coordinates.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># convert dips to radians</span>
+        <span class="n">dips</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">dips</span><span class="p">)</span>
+
+        <span class="c1"># ensure that all input sequences are numpy arrays</span>
+        <span class="n">xp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">xp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">zp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">dips</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dips</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+
+        <span class="c1"># get a projection object</span>
+        <span class="n">west</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">((</span><span class="n">xp0</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">xp1</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+        <span class="n">east</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">xp0</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">xp1</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+        <span class="n">south</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">((</span><span class="n">yp0</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">yp1</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+        <span class="n">north</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">yp0</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">yp1</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+
+        <span class="c1"># projected coordinates are in km</span>
+        <span class="n">proj</span> <span class="o">=</span> <span class="n">get_orthographic_projection</span><span class="p">(</span><span class="n">west</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">)</span>
+        <span class="n">surfaces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">xp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span>
+        <span class="n">xp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span>
+        <span class="n">yp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span>
+        <span class="n">yp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span>
+        <span class="n">zpdown</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">zp</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp0</span><span class="p">)):</span>
+            <span class="c1"># Project the top edge coordinates</span>
+            <span class="n">p0x</span><span class="p">,</span> <span class="n">p0y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">xp0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yp0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">p1x</span><span class="p">,</span> <span class="n">p1y</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">xp1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yp1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+            <span class="c1"># Get the rotation angle defined by these two points</span>
+            <span class="k">if</span> <span class="n">strike</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">dx</span> <span class="o">=</span> <span class="n">p1x</span> <span class="o">-</span> <span class="n">p0x</span>
+                <span class="n">dy</span> <span class="o">=</span> <span class="n">p1y</span> <span class="o">-</span> <span class="n">p0y</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>  <span class="c1"># theta is angle from north</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strike</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+            <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+                          <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
+
+            <span class="c1"># Rotate the top edge points into a new coordinate system (vertical</span>
+            <span class="c1"># line)</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p0x</span><span class="p">,</span> <span class="n">p0y</span><span class="p">])</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p1x</span><span class="p">,</span> <span class="n">p1y</span><span class="p">])</span>
+            <span class="n">p0p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
+            <span class="n">p1p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">p1</span><span class="p">)</span>
+
+            <span class="c1"># Get right side coordinates in project,rotated system</span>
+            <span class="n">dz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dips</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dips</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">p3xp</span> <span class="o">=</span> <span class="n">p0p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span>
+            <span class="n">p3yp</span> <span class="o">=</span> <span class="n">p0p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">p2xp</span> <span class="o">=</span> <span class="n">p1p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span>
+            <span class="n">p2yp</span> <span class="o">=</span> <span class="n">p1p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Get right side coordinates in un-rotated projected system</span>
+            <span class="n">p3p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p3xp</span><span class="p">,</span> <span class="n">p3yp</span><span class="p">])</span>
+            <span class="n">p2p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p2xp</span><span class="p">,</span> <span class="n">p2yp</span><span class="p">])</span>
+            <span class="n">Rback</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span><span class="p">)],</span>
+                              <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="o">-</span><span class="n">theta</span><span class="p">)]])</span>
+            <span class="n">p3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Rback</span><span class="p">,</span> <span class="n">p3p</span><span class="p">)</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Rback</span><span class="p">,</span> <span class="n">p2p</span><span class="p">)</span>
+            <span class="n">p3x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p3</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">p3y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p3</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="n">p2x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">p2y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+            <span class="c1"># project lower edge points back to lat/lon coordinates</span>
+            <span class="n">lon3</span><span class="p">,</span> <span class="n">lat3</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">p3x</span><span class="p">,</span> <span class="n">p3y</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">p2x</span><span class="p">,</span> <span class="n">p2y</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="n">xp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon2</span>
+            <span class="n">xp3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lon3</span>
+            <span class="n">yp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat2</span>
+            <span class="n">yp3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lat3</span>
+            <span class="n">zpdown</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dz</span>
+
+        <span class="c1"># assemble the vertices as the Fault constructor needs them...</span>
+        <span class="c1"># which is: for each rectangle, there should be the four corners, the</span>
+        <span class="c1"># first corner repeated, and then a nan.</span>
+        <span class="n">nrects</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp</span><span class="p">)</span>
+        <span class="n">anan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">xp0</span><span class="p">,</span> <span class="n">xp1</span><span class="p">,</span> <span class="n">xp2</span><span class="p">,</span> <span class="n">xp3</span><span class="p">,</span> <span class="n">xp0</span><span class="p">,</span> <span class="n">anan</span><span class="p">))</span>
+                       <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nrects</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">yp0</span><span class="p">,</span> <span class="n">yp1</span><span class="p">,</span> <span class="n">yp2</span><span class="p">,</span> <span class="n">yp3</span><span class="p">,</span> <span class="n">yp0</span><span class="p">,</span> <span class="n">anan</span><span class="p">))</span>
+                       <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nrects</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+        <span class="c1"># we need an array of depths, but we need to double each zp and zpdown</span>
+        <span class="c1"># element we have</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nrects</span><span class="p">):</span>
+            <span class="n">dep</span> <span class="o">+=</span> <span class="p">[</span><span class="n">zp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zpdown</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zpdown</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dep</span><span class="p">)</span>
+
+        <span class="c1"># take the nans off the end of each array</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="n">dep</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fault.writeFaultFile"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.writeFaultFile">[docs]</a>    <span class="k">def</span> <span class="nf">writeFaultFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">faultfile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write fault data to fault file format as defined in ShakeMap Software Guide.</span>
+
+<span class="sd">        :param faultfile:</span>
+<span class="sd">            Filename of output data file OR file-like object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">faultfile</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">):</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">faultfile</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">faultfile</span>  <span class="c1"># just a reference to the input file-like object</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reference</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadrilaterals</span><span class="p">():</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quad</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P2</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">P2</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P3</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">P3</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="s1"> </span><span class="si">%.4f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">u&#39;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">faultfile</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Fault.readFaultFile"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.readFaultFile">[docs]</a>    <span class="k">def</span> <span class="nf">readFaultFile</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">faultfile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read fault file format as defined in ShakeMap Software Guide.</span>
+
+<span class="sd">        :param faultfile:</span>
+<span class="sd">            Path to fault file OR file-like object in GMT psxy format, where</span>
+<span class="sd">            * Fault vertices are space separated lat,lon,depth triplets on a single line.</span>
+<span class="sd">            * Fault segments are separated by lines containing &quot;&gt;&quot;</span>
+<span class="sd">            * Fault segments must be closed.</span>
+<span class="sd">            * Fault segments must be all clockwise or all counter-clockwise.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">           Fault object.</span>
+<span class="sd">        :raises ShakeMapException:</span>
+<span class="sd">            when any of above conditions are not met.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">isFile</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">faultfile</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">isFile</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">faultfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">faultfile</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>
+            <span class="n">faultlines</span> <span class="o">=</span> <span class="n">faultfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">faultlines</span> <span class="o">=</span> <span class="n">faultfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">reference</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">faultlines</span><span class="p">:</span>
+            <span class="n">sline</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sline</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+                <span class="n">reference</span> <span class="o">+=</span> <span class="n">sline</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">sline</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>  <span class="c1"># start of new line segment</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+                    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+                    <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># start of file</span>
+                    <span class="k">continue</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">sline</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+                <span class="k">continue</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">sline</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                    <span class="s1">&#39;Finite fault file </span><span class="si">%s</span><span class="s1"> has no depth values.&#39;</span> <span class="o">%</span>
+                    <span class="n">faultfile</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">isFile</span><span class="p">:</span>
+            <span class="n">faultfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Fault.fromVertices"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.fromVertices">[docs]</a>    <span class="k">def</span> <span class="nf">fromVertices</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span>
+                     <span class="n">xp0</span><span class="p">,</span> <span class="n">yp0</span><span class="p">,</span> <span class="n">zp0</span><span class="p">,</span> <span class="n">xp1</span><span class="p">,</span> <span class="n">yp1</span><span class="p">,</span> <span class="n">zp1</span><span class="p">,</span>
+                     <span class="n">xp2</span><span class="p">,</span> <span class="n">yp2</span><span class="p">,</span> <span class="n">zp2</span><span class="p">,</span> <span class="n">xp3</span><span class="p">,</span> <span class="n">yp3</span><span class="p">,</span> <span class="n">zp3</span><span class="p">,</span>
+                     <span class="n">reference</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a fault object from the vector of vertices that fully define the</span>
+<span class="sd">        quadrilaterals. The points p0, ..., p3 are labeled below for a trapezoid:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">              p0--------p1</span>
+<span class="sd">             /          |</span>
+<span class="sd">            /           |</span>
+<span class="sd">           p3-----------p2</span>
+
+<span class="sd">        All of the following vector arguments must have the same length.</span>
+
+<span class="sd">        :param xp0:</span>
+<span class="sd">            Vector of longitudes of p0.</span>
+<span class="sd">        :param yp0:</span>
+<span class="sd">            Vector of latitudes of p0.</span>
+<span class="sd">        :param zp0:</span>
+<span class="sd">            Vector of depths of p0 (positive down).</span>
+<span class="sd">        :param xp1:</span>
+<span class="sd">            Vector of longitudes of p1.</span>
+<span class="sd">        :param yp1:</span>
+<span class="sd">            Vector of latitudes of p1.</span>
+<span class="sd">        :param zp1:</span>
+<span class="sd">            Vector of depths of p1 (positive down).</span>
+<span class="sd">        :param xp2:</span>
+<span class="sd">            Vector of longitudes of p2.</span>
+<span class="sd">        :param yp2:</span>
+<span class="sd">            Vector of latitudes of p2.</span>
+<span class="sd">        :param zp2:</span>
+<span class="sd">            Vector of depths of p2 (positive down).</span>
+<span class="sd">        :param xp3:</span>
+<span class="sd">            Vector of longitudes of p3.</span>
+<span class="sd">        :param yp3:</span>
+<span class="sd">            Vector of latitudes of p3.</span>
+<span class="sd">        :param zp3:</span>
+<span class="sd">            Vector of depths of p3 (positive down).</span>
+<span class="sd">        :param reference:</span>
+<span class="sd">            String explaining where the fault definition came from (publication</span>
+<span class="sd">            style reference, etc.)</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Fault object, where the fault is modeled as a series of trapezoids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">yp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">yp1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp1</span><span class="p">)</span> <span class="o">==</span> \
+           <span class="nb">len</span><span class="p">(</span><span class="n">xp2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">yp2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp3</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">yp3</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zp3</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s1">&#39;All vectors specifying quadrilateral &#39;</span>
+                                    <span class="s1">&#39;vertices must have the same length.&#39;</span><span class="p">)</span>
+
+        <span class="n">nq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span>
+
+        <span class="n">xp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">zp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zp0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">xp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">zp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">xp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">zp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zp2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">xp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">yp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yp3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="n">zp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zp3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+
+        <span class="c1"># assemble the vertices as the Fault constructor needs them...</span>
+        <span class="c1"># which is: for each rectangle, there should be the four corners, the</span>
+        <span class="c1"># first corner repeated, and then a nan.</span>
+        <span class="n">anan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xp0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">xp0</span><span class="p">,</span> <span class="n">xp1</span><span class="p">,</span> <span class="n">xp2</span><span class="p">,</span> <span class="n">xp3</span><span class="p">,</span> <span class="n">xp0</span><span class="p">,</span> <span class="n">anan</span><span class="p">))</span>
+                       <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nq</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">yp0</span><span class="p">,</span> <span class="n">yp1</span><span class="p">,</span> <span class="n">yp2</span><span class="p">,</span> <span class="n">yp3</span><span class="p">,</span> <span class="n">yp0</span><span class="p">,</span> <span class="n">anan</span><span class="p">))</span>
+                       <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nq</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+        <span class="n">dep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">zp0</span><span class="p">,</span> <span class="n">zp1</span><span class="p">,</span> <span class="n">zp2</span><span class="p">,</span> <span class="n">zp3</span><span class="p">,</span> <span class="n">zp0</span><span class="p">,</span> <span class="n">anan</span><span class="p">))</span>
+                       <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nq</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">dep</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fault.getFaultLength"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getFaultLength">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute lenght of fault based on top edge.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Length of fault.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flength</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">:</span>
+            <span class="n">flength</span> <span class="o">=</span> <span class="n">flength</span> <span class="o">+</span> <span class="n">get_quad_length</span><span class="p">(</span><span class="n">quad</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">flength</span></div>
+
+<div class="viewcode-block" id="Fault.getQuadrilaterals"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getQuadrilaterals">[docs]</a>    <span class="k">def</span> <span class="nf">getQuadrilaterals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of quadrilaterals.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Each quad is a tuple of four Point objects</span>
+<span class="sd">            (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fault.getQuadWidth"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getQuadWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getQuadWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return width of an individual planar trapezoid, where the p0-p1 distance</span>
+<span class="sd">        represents the long side.</span>
+
+<span class="sd">        :param p0:</span>
+<span class="sd">            ECEF x,y,z point representing the first vertex of a quadrilateral.</span>
+<span class="sd">        :param p1:</span>
+<span class="sd">            ECEF x,y,z point representing the second vertex of a quadrilateral.</span>
+<span class="sd">        :param p3:</span>
+<span class="sd">            ECEF x,y,z point representing the fourth vertex of a quadrilateral.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">           Width of planar trapezoid (float).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">AB</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p1</span>
+        <span class="n">AC</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p3</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">width</span></div>
+
+<div class="viewcode-block" id="Fault.getStrike"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getStrike">[docs]</a>    <span class="k">def</span> <span class="nf">getStrike</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return strike angle. If fault consists of multiple quadrilaterals, the</span>
+<span class="sd">        average strike angle, weighted by quad length, is returned.</span>
+<span class="sd">        Note: for faults with quads where the strike angle changes by 180 deg</span>
+<span class="sd">        due to reverses in dip direction are problematic and not handeled well</span>
+<span class="sd">        by this algorithm.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Strike angle (float). </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)</span>
+        <span class="n">strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nq</span><span class="p">)</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nq</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="p">):</span>
+            <span class="n">P0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">P1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">strikes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+            <span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_quad_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strikes</span><span class="p">))</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strikes</span><span class="p">))</span>
+        <span class="n">xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">lengths</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+        <span class="n">ybar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">lengths</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">xbar</span><span class="p">,</span> <span class="n">ybar</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Fault.getTopOfRupture"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getTopOfRupture">[docs]</a>    <span class="k">def</span> <span class="nf">getTopOfRupture</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine shallowest vertex of entire fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Shallowest depth of all vertices (float).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mindep</span> <span class="o">=</span> <span class="mi">9999999</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">:</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quad</span>
+            <span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">mindep</span><span class="p">:</span>
+                <span class="n">mindep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mindep</span></div>
+
+<div class="viewcode-block" id="Fault.getDip"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getDip">[docs]</a>    <span class="k">def</span> <span class="nf">getDip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return average dip of all quadrilaterals in the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">           Average dip in degrees (float).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dipsum</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">:</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="n">get_quad_normal</span><span class="p">(</span><span class="n">quad</span><span class="p">)</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">get_vertical_vector</span><span class="p">(</span><span class="n">quad</span><span class="p">)</span>
+            <span class="n">dipsum</span> <span class="o">=</span> <span class="n">dipsum</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">V</span><span class="p">)))</span>
+        <span class="n">dip</span> <span class="o">=</span> <span class="n">dipsum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dip</span></div>
+
+<div class="viewcode-block" id="Fault.getWidth"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the average fault width (km) for all quadrilaterals defined for the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Average width in km of all fault quadrilaterals (float).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wsum</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">:</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quad</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+            <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+            <span class="n">wsum</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+        <span class="n">mwidth</span> <span class="o">=</span> <span class="p">(</span><span class="n">wsum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">))</span> <span class="o">/</span> <span class="mf">1000.0</span>
+        <span class="k">return</span> <span class="n">mwidth</span></div>
+
+<div class="viewcode-block" id="Fault.getIndividualWidths"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getIndividualWidths">[docs]</a>    <span class="k">def</span> <span class="nf">getIndividualWidths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an array of fault widths (km), one for each quadrilateral defined for the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Array of quad widths in km of all fault quadrilaterals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nquad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNumQuads</span><span class="p">()</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nquad</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nquad</span><span class="p">):</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+            <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+            <span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+        <span class="k">return</span> <span class="n">widths</span></div>
+
+<div class="viewcode-block" id="Fault.getIndividualTopLengths"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getIndividualTopLengths">[docs]</a>    <span class="k">def</span> <span class="nf">getIndividualTopLengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an array of fault lengths along top edge (km),</span>
+<span class="sd">        one for each quadrilateral defined for the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Array of lengths in km of top edge of quadrilaterals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nquad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNumQuads</span><span class="p">()</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nquad</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nquad</span><span class="p">):</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+            <span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span> <span class="o">/</span> <span class="mf">1000.0</span>
+        <span class="k">return</span> <span class="n">lengths</span></div>
+
+    <span class="k">def</span> <span class="nf">_getTrapMeanLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the sqrt of the area of a quadrilateral (used for QA of fault </span>
+<span class="sd">        plane).</span>
+
+<span class="sd">        :param p0:</span>
+<span class="sd">            ECEF x,y,z point representing the first vertex of a quadrilateral.</span>
+<span class="sd">        :param p1:</span>
+<span class="sd">            ECEF x,y,z point representing the second vertex of a quadrilateral.</span>
+<span class="sd">        :param p2:</span>
+<span class="sd">            ECEF x,y,z point representing the third vertex of a quadrilateral.</span>
+<span class="sd">        :param p3:</span>
+<span class="sd">            ECEF x,y,z point representing the fourth vertex of a quadrilateral.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            square root of trapezoid area.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># area of a trapezoid: A = (a+b)/2 * h</span>
+        <span class="c1"># (https://en.wikipedia.org/wiki/Trapezoid)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p3</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="p">((</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">length</span>
+
+<div class="viewcode-block" id="Fault.getDistanceToPlane"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getDistanceToPlane">[docs]</a>    <span class="k">def</span> <span class="nf">getDistanceToPlane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planepoints</span><span class="p">,</span> <span class="n">otherpoint</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate a point&#39;s distance to a plane.  Used to figure out if a</span>
+<span class="sd">        quadrilateral points are all co-planar.</span>
+
+<span class="sd">        :param planepoints:</span>
+<span class="sd">            List of three points (Vector objects) defining a plane.</span>
+<span class="sd">        :param otherpoint:</span>
+<span class="sd">            4th Vector to compare to points defining the plane</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Distance (in meters) from otherpoint to plane.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># from</span>
+        <span class="c1"># https://en.wikipedia.org/wiki/Plane_(geometry)#Describing_a_plane_through_three_points</span>
+        <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">planepoints</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+        <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+        <span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">at</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
+        <span class="n">bt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]))</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">at</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">bt</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">ct</span>
+
+        <span class="n">numer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span>
+                       <span class="n">b</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span>
+                       <span class="n">c</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="k">return</span> <span class="n">dist</span></div>
+
+    <span class="k">def</span> <span class="nf">_isPointToRight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">):</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+        <span class="n">p1p0</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+        <span class="n">p2p0</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">-</span> <span class="n">p0</span>
+        <span class="n">qnv</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">p2p0</span><span class="p">,</span> <span class="n">p1p0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">+</span> <span class="n">qnv</span>
+        <span class="n">tmplat</span><span class="p">,</span> <span class="n">tmplon</span><span class="p">,</span> <span class="n">tmpz</span> <span class="o">=</span> <span class="n">ecef2latlon</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">tmp</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">tmp</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tmpz</span> <span class="o">-</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">_reverseQuad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">):</span>
+        <span class="n">newP0</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+        <span class="n">newP1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+        <span class="n">newP2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+        <span class="n">newP3</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isPointToRight</span><span class="p">(</span><span class="n">newP0</span><span class="p">,</span> <span class="n">newP1</span><span class="p">,</span> <span class="n">newP2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                <span class="s1">&#39;Third vertex of quadrilateral must be to the right of the second vertex&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">newP0</span><span class="p">,</span> <span class="n">newP1</span><span class="p">,</span> <span class="n">newP2</span><span class="p">,</span> <span class="n">newP3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_validateQuad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate and fix* a given quadrilateral (*currently &quot;fix&quot; means check third vertex for co-planarity</span>
+<span class="sd">        with other three points, and force it to be co-planar if it&#39;s not wildly out of the plane.()</span>
+
+<span class="sd">        :param P0:</span>
+<span class="sd">            First vertex https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
+<span class="sd">        :param P1:</span>
+<span class="sd">            Second vertex https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
+<span class="sd">        :param P2:</span>
+<span class="sd">            Third vertex https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
+<span class="sd">        :param P3:</span>
+<span class="sd">            Fourth vertex https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
+<span class="sd">        :returns:</span>
+<span class="sd">           Tuple of (potentially) modified vertices.</span>
+<span class="sd">        :raises ShakeMapException:</span>
+<span class="sd">           * if top and bottom edges are not parallel to surface</span>
+<span class="sd">           * if dip angle is not dipping to the right relative to strike (defined by first two vertices)</span>
+<span class="sd">           * if all 4 points are not reasonably co-planar (P2 is more than 5% of mean length of trapezoid out of plane)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Someday fix the rule about dip angle being clockwise and 0-90 degrees</span>
+        <span class="c1"># In theory, you could flip the quadrilateral by 180 degrees and it</span>
+        <span class="c1"># would be ok.</span>
+
+        <span class="c1"># Are the top and bottom edges both parallel to the surface?</span>
+        <span class="n">topDepthsEqual</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">bottomDepthsEqual</span> <span class="o">=</span> <span class="n">P2</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">topDepthsEqual</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">bottomDepthsEqual</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                <span class="s1">&#39;Top and bottom edges of fault quadrilateral must be parallel to the surface&#39;</span><span class="p">)</span>
+        <span class="c1"># Is top edge defined by first two vertices?</span>
+        <span class="k">if</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span> <span class="o">&gt;</span> <span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                <span class="s1">&#39;Top edge of a quadrilateral must be defined by the first two vertices&#39;</span><span class="p">)</span>
+        <span class="c1"># Is dip angle clockwise and btw 0-90 degrees?</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isPointToRight</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">):</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverseQuad</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Reversing quad where dip not between 0 and 90 degrees.&#39;</span><span class="p">)</span>
+        <span class="c1"># Are all 4 points (reasonably) co-planar?</span>
+        <span class="c1"># Translate vertices to ECEF</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+        <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+        <span class="c1"># Calculate normalized vector along top edge</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+        <span class="c1"># Calculate distance btw p3 and p2</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">p3</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
+        <span class="c1"># get the new P2 value</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">*</span> <span class="n">d</span>
+        <span class="n">newp2</span> <span class="o">=</span> <span class="n">p3</span> <span class="o">+</span> <span class="n">v1</span>
+        <span class="n">planepoints</span> <span class="o">=</span> <span class="p">[</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">]</span>
+        <span class="n">dnormal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDistanceToPlane</span><span class="p">(</span><span class="n">planepoints</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+        <span class="n">geometricMean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getTrapMeanLength</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">newp2</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dnormal</span> <span class="o">/</span> <span class="n">geometricMean</span> <span class="o">&gt;</span> <span class="n">OFFPLANE_TOLERANCE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                <span class="s1">&#39;Points in quadrilateral are not co-planar&#39;</span><span class="p">)</span>
+        <span class="n">newP0</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
+        <span class="n">newP1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
+        <span class="n">newP2</span> <span class="o">=</span> <span class="n">newp2</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
+        <span class="n">newP3</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">toPoint</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">newP0</span><span class="p">,</span> <span class="n">newP1</span><span class="p">,</span> <span class="n">newP2</span><span class="p">,</span> <span class="n">newP3</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_setQuadrilaterals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create internal list of N quadrilaterals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Fault QA rules</span>
+        <span class="c1"># 1) Fault must consist of 1 or more quadrilaterals, where each quad top/bottom edges are</span>
+        <span class="c1">#   parallel to the surface</span>
+        <span class="c1"># 2) The strike angle of each quadrilateral is defined by the first two vertices of that quad</span>
+        <span class="c1"># 3) The dip angle is defined by segments 2 and 3, or 1 and 4.  This angle must be clockwise with respect to the</span>
+        <span class="c1">#   strike angle, and between 0 and 90 degrees.</span>
+        <span class="c1"># 4) The top edge of each quad must be defined by the first two vertices of that quad.</span>
+        <span class="c1"># 5) 4 points of quadrilateral must be co-planar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">)</span>
+        <span class="n">inan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span>
+        <span class="n">numnans</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">[</span><span class="n">inan</span><span class="p">])</span>
+        <span class="n">numsegments</span> <span class="o">=</span> <span class="n">numnans</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># requirements:</span>
+        <span class="c1"># 1) Coordinate arrays must be same length</span>
+        <span class="c1"># 2) Polygons must be quadrilaterals</span>
+        <span class="c1"># 3) Quads must be closed</span>
+        <span class="c1"># 4) Quads must be planar</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="s1">&#39;Length of input lon,lat,depth arrays must be equal&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Addition: self._segment_index</span>
+        <span class="c1">#   It is also convenient to create a list of indexes for which &#39;trace&#39;</span>
+        <span class="c1">#   each quad is on (i.e, grouped). This information is required for GC2</span>
+        <span class="c1">#   calculations. Also, in some rare situations, we need to be able to</span>
+        <span class="c1">#   overwrite the default values.</span>
+
+        <span class="n">istart</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">endpoints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">endpoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_segment_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">segind</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">iend</span> <span class="ow">in</span> <span class="n">endpoints</span><span class="p">:</span>
+            <span class="n">lonseg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">[</span><span class="n">istart</span><span class="p">:</span><span class="n">iend</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># remove closing points</span>
+            <span class="n">latseg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">[</span><span class="n">istart</span><span class="p">:</span><span class="n">iend</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">depthseg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">[</span><span class="n">istart</span><span class="p">:</span><span class="n">iend</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># each segment can have many contiguous quadrilaterals defined in it</span>
+            <span class="c1"># separations (nans) between segments mean that segments are not</span>
+            <span class="c1"># contiguous.</span>
+            <span class="n">npoints</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lonseg</span><span class="p">)</span>
+            <span class="n">nquads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">npoints</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">startidx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">endidx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nquads</span><span class="p">):</span>
+                <span class="n">topLeft</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lonseg</span><span class="p">[</span><span class="n">startidx</span><span class="p">],</span> <span class="n">latseg</span><span class="p">[</span><span class="n">startidx</span><span class="p">],</span>
+                                      <span class="n">depthseg</span><span class="p">[</span><span class="n">startidx</span><span class="p">])</span>
+                <span class="n">topRight</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span>
+                    <span class="n">lonseg</span><span class="p">[</span>
+                        <span class="n">startidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="n">latseg</span><span class="p">[</span>
+                        <span class="n">startidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="n">depthseg</span><span class="p">[</span>
+                        <span class="n">startidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">bottomRight</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span>
+                    <span class="n">lonseg</span><span class="p">[</span>
+                        <span class="n">endidx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="n">latseg</span><span class="p">[</span>
+                        <span class="n">endidx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="n">depthseg</span><span class="p">[</span>
+                        <span class="n">endidx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">bottomLeft</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">lonseg</span><span class="p">[</span><span class="n">endidx</span><span class="p">],</span> <span class="n">latseg</span><span class="p">[</span><span class="n">endidx</span><span class="p">],</span>
+                                         <span class="n">depthseg</span><span class="p">[</span><span class="n">endidx</span><span class="p">])</span>
+                <span class="n">surface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validateQuad</span><span class="p">(</span><span class="n">topLeft</span><span class="p">,</span> <span class="n">topRight</span><span class="p">,</span> <span class="n">bottomRight</span><span class="p">,</span>
+                                             <span class="n">bottomLeft</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>
+                <span class="n">startidx</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">endidx</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">istart</span> <span class="o">=</span> <span class="n">iend</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_segment_index</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">segind</span><span class="p">]</span> <span class="o">*</span> <span class="n">nquads</span><span class="p">)</span>
+            <span class="n">segind</span> <span class="o">=</span> <span class="n">segind</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_getSegmentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of segment indexes.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            List of segment indexes; lenght equals the number of quadrilaterals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_segment_index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;xlim3d&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                    <span class="s1">&#39;Non-3d axes object passed to plot() method.&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">:</span>
+            <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">quad</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;B.&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">([</span><span class="n">P0</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P0</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;P0&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P1</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">([</span><span class="n">P1</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P1</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P1</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;P1&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">P2</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P2</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">([</span><span class="n">P2</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P2</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;P2&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">P3</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P3</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P3</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">([</span><span class="n">P3</span><span class="o">.</span><span class="n">longitude</span><span class="p">],</span> <span class="p">[</span><span class="n">P3</span><span class="o">.</span><span class="n">latitude</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">P3</span><span class="o">.</span><span class="n">depth</span><span class="p">],</span> <span class="s1">&#39;P3&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Fault.getLats"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getLats">[docs]</a>    <span class="k">def</span> <span class="nf">getLats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of the array of latitude points for the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Numpy array of latitude values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Fault.getLons"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getLons">[docs]</a>    <span class="k">def</span> <span class="nf">getLons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of the array of longitude points for the fault.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Numpy array of latitude values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Fault.getReference"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getReference">[docs]</a>    <span class="k">def</span> <span class="nf">getReference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whatever reference information was contained in fault file.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            string citeable reference</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_reference</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fault.getNumSegments"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getNumSegments">[docs]</a>    <span class="k">def</span> <span class="nf">getNumSegments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a count of the number of fault segments.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            number of fault segments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Fault.getNumQuads"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getNumQuads">[docs]</a>    <span class="k">def</span> <span class="nf">getNumQuads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a count of the number of fault quadrilaterals.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            number of fault quadrilaterals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fault.getFaultAsArrays"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getFaultAsArrays">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultAsArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a 3-tuple of numpy arrays indicating X, Y, Z (lon,lat,depth)</span>
+<span class="sd">        coordinates. Fault segments are separated by numpy.NaN values.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Fault.getFaultAsMesh"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getFaultAsMesh">[docs]</a>    <span class="k">def</span> <span class="nf">getFaultAsMesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return fault segments as a OQ-Hazardlib Mesh object.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            Mesh (https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fault</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fault</span></div>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that all segments are closed.</span>
+<span class="sd">        :raises ShakeMapException:</span>
+<span class="sd">            if unclosed segments exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO - implement ccw algorithm...</span>
+        <span class="c1"># http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span><span class="s2">&quot;Fault coordinates don&#39;t match&quot;</span><span class="p">)</span>
+        <span class="n">inan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">inan</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">[</span><span class="n">inan</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]):</span>
+            <span class="n">inan</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inan</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">))</span>
+        <span class="n">istart</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">inan</span><span class="p">)):</span>
+            <span class="n">iend</span> <span class="o">=</span> <span class="n">inan</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">[</span><span class="n">istart</span><span class="p">]</span>
+            <span class="n">x2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">[</span><span class="n">iend</span><span class="p">]</span>
+            <span class="n">y1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">[</span><span class="n">istart</span><span class="p">]</span>
+            <span class="n">y2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">[</span><span class="n">iend</span><span class="p">]</span>
+            <span class="n">z1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">[</span><span class="n">istart</span><span class="p">]</span>
+            <span class="n">z2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth</span><span class="p">[</span><span class="n">iend</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">x1</span> <span class="o">!=</span> <span class="n">x2</span> <span class="ow">or</span> <span class="n">y1</span> <span class="o">!=</span> <span class="n">y2</span> <span class="ow">or</span> <span class="n">z1</span> <span class="o">!=</span> <span class="n">z2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
+                    <span class="s1">&#39;Unclosed segments exist in fault file.&#39;</span><span class="p">)</span>
+            <span class="n">istart</span> <span class="o">=</span> <span class="n">inan</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="get_quad_mesh"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_mesh">[docs]</a><span class="k">def</span> <span class="nf">get_quad_mesh</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Length of top eduge of a quadrilateral.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :param dx:</span>
+<span class="sd">        Target dx in km; used to get nx and ny of mesh, but mesh snaps</span>
+<span class="sd">        to edges of fault so actual dx/dy will not actually equal this</span>
+<span class="sd">        value in general.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Mesh dictionary, which includes numpy arrays:</span>
+
+<span class="sd">        - llx: lower left x coordinate in ECEF coords.</span>
+<span class="sd">        - lly: lower left y coordinate in ECEF coords.</span>
+<span class="sd">        - llz: lower left z coordinate in ECEF coords.</span>
+<span class="sd">        - ulx: upper left x coordinate in ECEF coords.</span>
+<span class="sd">        - etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+    <span class="c1"># Get nx based on length of top edge, minimum allowed is 2</span>
+    <span class="n">toplen_km</span> <span class="o">=</span> <span class="n">get_quad_length</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">nx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">toplen_km</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+
+    <span class="c1"># Get array of points along top and bottom edges</span>
+    <span class="n">xfac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+    <span class="n">topp</span> <span class="o">=</span> <span class="p">[</span><span class="n">p0</span> <span class="o">+</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span> <span class="o">*</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">xfac</span><span class="p">]</span>
+    <span class="n">botp</span> <span class="o">=</span> <span class="p">[</span><span class="n">p3</span> <span class="o">+</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">xfac</span><span class="p">]</span>
+
+    <span class="c1"># Get ny based on mean length of vectors connecting top and bottom points</span>
+    <span class="n">ylen_km</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx</span><span class="p">):</span>
+        <span class="n">ylen_km</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">topp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">botp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="n">ny</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ylen_km</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+    <span class="n">yfac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+
+    <span class="c1"># Build mesh: dict of ny by nx arrays (x, y, z):</span>
+    <span class="n">mesh</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">]),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">]),</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">])}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx</span><span class="p">):</span>
+        <span class="n">mpts</span> <span class="o">=</span> <span class="p">[</span><span class="n">topp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">botp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">topp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">yfac</span><span class="p">]</span>
+        <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">mpts</span><span class="p">]</span>
+        <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">mpts</span><span class="p">]</span>
+        <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">mpts</span><span class="p">]</span>
+
+    <span class="c1"># Make arrays of pixel corners</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lrx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ulx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;urx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;uly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ury&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lrz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ulz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;urz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">])</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">])</span>
+    <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">])</span>
+
+    <span class="c1"># i and j are indices over subfaults</span>
+    <span class="n">ni</span><span class="p">,</span> <span class="n">nj</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ni</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nj</span><span class="p">):</span>
+            <span class="c1"># Fault corner points</span>
+            <span class="n">pp0</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ulx&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;uly&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ulz&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+            <span class="n">pp1</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;urx&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;ury&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;urz&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+            <span class="n">pp2</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lrx&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lry&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lrz&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+            <span class="n">pp3</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llx&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;lly&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;llz&#39;</span><span class="p">][</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+            <span class="c1"># Find center of quad</span>
+            <span class="n">mp0</span> <span class="o">=</span> <span class="n">pp0</span> <span class="o">+</span> <span class="p">(</span><span class="n">pp1</span> <span class="o">-</span> <span class="n">pp0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="n">mp1</span> <span class="o">=</span> <span class="n">pp3</span> <span class="o">+</span> <span class="p">(</span><span class="n">pp2</span> <span class="o">-</span> <span class="n">pp3</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="n">cp</span> <span class="o">=</span> <span class="n">mp0</span> <span class="o">+</span> <span class="p">(</span><span class="n">mp1</span> <span class="o">-</span> <span class="n">mp0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpx&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">x</span>
+            <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpy&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">y</span>
+            <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cpz&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">z</span>
+    <span class="k">return</span> <span class="n">mesh</span></div>
+
+
+<div class="viewcode-block" id="get_local_unit_slip_vector"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_local_unit_slip_vector">[docs]</a><span class="k">def</span> <span class="nf">get_local_unit_slip_vector</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the components of a unit slip vector.</span>
+
+<span class="sd">    :param strike:</span>
+<span class="sd">        Clockwise angle (deg) from north of the line at the intersection</span>
+<span class="sd">        of the fault plane and the horizontal plane.</span>
+<span class="sd">    :param dip:</span>
+<span class="sd">        Angle (deg) between fault plane and the horizontal plane normal</span>
+<span class="sd">        to the strike (0-90 using right hand rule).</span>
+<span class="sd">    :param rake:</span>
+<span class="sd">        Direction of motion of the hanging wall relative to the</span>
+<span class="sd">        foot wall, as measured by the angle (deg) from the strike vector.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Unit slip vector in &#39;local&#39; N-S, E-W, U-D coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">strike</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span>
+    <span class="n">rake</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span>
+    <span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">+</span> \
+        <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_local_unit_slip_vector_DS"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_local_unit_slip_vector_DS">[docs]</a><span class="k">def</span> <span class="nf">get_local_unit_slip_vector_DS</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the DIP SLIP components of a unit slip vector.</span>
+
+<span class="sd">    :param strike:</span>
+<span class="sd">        Clockwise angle (deg) from north of the line at the intersection</span>
+<span class="sd">        of the fault plane and the horizontal plane.</span>
+<span class="sd">    :param dip:</span>
+<span class="sd">        Angle (deg) between fault plane and the horizontal plane normal</span>
+<span class="sd">        to the strike (0-90 using right hand rule).</span>
+<span class="sd">    :param rake:</span>
+<span class="sd">        Direction of motion of the hanging wall relative to the</span>
+<span class="sd">        foot wall, as measured by the angle (deg) from the strike vector.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Unit slip vector in &#39;local&#39; N-S, E-W, U-D coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">strike</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span>
+    <span class="n">rake</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span>
+    <span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_local_unit_slip_vector_SS"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_local_unit_slip_vector_SS">[docs]</a><span class="k">def</span> <span class="nf">get_local_unit_slip_vector_SS</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the STRIKE SLIP components of a unit slip vector.</span>
+
+<span class="sd">    :param strike:</span>
+<span class="sd">        Clockwise angle (deg) from north of the line at the intersection</span>
+<span class="sd">        of the fault plane and the horizontal plane.</span>
+<span class="sd">    :param dip:</span>
+<span class="sd">        Angle (deg) between fault plane and the horizontal plane normal</span>
+<span class="sd">        to the strike (0-90 using right hand rule).</span>
+<span class="sd">    :param rake:</span>
+<span class="sd">        Direction of motion of the hanging wall relative to the</span>
+<span class="sd">        foot wall, as measured by the angle (deg) from the strike vector.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Unit slip vector in &#39;local&#39; N-S, E-W, U-D coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">strike</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">dip</span><span class="p">)</span>
+    <span class="n">rake</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span>
+    <span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rake</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span>
+    <span class="n">sz</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_quad_slip"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_slip">[docs]</a><span class="k">def</span> <span class="nf">get_quad_slip</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">rake</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the unit slip vector in ECEF space for a quad and rake angle.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :param rake:</span>
+<span class="sd">        Direction of motion of the hanging wall relative to the</span>
+<span class="sd">        foot wall, as measured by the angle (deg) from the strike vector.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Unit slip vector in ECEF space.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">strike</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">get_quad_dip</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">s1_local</span> <span class="o">=</span> <span class="n">get_local_unit_slip_vector</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">rake</span><span class="p">)</span>
+    <span class="n">s0_local</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">qlats</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">latitude</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">q</span><span class="p">]</span>
+    <span class="n">qlons</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">longitude</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">q</span><span class="p">]</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">get_orthographic_projection</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qlons</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">qlons</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qlats</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">qlats</span><span class="p">))</span>
+    <span class="n">s1_ll</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s1_local</span><span class="o">.</span><span class="n">x</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s1_local</span><span class="o">.</span><span class="n">y</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">s0_ll</span> <span class="o">=</span> <span class="n">proj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s0_local</span><span class="o">.</span><span class="n">x</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s0_local</span><span class="o">.</span><span class="n">y</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">s1_ecef</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromTuple</span><span class="p">(</span><span class="n">latlon2ecef</span><span class="p">(</span><span class="n">s1_ll</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">s1_ll</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s1_local</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+    <span class="n">s0_ecef</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromTuple</span><span class="p">(</span><span class="n">latlon2ecef</span><span class="p">(</span><span class="n">s0_ll</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">s0_ll</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s0_local</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+    <span class="n">slp_ecef</span> <span class="o">=</span> <span class="p">(</span><span class="n">s1_ecef</span> <span class="o">-</span> <span class="n">s0_ecef</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">slp_ecef</span></div>
+
+
+<div class="viewcode-block" id="get_quad_length"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_length">[docs]</a><span class="k">def</span> <span class="nf">get_quad_length</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Length of top eduge of a quadrilateral.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Length in km.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">qlength</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="k">return</span> <span class="n">qlength</span></div>
+
+
+<div class="viewcode-block" id="get_quad_dip"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_dip">[docs]</a><span class="k">def</span> <span class="nf">get_quad_dip</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dip of a quadrilateral.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Dip in degrees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">get_quad_normal</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">get_vertical_vector</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">V</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">dip</span></div>
+
+
+<div class="viewcode-block" id="get_quad_normal"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_normal">[docs]</a><span class="k">def</span> <span class="nf">get_quad_normal</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the unit normal vector for a quadrilateral in</span>
+<span class="sd">    ECEF coordinates.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Normalized normal vector for the quadrilateral in ECEF coords.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">p3</span> <span class="o">-</span> <span class="n">p0</span>
+    <span class="n">vn</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">vn</span></div>
+
+
+<div class="viewcode-block" id="get_quad_strike_vector"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_strike_vector">[docs]</a><span class="k">def</span> <span class="nf">get_quad_strike_vector</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the unit vector pointing in the direction of strike for a</span>
+<span class="sd">    quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        The unit vector pointing in strike direction in ECEF coords.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">v1</span></div>
+
+
+<div class="viewcode-block" id="get_quad_down_dip_vector"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_down_dip_vector">[docs]</a><span class="k">def</span> <span class="nf">get_quad_down_dip_vector</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the unit vector pointing down dip for a quadrilateral in</span>
+<span class="sd">    ECEF coordinates.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        The unit vector pointing down dip in ECEF coords.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>  <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+    <span class="n">p0p1</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span>
+    <span class="n">qnv</span> <span class="o">=</span> <span class="n">get_quad_normal</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">ddv</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">p0p1</span><span class="p">,</span> <span class="n">qnv</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ddv</span></div>
+
+
+<div class="viewcode-block" id="get_vertical_vector"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_vertical_vector">[docs]</a><span class="k">def</span> <span class="nf">get_vertical_vector</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the vertical unit vector for a quadrilateral</span>
+<span class="sd">    in ECEF coordinates.</span>
+
+<span class="sd">    :param q:</span>
+<span class="sd">        A quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Normalized vertical vector for the quadrilateral in ECEF coords.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">P0_up</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+    <span class="n">P0_up</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">P0_up</span><span class="o">.</span><span class="n">depth</span> <span class="o">-</span> <span class="mf">1.0</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>   <span class="c1"># fromPoint converts to ECEF</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0_up</span><span class="p">)</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">v1</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

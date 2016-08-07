@@ -1,0 +1,7 @@
+shakemap.grind.multigmpe
+===============================
+
+.. automodule:: shakemap.grind.multigmpe
+    :members:
+    :undoc-members:
+    :show-inheritance:

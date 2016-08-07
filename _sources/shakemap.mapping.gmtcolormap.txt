@@ -1,0 +1,7 @@
+shakemap.mapping.gmtcolormap
+===================================
+
+.. automodule:: shakemap.mapping.gmtcolormap
+    :members:
+    :undoc-members:
+    :show-inheritance:

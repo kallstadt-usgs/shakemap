@@ -1,0 +1,16 @@
+shakemap.grind.correlation
+==================================
+
+Submodules
+
+.. toctree::
+
+   shakemap.grind.correlation.boore_2003
+   shakemap.grind.correlation.goda_atkinson_2010
+
+Module contents
+
+.. automodule:: shakemap.grind.correlation
+    :members:
+    :undoc-members:
+    :show-inheritance:

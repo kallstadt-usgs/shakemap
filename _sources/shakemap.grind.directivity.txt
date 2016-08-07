@@ -1,0 +1,16 @@
+shakemap.grind.directivity
+==================================
+
+Submodules
+
+.. toctree::
+
+   shakemap.grind.directivity.bayless2013
+   shakemap.grind.directivity.rowshandel2013
+
+Module contents
+
+.. automodule:: shakemap.grind.directivity
+    :members:
+    :undoc-members:
+    :show-inheritance:

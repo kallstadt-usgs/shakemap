@@ -9,8 +9,8 @@ Welcome to the ShakeMap Documentation
 .. toctree::
    :maxdepth: 1
 
-   shake_index.rst
-   apidoc/index.rst
+   manual_index.rst
+   api_index.rst
 
 .. Indices and tables
 .. ==================

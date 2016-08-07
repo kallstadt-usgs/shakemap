@@ -1,0 +1,7 @@
+shakemap.transfer.sender
+===============================
+
+.. automodule:: shakemap.transfer.sender
+    :members:
+    :undoc-members:
+    :show-inheritance:

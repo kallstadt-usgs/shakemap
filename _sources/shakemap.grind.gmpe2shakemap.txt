@@ -1,0 +1,7 @@
+shakemap.grind.gmpe2shakemap
+===================================
+
+.. automodule:: shakemap.grind.gmpe2shakemap
+    :members:
+    :undoc-members:
+    :show-inheritance:

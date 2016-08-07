@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shakemap.grind.fault &mdash; ShakeMap Documentation  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ShakeMap Documentation  documentation" href="index.html"/>
+        <link rel="up" title="shakemap.grind" href="shakemap.grind.html"/>
+        <link rel="next" title="shakemap.grind.gmpe2shakemap" href="shakemap.grind.gmpe2shakemap.html"/>
+        <link rel="prev" title="shakemap.grind.distance" href="shakemap.grind.distance.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ShakeMap Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.distance.html">shakemap.grind.distance</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">shakemap.grind.fault</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmpe2shakemap.html">shakemap.grind.gmpe2shakemap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.multigmpe.html">shakemap.grind.multigmpe</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.sites.html">shakemap.grind.sites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.source.html">shakemap.grind.source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.station.html">shakemap.grind.station</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.zoneconfig.html">shakemap.grind.zoneconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.transfer.html">shakemap.transfer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shakemap.utils.html">shakemap.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">ShakeMap Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="api_index.html">ShakeMap 4.0 API</a> &raquo;</li>
+      
+          <li><a href="shakemap.html">shakemap</a> &raquo;</li>
+      
+          <li><a href="shakemap.grind.html">shakemap.grind</a> &raquo;</li>
+      
+    <li>shakemap.grind.fault</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/shakemap.grind.fault.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shakemap.grind.fault">
+<span id="shakemap-grind-fault"></span><h1>shakemap.grind.fault<a class="headerlink" href="#module-shakemap.grind.fault" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="shakemap.grind.fault.Fault">
+<em class="property">class </em><code class="descclassname">shakemap.grind.fault.</code><code class="descname">Fault</code><span class="sig-paren">(</span><em>lon</em>, <em>lat</em>, <em>depth</em>, <em>reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class to handle fault files of various types and output fault data in 
+various ways.</p>
+<dl class="classmethod">
+<dt id="shakemap.grind.fault.Fault.fromTrace">
+<em class="property">classmethod </em><code class="descname">fromTrace</code><span class="sig-paren">(</span><em>xp0</em>, <em>yp0</em>, <em>xp1</em>, <em>yp1</em>, <em>zp</em>, <em>widths</em>, <em>dips</em>, <em>strike=None</em>, <em>reference=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.fromTrace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.fromTrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a fault object from a set of vertices that define the top of the
+fault, and an array of widths/dips.</p>
+<p>These top of rupture points are defined by specifying the x and y
+coordinates of each of the two vertices, and then specifying an array of
+depths,widths, and dips for each rectangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xp0</strong> &#8211; Array of longitude coordinates for the first (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>yp0</strong> &#8211; Array of latitude coordinates for the first (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>xp1</strong> &#8211; Array of longitude coordinates for the second (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>yp1</strong> &#8211; Array of latitude coordinates for the second (top of rupture) vertex
+of each rectangle (decimal degrees).</li>
+<li><strong>zp</strong> &#8211; Array of depths for each of the top of rupture rectangles (km).</li>
+<li><strong>widths</strong> &#8211; Array of widths for each of rectangle (km).</li>
+<li><strong>dips</strong> &#8211; Array of dips for each of rectangle (degrees).</li>
+<li><strong>strike</strong> &#8211; If None then strike is computed from verticies of top edge of each
+quadrilateral. If a scalar, then all quadrilaterals are constructed
+assuming this strike direction. If a vector with the same length as
+the trace coordinates then it specifies the strike for each 
+quadrilateral.</li>
+<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication
+style reference, etc.)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Fault object, where the fault is modeled as a series of rectangles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.grind.fault.Fault.fromVertices">
+<em class="property">classmethod </em><code class="descname">fromVertices</code><span class="sig-paren">(</span><em>xp0</em>, <em>yp0</em>, <em>zp0</em>, <em>xp1</em>, <em>yp1</em>, <em>zp1</em>, <em>xp2</em>, <em>yp2</em>, <em>zp2</em>, <em>xp3</em>, <em>yp3</em>, <em>zp3</em>, <em>reference=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.fromVertices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.fromVertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a fault object from the vector of vertices that fully define the
+quadrilaterals. The points p0, ..., p3 are labeled below for a trapezoid:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>   <span class="n">p0</span><span class="o">--------</span><span class="n">p1</span>
+  <span class="o">/</span>          <span class="o">|</span>
+ <span class="o">/</span>           <span class="o">|</span>
+<span class="n">p3</span><span class="o">-----------</span><span class="n">p2</span>
+</pre></div>
+</div>
+<p>All of the following vector arguments must have the same length.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xp0</strong> &#8211; Vector of longitudes of p0.</li>
+<li><strong>yp0</strong> &#8211; Vector of latitudes of p0.</li>
+<li><strong>zp0</strong> &#8211; Vector of depths of p0 (positive down).</li>
+<li><strong>xp1</strong> &#8211; Vector of longitudes of p1.</li>
+<li><strong>yp1</strong> &#8211; Vector of latitudes of p1.</li>
+<li><strong>zp1</strong> &#8211; Vector of depths of p1 (positive down).</li>
+<li><strong>xp2</strong> &#8211; Vector of longitudes of p2.</li>
+<li><strong>yp2</strong> &#8211; Vector of latitudes of p2.</li>
+<li><strong>zp2</strong> &#8211; Vector of depths of p2 (positive down).</li>
+<li><strong>xp3</strong> &#8211; Vector of longitudes of p3.</li>
+<li><strong>yp3</strong> &#8211; Vector of latitudes of p3.</li>
+<li><strong>zp3</strong> &#8211; Vector of depths of p3 (positive down).</li>
+<li><strong>reference</strong> &#8211; String explaining where the fault definition came from (publication
+style reference, etc.)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Fault object, where the fault is modeled as a series of trapezoids.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getDip">
+<code class="descname">getDip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getDip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getDip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return average dip of all quadrilaterals in the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Average dip in degrees (float).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getDistanceToPlane">
+<code class="descname">getDistanceToPlane</code><span class="sig-paren">(</span><em>planepoints</em>, <em>otherpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getDistanceToPlane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getDistanceToPlane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate a point&#8217;s distance to a plane.  Used to figure out if a
+quadrilateral points are all co-planar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>planepoints</strong> &#8211; List of three points (Vector objects) defining a plane.</li>
+<li><strong>otherpoint</strong> &#8211; 4th Vector to compare to points defining the plane</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Distance (in meters) from otherpoint to plane.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getFaultAsArrays">
+<code class="descname">getFaultAsArrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultAsArrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultAsArrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a 3-tuple of numpy arrays indicating X, Y, Z (lon,lat,depth)
+coordinates. Fault segments are separated by numpy.NaN values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3-tuple of numpy arrays indicating X,Y,Z (lon,lat,depth) coordinates.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getFaultAsMesh">
+<code class="descname">getFaultAsMesh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultAsMesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultAsMesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return fault segments as a OQ-Hazardlib Mesh object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Mesh (<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/mesh.py</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getFaultLength">
+<code class="descname">getFaultLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getFaultLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getFaultLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute lenght of fault based on top edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Length of fault.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getIndividualTopLengths">
+<code class="descname">getIndividualTopLengths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getIndividualTopLengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getIndividualTopLengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array of fault lengths along top edge (km),
+one for each quadrilateral defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of lengths in km of top edge of quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getIndividualWidths">
+<code class="descname">getIndividualWidths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getIndividualWidths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getIndividualWidths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array of fault widths (km), one for each quadrilateral defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of quad widths in km of all fault quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getLats">
+<code class="descname">getLats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getLats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getLats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the array of latitude points for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Numpy array of latitude values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getLons">
+<code class="descname">getLons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getLons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getLons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the array of longitude points for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Numpy array of latitude values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getNumQuads">
+<code class="descname">getNumQuads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getNumQuads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getNumQuads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a count of the number of fault quadrilaterals.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of fault quadrilaterals.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getNumSegments">
+<code class="descname">getNumSegments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getNumSegments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getNumSegments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a count of the number of fault segments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of fault segments</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getQuadWidth">
+<code class="descname">getQuadWidth</code><span class="sig-paren">(</span><em>p0</em>, <em>p1</em>, <em>p3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getQuadWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getQuadWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return width of an individual planar trapezoid, where the p0-p1 distance
+represents the long side.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p0</strong> &#8211; ECEF x,y,z point representing the first vertex of a quadrilateral.</li>
+<li><strong>p1</strong> &#8211; ECEF x,y,z point representing the second vertex of a quadrilateral.</li>
+<li><strong>p3</strong> &#8211; ECEF x,y,z point representing the fourth vertex of a quadrilateral.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Width of planar trapezoid (float).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getQuadrilaterals">
+<code class="descname">getQuadrilaterals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getQuadrilaterals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getQuadrilaterals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of quadrilaterals.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Each quad is a tuple of four Point objects
+(<a class="reference external" href="https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py">https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getReference">
+<code class="descname">getReference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whatever reference information was contained in fault file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string citeable reference</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getStrike">
+<code class="descname">getStrike</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getStrike"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getStrike" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return strike angle. If fault consists of multiple quadrilaterals, the
+average strike angle, weighted by quad length, is returned.
+Note: for faults with quads where the strike angle changes by 180 deg
+due to reverses in dip direction are problematic and not handeled well
+by this algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Strike angle (float).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getTopOfRupture">
+<code class="descname">getTopOfRupture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getTopOfRupture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getTopOfRupture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine shallowest vertex of entire fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Shallowest depth of all vertices (float).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.getWidth">
+<code class="descname">getWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the average fault width (km) for all quadrilaterals defined for the fault.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Average width in km of all fault quadrilaterals (float).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shakemap.grind.fault.Fault.readFaultFile">
+<em class="property">classmethod </em><code class="descname">readFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.readFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.readFaultFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read fault file format as defined in ShakeMap Software Guide.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; Path to fault file OR file-like object in GMT psxy format, where
+* Fault vertices are space separated lat,lon,depth triplets on a single line.
+* Fault segments are separated by lines containing &#8220;&gt;&#8221;
+* Fault segments must be closed.
+* Fault segments must be all clockwise or all counter-clockwise.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Fault object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ShakeMapException</strong> &#8211; when any of above conditions are not met.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shakemap.grind.fault.Fault.writeFaultFile">
+<code class="descname">writeFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.writeFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.writeFaultFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write fault data to fault file format as defined in ShakeMap Software Guide.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; Filename of output data file OR file-like object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_local_unit_slip_vector">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the components of a unit slip vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
+<li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
+to the strike (0-90 using right hand rule).</li>
+<li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
+foot wall, as measured by the angle (deg) from the strike vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unit slip vector in &#8216;local&#8217; N-S, E-W, U-D coordinates.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_local_unit_slip_vector_DS">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector_DS</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector_DS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector_DS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the DIP SLIP components of a unit slip vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
+<li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
+to the strike (0-90 using right hand rule).</li>
+<li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
+foot wall, as measured by the angle (deg) from the strike vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unit slip vector in &#8216;local&#8217; N-S, E-W, U-D coordinates.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_local_unit_slip_vector_SS">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_local_unit_slip_vector_SS</code><span class="sig-paren">(</span><em>strike</em>, <em>dip</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_local_unit_slip_vector_SS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_local_unit_slip_vector_SS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the STRIKE SLIP components of a unit slip vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strike</strong> &#8211; Clockwise angle (deg) from north of the line at the intersection
+of the fault plane and the horizontal plane.</li>
+<li><strong>dip</strong> &#8211; Angle (deg) between fault plane and the horizontal plane normal
+to the strike (0-90 using right hand rule).</li>
+<li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
+foot wall, as measured by the angle (deg) from the strike vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unit slip vector in &#8216;local&#8217; N-S, E-W, U-D coordinates.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_dip">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_dip</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_dip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_dip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dip of a quadrilateral.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dip in degrees.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_down_dip_vector">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_down_dip_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_down_dip_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_down_dip_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the unit vector pointing down dip for a quadrilateral in
+ECEF coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing down dip in ECEF coords.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_length">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_length</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length of top eduge of a quadrilateral.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Length in km.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_mesh">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_mesh</code><span class="sig-paren">(</span><em>q</em>, <em>dx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_mesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_mesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length of top eduge of a quadrilateral.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>q</strong> &#8211; A quadrilateral.</li>
+<li><strong>dx</strong> &#8211; Target dx in km; used to get nx and ny of mesh, but mesh snaps
+to edges of fault so actual dx/dy will not actually equal this
+value in general.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>Mesh dictionary, which includes numpy arrays:</p>
+<ul class="simple">
+<li>llx: lower left x coordinate in ECEF coords.</li>
+<li>lly: lower left y coordinate in ECEF coords.</li>
+<li>llz: lower left z coordinate in ECEF coords.</li>
+<li>ulx: upper left x coordinate in ECEF coords.</li>
+<li>etc.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_normal">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_normal</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_normal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_normal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the unit normal vector for a quadrilateral in
+ECEF coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Normalized normal vector for the quadrilateral in ECEF coords.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_slip">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_slip</code><span class="sig-paren">(</span><em>q</em>, <em>rake</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_slip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_slip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the unit slip vector in ECEF space for a quad and rake angle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>q</strong> &#8211; A quadrilateral.</li>
+<li><strong>rake</strong> &#8211; Direction of motion of the hanging wall relative to the
+foot wall, as measured by the angle (deg) from the strike vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unit slip vector in ECEF space.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_strike_vector">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_strike_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_strike_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_strike_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the unit vector pointing in the direction of strike for a
+quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing in strike direction in ECEF coords.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_vertical_vector">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_vertical_vector</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_vertical_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_vertical_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the vertical unit vector for a quadrilateral
+in ECEF coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Normalized vertical vector for the quadrilateral in ECEF coords.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shakemap.grind.gmpe2shakemap.html" class="btn btn-neutral float-right" title="shakemap.grind.gmpe2shakemap" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shakemap.grind.distance.html" class="btn btn-neutral" title="shakemap.grind.distance" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

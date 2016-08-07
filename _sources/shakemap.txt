@@ -1,0 +1,19 @@
+shakemap
+================
+
+
+.. toctree::
+
+    shakemap.genex
+    shakemap.gmice
+    shakemap.grind
+    shakemap.mapping
+    shakemap.transfer
+    shakemap.utils
+
+Module contents
+
+.. automodule:: shakemap
+    :members:
+    :undoc-members:
+    :show-inheritance:

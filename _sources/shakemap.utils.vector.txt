@@ -1,0 +1,7 @@
+shakemap.utils.vector
+============================
+
+.. automodule:: shakemap.utils.vector
+    :members:
+    :undoc-members:
+    :show-inheritance:

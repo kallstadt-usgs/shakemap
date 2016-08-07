@@ -1,0 +1,7 @@
+shakemap.utils.conf
+==========================
+
+.. automodule:: shakemap.utils.conf
+    :members:
+    :undoc-members:
+    :show-inheritance:

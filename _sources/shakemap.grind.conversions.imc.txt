@@ -1,0 +1,15 @@
+shakemap.grind.conversions.imc
+======================================
+
+Submodules
+
+.. toctree::
+
+   shakemap.grind.conversions.imc.beyer_bommer_2006
+
+Module contents
+
+.. automodule:: shakemap.grind.conversions.imc
+    :members:
+    :undoc-members:
+    :show-inheritance:
