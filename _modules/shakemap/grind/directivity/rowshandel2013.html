@@ -148,27 +148,27 @@
 <span class="sd">    provides many options for computing the directivity factor and we have </span>
 <span class="sd">    also used some coefficients that are unpublished updates by Rowshandel. </span>
 <span class="sd">    Some of the implementation options are controlled by arguments (e.g., </span>
-<span class="sd">    mtype). </span>
+<span class="sd">    mtype).</span>
 
 <span class="sd">    Fd is the directivity function. One of the options is whether or not to</span>
-<span class="sd">    use the &#39;centering&#39; term (the argument is &#39;centered&#39; and defaults to </span>
+<span class="sd">    use the &#39;centering&#39; term (the argument is &#39;centered&#39; and defaults to</span>
 <span class="sd">    True). If it is True then</span>
 
 <span class="sd">    Fd = C1 * (XiPrime - Xic) * LD * DT * WP</span>
 
-<span class="sd">    otherwise </span>
+<span class="sd">    otherwise</span>
 
 <span class="sd">    Fd = (C1 * Xiprime + C2) * LD * DT * WP</span>
 
 <span class="sd">    where</span>
 
-<span class="sd">    - C1 and C2 are regression coefficients. </span>
+<span class="sd">    - C1 and C2 are regression coefficients.</span>
 <span class="sd">    - XiPrime is a factor that accounts for rupture propagation and slip</span>
-<span class="sd">      direction. </span>
-<span class="sd">    - Xic is the centering term. </span>
-<span class="sd">    - LD is the rupture length de-normalization factor. </span>
-<span class="sd">    - DT is the distance-taper. </span>
-<span class="sd">    - WP is the narrow-band multiplier. </span>
+<span class="sd">      direction.</span>
+<span class="sd">    - Xic is the centering term.</span>
+<span class="sd">    - LD is the rupture length de-normalization factor.</span>
+<span class="sd">    - DT is the distance-taper.</span>
+<span class="sd">    - WP is the narrow-band multiplier.</span>
 
 <span class="sd">    Note that Fd is intended to be used in GMPEs as:</span>
 
@@ -176,9 +176,9 @@
 
 <span class="sd">    where</span>
 
-<span class="sd">    - Fd is the directivity effect</span>
-<span class="sd">    - IM is the intensity measure predicted by the GMPE. </span>
-<span class="sd">    - IM_dir is the directivity-adjusted IM. </span>
+<span class="sd">    - Fd is the directivity effect.</span>
+<span class="sd">    - IM is the intensity measure predicted by the GMPE.</span>
+<span class="sd">    - IM_dir is the directivity-adjusted IM.</span>
 
 <span class="sd">    To do</span>
 <span class="sd">        - Add checks on function arguments (e.g., mtype) for valid values.</span>
