@@ -1,0 +1,7 @@
+shakemap.plotting.plotfault
+==================================
+
+.. automodule:: shakemap.plotting.plotfault
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,15 @@
+shakemap.plotting
+=========================
+
+Submodules
+
+.. toctree::
+
+   shakemap.plotting.plotfault
+
+Module contents
+
+.. automodule:: shakemap.plotting
+    :members:
+    :undoc-members:
+    :show-inheritance:
