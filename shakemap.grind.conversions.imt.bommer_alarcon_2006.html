@@ -82,11 +82,11 @@
 <li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmice.html">shakemap.grind.gmice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.distance.html">shakemap.grind.distance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.fault.html">shakemap.grind.fault</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmpe2shakemap.html">shakemap.grind.gmpe2shakemap</a></li>
@@ -172,9 +172,12 @@ by Bommer and Alarcon (2006).</p>
 <li>PGV is peak ground velocity.</li>
 </ul>
 <dl class="docutils">
-<dt>Todo: </dt>
-<dd>Inherit from ConvertIMT class.</dd>
-<dt>References: </dt>
+<dt>To do</dt>
+<dd><ul class="first last simple">
+<li>Inherit from ConvertIMT class.</li>
+</ul>
+</dd>
+<dt>References:</dt>
 <dd>Bommer, J. J., &amp; Alarcon, J. E. (2006). The prediction and use of peak 
 ground velocity. Journal of Earthquake Engineering, 10(01), 1-31.
 <a class="reference external" href="http://www.worldscientific.com/doi/abs/10.1142/S1363246906002463">[link]</a></dd>
@@ -196,15 +199,18 @@ ground velocity. Journal of Earthquake Engineering, 10(01), 1-31.
 <dt id="shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.pgv2psa05">
 <em class="property">static </em><code class="descname">pgv2psa05</code><span class="sig-paren">(</span><em>pgv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions/imt/bommer_alarcon_2006.html#BommerAlarcon2006.pgv2psa05"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.pgv2psa05" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert PGV in cm/s to PSA05 in g.
-<strong>Important:</strong> PGV must be linear units.
-:param pgv:</p>
-<blockquote>
-<div>Numpy array or float of PGV values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Numpy array or float of PSA05 (spectral acceleration with oscillator
-period of 0.5 sec) converted from PGV.</dd>
-</dl>
+<strong>Important:</strong> PGV must be linear units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pgv</strong> &#8211; Numpy array or float of PGV values; linear units.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Numpy array or float of PSA05 (spectral acceleration with oscillator
+period of 0.5 sec) converted from PGV.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="staticmethod">
@@ -212,14 +218,17 @@ period of 0.5 sec) converted from PGV.</dd>
 <em class="property">static </em><code class="descname">psa052pgv</code><span class="sig-paren">(</span><em>psa05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions/imt/bommer_alarcon_2006.html#BommerAlarcon2006.psa052pgv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.imt.bommer_alarcon_2006.BommerAlarcon2006.psa052pgv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert PSA05 (spectral acceleration with oscillator period of 0.5 sec)
 in g to PGV cm/s.
-<strong>Important:</strong> PSA10 must be linear units.
-:param psa05:</p>
-<blockquote>
-<div>Numpy array or float of PSA05 values; linear units.</div></blockquote>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Numpy array or float of PGV converted from psa05.</dd>
-</dl>
+<strong>Important:</strong> PSA10 must be linear units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>psa05</strong> &#8211; Numpy array or float of PSA05 values; linear units.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Numpy array or float of PGV converted from psa05.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

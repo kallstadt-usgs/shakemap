@@ -5,7 +5,6 @@ shakemap
 .. toctree::
 
     shakemap.genex
-    shakemap.gmice
     shakemap.grind
     shakemap.mapping
     shakemap.transfer

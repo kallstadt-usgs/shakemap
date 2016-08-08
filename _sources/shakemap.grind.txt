@@ -7,6 +7,7 @@ shakemap.grind
     shakemap.grind.conversions
     shakemap.grind.correlation
     shakemap.grind.directivity
+    shakemap.grind.gmice
 
 Submodules
 

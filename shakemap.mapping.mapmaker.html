@@ -82,7 +82,6 @@
 <li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.mapping.html">shakemap.mapping</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="shakemap.mapping.colormap.html">shakemap.mapping.colormap</a></li>
@@ -148,79 +147,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-shakemap.mapping.mapmaker">
-<span id="shakemap-mapping-mapmaker"></span><h1>shakemap.mapping.mapmaker<a class="headerlink" href="#module-shakemap.mapping.mapmaker" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="shakemap.mapping.mapmaker.MapMaker">
-<em class="property">class </em><code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">MapMaker</code><span class="sig-paren">(</span><em>shakemap</em>, <em>topofile</em>, <em>stations</em>, <em>fault</em>, <em>layerdict</em>, <em>source</em>, <em>cities=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.drawContourMap">
-<code class="descname">drawContourMap</code><span class="sig-paren">(</span><em>outfolder</em>, <em>cmin=None</em>, <em>cmax=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.drawContourMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.drawContourMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.drawIntensityMap">
-<code class="descname">drawIntensityMap</code><span class="sig-paren">(</span><em>outfolder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.drawIntensityMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.drawIntensityMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.getContourLevels">
-<code class="descname">getContourLevels</code><span class="sig-paren">(</span><em>dmin</em>, <em>dmax</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.getContourLevels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.getContourLevels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.round_to">
-<code class="descname">round_to</code><span class="sig-paren">(</span><em>n</em>, <em>precision</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.round_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.round_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setCityGrid">
-<code class="descname">setCityGrid</code><span class="sig-paren">(</span><em>nx=2</em>, <em>ny=2</em>, <em>cities_per_grid=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setCityGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setCityGrid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setCityList">
-<code class="descname">setCityList</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setCityList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setCityList" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap">
-<code class="descname">setContourGMTColorMap</code><span class="sig-paren">(</span><em>colormap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setContourGMTColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setContourGMTColorMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setContourLayer">
-<code class="descname">setContourLayer</code><span class="sig-paren">(</span><em>contour_layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setContourLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setContourLayer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setFigureSize">
-<code class="descname">setFigureSize</code><span class="sig-paren">(</span><em>figwidth</em>, <em>figheight</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setFigureSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setFigureSize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap">
-<code class="descname">setIntensityGMTColorMap</code><span class="sig-paren">(</span><em>colormap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setIntensityGMTColorMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setIntensityGMTColorMap" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="shakemap.mapping.mapmaker.MapMaker.setIntensityLayer">
-<code class="descname">setIntensityLayer</code><span class="sig-paren">(</span><em>imt_layer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#MapMaker.setIntensityLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.MapMaker.setIntensityLayer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="shakemap.mapping.mapmaker.getProjectedPatches">
-<code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">getProjectedPatches</code><span class="sig-paren">(</span><em>polygon</em>, <em>m</em>, <em>edgecolor='#7AA1DA'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#getProjectedPatches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.getProjectedPatches" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="shakemap.mapping.mapmaker.getProjectedPolygon">
-<code class="descclassname">shakemap.mapping.mapmaker.</code><code class="descname">getProjectedPolygon</code><span class="sig-paren">(</span><em>polygon</em>, <em>m</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/mapping/mapmaker.html#getProjectedPolygon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.mapping.mapmaker.getProjectedPolygon" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+  <div class="section" id="shakemap-mapping-mapmaker">
+<h1>shakemap.mapping.mapmaker<a class="headerlink" href="#shakemap-mapping-mapmaker" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

@@ -82,11 +82,11 @@
 <li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmice.html">shakemap.grind.gmice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.distance.html">shakemap.grind.distance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.fault.html">shakemap.grind.fault</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmpe2shakemap.html">shakemap.grind.gmpe2shakemap</a></li>
@@ -181,8 +181,11 @@ Note that 2.54 is the conversion factor to convert from cm/s to in/s and
 <li>386.09 is the acceleration of gravity in inches per second per g</li>
 </ul>
 <dl class="docutils">
-<dt>Todo: </dt>
-<dd>Inherit from ConvertIMT class.</dd>
+<dt>To do</dt>
+<dd><ul class="first last simple">
+<li>Inherit from ConvertIMT class.</li>
+</ul>
+</dd>
 <dt>References: </dt>
 <dd>Newmark, N. M., &amp; Hall, W. J. (1982). Earthquake spectra and design. 
 Earthquake Engineering Research Institute, El Cerrito, California.</dd>
@@ -212,12 +215,10 @@ period of 1.0 sec) in g.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pgv</strong> &#8211; Numpy array or float of PGV values; linear units.</td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Values converted to PSA10.</td>
+</tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>: returns:</dt>
-<dd>Values converted to PSA10.</dd>
-</dl>
 </dd></dl>
 
 <dl class="staticmethod">

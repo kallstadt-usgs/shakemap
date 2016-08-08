@@ -128,20 +128,17 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="c1"># stdlib modules</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="c1"># third party imports</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">mesh</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.utils</span> <span class="kn">import</span> <span class="n">get_orthographic_projection</span>
 <span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span>
 <span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">ecef2latlon</span>
 <span class="kn">from</span> <span class="nn">..utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
 <span class="c1"># local imports</span>
 <span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>
@@ -341,7 +338,8 @@
 
 <div class="viewcode-block" id="Fault.writeFaultFile"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.writeFaultFile">[docs]</a>    <span class="k">def</span> <span class="nf">writeFaultFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">faultfile</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Write fault data to fault file format as defined in ShakeMap Software Guide.</span>
+<span class="sd">        Write fault data to fault file format as defined in ShakeMap Software</span>
+<span class="sd">        Guide.</span>
 
 <span class="sd">        :param faultfile:</span>
 <span class="sd">            Filename of output data file OR file-like object.</span>
@@ -369,7 +367,8 @@
 
 <span class="sd">        :param faultfile:</span>
 <span class="sd">            Path to fault file OR file-like object in GMT psxy format, where</span>
-<span class="sd">            * Fault vertices are space separated lat,lon,depth triplets on a single line.</span>
+<span class="sd">            * Fault vertices are space separated lat,lon,depth triplets on a</span>
+<span class="sd">              single line.</span>
 <span class="sd">            * Fault segments are separated by lines containing &quot;&gt;&quot;</span>
 <span class="sd">            * Fault segments must be closed.</span>
 <span class="sd">            * Fault segments must be all clockwise or all counter-clockwise.</span>
@@ -526,27 +525,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Fault.getQuadWidth"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getQuadWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getQuadWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return width of an individual planar trapezoid, where the p0-p1 distance</span>
-<span class="sd">        represents the long side.</span>
-
-<span class="sd">        :param p0:</span>
-<span class="sd">            ECEF x,y,z point representing the first vertex of a quadrilateral.</span>
-<span class="sd">        :param p1:</span>
-<span class="sd">            ECEF x,y,z point representing the second vertex of a quadrilateral.</span>
-<span class="sd">        :param p3:</span>
-<span class="sd">            ECEF x,y,z point representing the fourth vertex of a quadrilateral.</span>
-<span class="sd">        :returns:</span>
-<span class="sd">           Width of planar trapezoid (float).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">AB</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p1</span>
-        <span class="n">AC</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p3</span>
-        <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">width</span></div>
-
 <div class="viewcode-block" id="Fault.getStrike"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getStrike">[docs]</a>    <span class="k">def</span> <span class="nf">getStrike</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return strike angle. If fault consists of multiple quadrilaterals, the</span>
@@ -604,7 +582,8 @@
 
 <div class="viewcode-block" id="Fault.getWidth"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the average fault width (km) for all quadrilaterals defined for the fault.</span>
+<span class="sd">        Return the average fault width (km) for all quadrilaterals defined for</span>
+<span class="sd">        the fault.</span>
 
 <span class="sd">        :returns:</span>
 <span class="sd">            Average width in km of all fault quadrilaterals (float).</span>
@@ -615,13 +594,14 @@
             <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
             <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
             <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
-            <span class="n">wsum</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+            <span class="n">wsum</span> <span class="o">+=</span> <span class="n">get_quad_width</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
         <span class="n">mwidth</span> <span class="o">=</span> <span class="p">(</span><span class="n">wsum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quadrilaterals</span><span class="p">))</span> <span class="o">/</span> <span class="mf">1000.0</span>
         <span class="k">return</span> <span class="n">mwidth</span></div>
 
 <div class="viewcode-block" id="Fault.getIndividualWidths"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getIndividualWidths">[docs]</a>    <span class="k">def</span> <span class="nf">getIndividualWidths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return an array of fault widths (km), one for each quadrilateral defined for the fault.</span>
+<span class="sd">        Return an array of fault widths (km), one for each quadrilateral defined</span>
+<span class="sd">        for the fault.</span>
 
 <span class="sd">        :returns:</span>
 <span class="sd">            Array of quad widths in km of all fault quadrilaterals.</span>
@@ -633,7 +613,7 @@
             <span class="n">p0</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
             <span class="n">p1</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
             <span class="n">p3</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">P3</span><span class="p">)</span>
-            <span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+            <span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_quad_width</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
         <span class="k">return</span> <span class="n">widths</span></div>
 
 <div class="viewcode-block" id="Fault.getIndividualTopLengths"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.Fault.getIndividualTopLengths">[docs]</a>    <span class="k">def</span> <span class="nf">getIndividualTopLengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -671,7 +651,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># area of a trapezoid: A = (a+b)/2 * h</span>
         <span class="c1"># (https://en.wikipedia.org/wiki/Trapezoid)</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQuadWidth</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">get_quad_width</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
         <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
         <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p3</span><span class="p">)</span><span class="o">.</span><span class="n">mag</span><span class="p">()</span>
         <span class="n">A</span> <span class="o">=</span> <span class="p">((</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">h</span>
@@ -697,19 +677,25 @@
         <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
         <span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">getArray</span><span class="p">()</span>
         <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">at</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
-        <span class="n">bt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
-        <span class="n">ct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]))</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">at</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">bt</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">ct</span>
+        <span class="k">if</span> <span class="n">D</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">at</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
+            <span class="n">bt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z3</span><span class="p">]]))</span>
+            <span class="n">ct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]))</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">at</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">bt</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">ct</span>
 
-        <span class="n">numer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span>
-                       <span class="n">b</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span>
-                       <span class="n">c</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
-        <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span>
+            <span class="n">numer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span>
+                           <span class="n">b</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span>
+                           <span class="n">c</span> <span class="o">*</span> <span class="n">otherpoint</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">dist</span></div>
 
     <span class="k">def</span> <span class="nf">_isPointToRight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">):</span>
@@ -738,8 +724,9 @@
 
     <span class="k">def</span> <span class="nf">_validateQuad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Validate and fix* a given quadrilateral (*currently &quot;fix&quot; means check third vertex for co-planarity</span>
-<span class="sd">        with other three points, and force it to be co-planar if it&#39;s not wildly out of the plane.()</span>
+<span class="sd">        Validate and fix* a given quadrilateral (*currently &quot;fix&quot; means check</span>
+<span class="sd">        third vertex for co-planarity with other three points, and force it to</span>
+<span class="sd">        be co-planar if it&#39;s not wildly out of the plane.()</span>
 
 <span class="sd">        :param P0:</span>
 <span class="sd">            First vertex https://github.com/gem/oq-hazardlib/blob/master/openquake/hazardlib/geo/point.py</span>
@@ -753,8 +740,10 @@
 <span class="sd">           Tuple of (potentially) modified vertices.</span>
 <span class="sd">        :raises ShakeMapException:</span>
 <span class="sd">           * if top and bottom edges are not parallel to surface</span>
-<span class="sd">           * if dip angle is not dipping to the right relative to strike (defined by first two vertices)</span>
-<span class="sd">           * if all 4 points are not reasonably co-planar (P2 is more than 5% of mean length of trapezoid out of plane)</span>
+<span class="sd">           * if dip angle is not dipping to the right relative to strike </span>
+<span class="sd">             (defined by first two vertices)</span>
+<span class="sd">           * if all 4 points are not reasonably co-planar (P2 is more than 5% of</span>
+<span class="sd">             mean length of trapezoid out of plane)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: Someday fix the rule about dip angle being clockwise and 0-90 degrees</span>
         <span class="c1"># In theory, you could flip the quadrilateral by 180 degrees and it</span>
@@ -804,12 +793,15 @@
 <span class="sd">        Create internal list of N quadrilaterals.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Fault QA rules</span>
-        <span class="c1"># 1) Fault must consist of 1 or more quadrilaterals, where each quad top/bottom edges are</span>
-        <span class="c1">#   parallel to the surface</span>
-        <span class="c1"># 2) The strike angle of each quadrilateral is defined by the first two vertices of that quad</span>
-        <span class="c1"># 3) The dip angle is defined by segments 2 and 3, or 1 and 4.  This angle must be clockwise with respect to the</span>
-        <span class="c1">#   strike angle, and between 0 and 90 degrees.</span>
-        <span class="c1"># 4) The top edge of each quad must be defined by the first two vertices of that quad.</span>
+        <span class="c1"># 1) Fault must consist of 1 or more quadrilaterals, where each quad</span>
+        <span class="c1">#    top/bottom edges are parallel to the surface</span>
+        <span class="c1"># 2) The strike angle of each quadrilateral is defined by the first two</span>
+        <span class="c1">#    vertices of that quad</span>
+        <span class="c1"># 3) The dip angle is defined by segments 2 and 3, or 1 and 4.  This</span>
+        <span class="c1">#    angle must be clockwise with respect to the strike angle, and</span>
+        <span class="c1">#    between 0 and 90 degrees.</span>
+        <span class="c1"># 4) The top edge of each quad must be defined by the first two vertices</span>
+        <span class="c1">#    of that quad.</span>
         <span class="c1"># 5) 4 points of quadrilateral must be co-planar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat</span><span class="p">)</span>
@@ -1003,6 +995,27 @@
                     <span class="s1">&#39;Unclosed segments exist in fault file.&#39;</span><span class="p">)</span>
             <span class="n">istart</span> <span class="o">=</span> <span class="n">inan</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span></div>
 
+
+<div class="viewcode-block" id="get_quad_width"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_width">[docs]</a><span class="k">def</span> <span class="nf">get_quad_width</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return width of an individual planar trapezoid, where the p0-p1 distance</span>
+<span class="sd">    represents the long side.</span>
+
+<span class="sd">    :param p0:</span>
+<span class="sd">        ECEF x,y,z point representing the first vertex of a quadrilateral.</span>
+<span class="sd">    :param p1:</span>
+<span class="sd">        ECEF x,y,z point representing the second vertex of a quadrilateral.</span>
+<span class="sd">    :param p3:</span>
+<span class="sd">        ECEF x,y,z point representing the fourth vertex of a quadrilateral.</span>
+<span class="sd">    :returns:</span>
+<span class="sd">        Width of planar trapezoid (float).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">AB</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p1</span>
+    <span class="n">AC</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">-</span> <span class="n">p3</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">AB</span><span class="p">))</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">width</span></div>
 
 <div class="viewcode-block" id="get_quad_mesh"><a class="viewcode-back" href="../../../shakemap.grind.fault.html#shakemap.grind.fault.get_quad_mesh">[docs]</a><span class="k">def</span> <span class="nf">get_quad_mesh</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>

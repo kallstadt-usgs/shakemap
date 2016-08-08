@@ -138,8 +138,9 @@
 <div class="viewcode-block" id="MultiGMPE"><a class="viewcode-back" href="../../../shakemap.grind.multigmpe.html#shakemap.grind.multigmpe.MultiGMPE">[docs]</a><span class="k">class</span> <span class="nc">MultiGMPE</span><span class="p">(</span><span class="n">GMPE</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements a GMPE that is the combination of multiple GMPEs.</span>
-<span class="sd">    </span>
-<span class="sd">    Todo:</span>
+
+<span class="sd">    To do</span>
+
 <span class="sd">        * Convert IMT (e.g., PGV) from another IMT if it is not available from</span>
 <span class="sd">          the GMPE in get_mean_and_stddevs.</span>
 
@@ -300,7 +301,7 @@
 <span class="sd">        Numpy array of Vs30 values in m/s. </span>
 <span class="sd">    :returns: </span>
 <span class="sd">        Numpy array of z1.0 in m.  </span>
-<span class="sd">    </span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># ASK14 define units as KM, but implemented as m in OQ</span>
     <span class="n">z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">7.67</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span> <span class="o">*</span>

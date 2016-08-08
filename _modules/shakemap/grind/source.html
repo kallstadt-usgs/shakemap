@@ -129,24 +129,14 @@
 
 <span class="c1"># stdlib imports</span>
 <span class="kn">from</span> <span class="nn">xml.dom</span> <span class="kn">import</span> <span class="n">minidom</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="c1"># third party</span>
-<span class="kn">import</span> <span class="nn">pytz</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">geodetic</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">Mesh</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.surface</span> <span class="kn">import</span> <span class="n">multi</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.surface</span> <span class="kn">import</span> <span class="n">planar</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">utils</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">abrahamson_2014</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim</span> <span class="kn">import</span> <span class="n">base</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.const</span> <span class="kn">import</span> <span class="n">TRT</span>
-<span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">geometry</span>
 <span class="kn">from</span> <span class="nn">..utils.timeutils</span> <span class="kn">import</span> <span class="n">ShakeDateTime</span>
-<span class="kn">from</span> <span class="nn">..utils.ecef</span> <span class="kn">import</span> <span class="n">latlon2ecef</span><span class="p">,</span> <span class="n">ecef2latlon</span>
 <span class="kn">from</span> <span class="nn">.fault</span> <span class="kn">import</span> <span class="n">Fault</span>
 
 <span class="c1"># local imports</span>

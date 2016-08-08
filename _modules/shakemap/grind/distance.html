@@ -128,8 +128,6 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="c1"># stdlib imports</span>
-<span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="kn">as</span> <span class="nn">it</span>
@@ -140,7 +138,7 @@
 <span class="kn">from</span> <span class="nn">..utils.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
 <span class="kn">from</span> <span class="nn">.fault</span> <span class="kn">import</span> <span class="n">get_quad_length</span>
 <span class="kn">from</span> <span class="nn">.source</span> <span class="kn">import</span> <span class="n">rake_to_mech</span>
-<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">point</span><span class="p">,</span> <span class="n">geodetic</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.geo</span> <span class="kn">import</span> <span class="n">geodetic</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.geo.utils</span> <span class="kn">import</span> <span class="n">get_orthographic_projection</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim.base</span> <span class="kn">import</span> <span class="n">GMPE</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim</span> <span class="kn">import</span> <span class="n">base</span>
@@ -148,7 +146,6 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">scipy.interpolate</span> <span class="kn">as</span> <span class="nn">spint</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="c1"># local imports</span>
 <span class="kn">from</span> <span class="nn">shakemap.utils.exception</span> <span class="kn">import</span> <span class="n">ShakeMapException</span>

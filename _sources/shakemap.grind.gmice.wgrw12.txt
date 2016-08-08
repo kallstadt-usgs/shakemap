@@ -1,0 +1,7 @@
+shakemap.grind.gmice.wgrw12
+==================================
+
+.. automodule:: shakemap.grind.gmice.wgrw12
+    :members:
+    :undoc-members:
+    :show-inheritance:

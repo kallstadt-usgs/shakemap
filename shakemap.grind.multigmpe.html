@@ -82,11 +82,11 @@
 <li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmice.html">shakemap.grind.gmice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.distance.html">shakemap.grind.distance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.fault.html">shakemap.grind.fault</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmpe2shakemap.html">shakemap.grind.gmpe2shakemap</a></li>
@@ -162,14 +162,13 @@
 <em class="property">class </em><code class="descclassname">shakemap.grind.multigmpe.</code><code class="descname">MultiGMPE</code><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">openquake.hazardlib.gsim.base.GMPE</span></code></p>
 <p>Implements a GMPE that is the combination of multiple GMPEs.</p>
-<dl class="docutils">
-<dt>Todo:</dt>
-<dd><ul class="first last simple">
+<p>To do</p>
+<blockquote>
+<div><ul class="simple">
 <li>Convert IMT (e.g., PGV) from another IMT if it is not available from
 the GMPE in get_mean_and_stddevs.</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <dl class="attribute">
 <dt id="shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_COMPONENT">
 <code class="descname">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</code><em class="property"> = None</em><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.DEFINED_FOR_INTENSITY_MEASURE_COMPONENT" title="Permalink to this definition">¶</a></dt>

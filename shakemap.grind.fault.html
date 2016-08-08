@@ -82,11 +82,11 @@
 <li class="toctree-l1"><a class="reference internal" href="manual_index.html">ShakeMap Manual 2.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api_index.html">ShakeMap 4.0 API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="shakemap.html">shakemap</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="shakemap.gmice.html">shakemap.gmice</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="shakemap.grind.html">shakemap.grind</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.conversions.html">shakemap.grind.conversions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.correlation.html">shakemap.grind.correlation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.directivity.html">shakemap.grind.directivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmice.html">shakemap.grind.gmice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.distance.html">shakemap.grind.distance</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">shakemap.grind.fault</a></li>
 <li class="toctree-l4"><a class="reference internal" href="shakemap.grind.gmpe2shakemap.html">shakemap.grind.gmpe2shakemap</a></li>
@@ -342,7 +342,8 @@ one for each quadrilateral defined for the fault.</p>
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getIndividualWidths">
 <code class="descname">getIndividualWidths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getIndividualWidths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getIndividualWidths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an array of fault widths (km), one for each quadrilateral defined for the fault.</p>
+<dd><p>Return an array of fault widths (km), one for each quadrilateral defined
+for the fault.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -404,29 +405,6 @@ one for each quadrilateral defined for the fault.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of fault segments</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shakemap.grind.fault.Fault.getQuadWidth">
-<code class="descname">getQuadWidth</code><span class="sig-paren">(</span><em>p0</em>, <em>p1</em>, <em>p3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getQuadWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getQuadWidth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return width of an individual planar trapezoid, where the p0-p1 distance
-represents the long side.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>p0</strong> &#8211; ECEF x,y,z point representing the first vertex of a quadrilateral.</li>
-<li><strong>p1</strong> &#8211; ECEF x,y,z point representing the second vertex of a quadrilateral.</li>
-<li><strong>p3</strong> &#8211; ECEF x,y,z point representing the fourth vertex of a quadrilateral.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Width of planar trapezoid (float).</p>
-</td>
 </tr>
 </tbody>
 </table>
@@ -496,7 +474,8 @@ by this algorithm.</p>
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.getWidth">
 <code class="descname">getWidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.getWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.getWidth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the average fault width (km) for all quadrilaterals defined for the fault.</p>
+<dd><p>Return the average fault width (km) for all quadrilaterals defined for
+the fault.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -515,11 +494,16 @@ by this algorithm.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; Path to fault file OR file-like object in GMT psxy format, where
-* Fault vertices are space separated lat,lon,depth triplets on a single line.
-* Fault segments are separated by lines containing &#8220;&gt;&#8221;
-* Fault segments must be closed.
-* Fault segments must be all clockwise or all counter-clockwise.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>faultfile</strong> &#8211; <p>Path to fault file OR file-like object in GMT psxy format, where
+* Fault vertices are space separated lat,lon,depth triplets on a</p>
+<blockquote>
+<div>single line.</div></blockquote>
+<ul class="simple">
+<li>Fault segments are separated by lines containing &#8220;&gt;&#8221;</li>
+<li>Fault segments must be closed.</li>
+<li>Fault segments must be all clockwise or all counter-clockwise.</li>
+</ul>
+</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Fault object.</td>
 </tr>
@@ -532,7 +516,8 @@ by this algorithm.</p>
 <dl class="method">
 <dt id="shakemap.grind.fault.Fault.writeFaultFile">
 <code class="descname">writeFaultFile</code><span class="sig-paren">(</span><em>faultfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#Fault.writeFaultFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.Fault.writeFaultFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write fault data to fault file format as defined in ShakeMap Software Guide.</p>
+<dd><p>Write fault data to fault file format as defined in ShakeMap Software
+Guide.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -751,6 +736,29 @@ quadrilateral in ECEF coordinates. Top edge assumed to be horizontal.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>q</strong> &#8211; A quadrilateral.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unit vector pointing in strike direction in ECEF coords.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="shakemap.grind.fault.get_quad_width">
+<code class="descclassname">shakemap.grind.fault.</code><code class="descname">get_quad_width</code><span class="sig-paren">(</span><em>p0</em>, <em>p1</em>, <em>p3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/fault.html#get_quad_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.fault.get_quad_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return width of an individual planar trapezoid, where the p0-p1 distance
+represents the long side.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p0</strong> &#8211; ECEF x,y,z point representing the first vertex of a quadrilateral.</li>
+<li><strong>p1</strong> &#8211; ECEF x,y,z point representing the second vertex of a quadrilateral.</li>
+<li><strong>p3</strong> &#8211; ECEF x,y,z point representing the fourth vertex of a quadrilateral.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Width of planar trapezoid (float).</p>
+</td>
 </tr>
 </tbody>
 </table>
