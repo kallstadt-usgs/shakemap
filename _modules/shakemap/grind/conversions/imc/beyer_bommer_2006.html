@@ -143,7 +143,7 @@
 <span class="sd">    +===========================+========================+</span>
 <span class="sd">    | AVERAGE_HORIZONTAL        | GMxy (Geometric mean)  |</span>
 <span class="sd">    +---------------------------+------------------------+</span>
-<span class="sd">    | HORIZONTAL                | ???                    |</span>
+<span class="sd">    | HORIZONTAL                | Random?                |</span>
 <span class="sd">    +---------------------------+------------------------+</span>
 <span class="sd">    | MEDIAN_HORIZONTAL         | AMxy (Arithmetic mean) |</span>
 <span class="sd">    +---------------------------+------------------------+</span>
@@ -158,18 +158,29 @@
 <span class="sd">    | VERTICAL                  | ---                    |</span>
 <span class="sd">    +---------------------------+------------------------+</span>
 
-<span class="sd">    Note that AVERAGE_HORIZONTAL is the &quot;reference&quot; type</span>
+<span class="sd">    Notes </span>
+
+<span class="sd">        - AVERAGE_HORIZONTAL is the &quot;reference&quot; type. </span>
+<span class="sd">        - The OQ IMC &quot;HORIZONAL&quot; indicates that the horizontal IMC category</span>
+<span class="sd">          may be ambiguous. In these cases, we are assuming that it is a </span>
+<span class="sd">          random horizontal component as a default.</span>
 
 <span class="sd">    To do</span>
+
 <span class="sd">        - Inherit from ConvertIMC class. </span>
 
-<span class="sd">    References: </span>
+<span class="sd">    References</span>
+
 <span class="sd">        Beyer, K., &amp; Bommer, J. J. (2006). Relationships between median values</span>
 <span class="sd">        and between aleatory variabilities for different definitions of the </span>
 <span class="sd">        horizontal component of motion. Bulletin of the Seismological Society of</span>
 <span class="sd">        America, 96(4A), 1512-1522. </span>
 <span class="sd">        `[link] &lt;http://www.bssaonline.org/content/96/4A/1512.short&gt;`__</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># c12 = median ratio</span>
+    <span class="c1"># c34 = std. of log ratio</span>
+    <span class="c1"># R = ratio of sigma_pga values</span>
     <span class="n">__pga_pgv_col_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c12&#39;</span><span class="p">,</span> <span class="s1">&#39;c34&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
     <span class="n">__sa_col_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;c2&#39;</span><span class="p">,</span> <span class="s1">&#39;c3&#39;</span><span class="p">,</span> <span class="s1">&#39;c4&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
     <span class="n">__pga_dict</span> <span class="o">=</span> <span class="p">{</span>
@@ -177,18 +188,21 @@
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">]))),</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">])))}</span>
     <span class="n">__pgv_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">]))),</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__pga_pgv_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">])))}</span>
     <span class="n">__sa_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">]))),</span>
+        <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">]))),</span>
         <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">__sa_col_names</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">])))}</span>
 
     <span class="nd">@staticmethod</span>
@@ -196,52 +210,30 @@
         <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Returns amps converted from one IMC to another.</span>
 
-<span class="sd">        **Important**: </span>
+<span class="sd">        **Important**:</span>
 
-<span class="sd">            - Assumes the input amps are in linear (not log) space </span>
-<span class="sd">            - IMC types &#39;VERTICAL&#39; and &#39;HORIZONTAL&#39; are not supported</span>
+<span class="sd">            - Assumes the input amps are in natural log (not linear) space</span>
+<span class="sd">            - IMC type &#39;VERTICAL&#39; is not supported</span>
 
-<span class="sd">        :param amps: </span>
-<span class="sd">            Numpy array of ground motion amplitudes. </span>
+<span class="sd">        :param amps:</span>
+<span class="sd">            Numpy array of ground motion amplitudes.</span>
 <span class="sd">        :param imc_in:</span>
-<span class="sd">            OpenQuake IMC type of the input amp array. </span>
+<span class="sd">            OpenQuake IMC type of the input amp array.</span>
 <span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__</span>
 <span class="sd">        :param imc_out:</span>
-<span class="sd">            Desired OpenQuake IMC type of the output amps. </span>
+<span class="sd">            Desired OpenQuake IMC type of the output amps.</span>
 <span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__</span>
 <span class="sd">        :param imt:</span>
-<span class="sd">            OpenQuake IMT of the input amps (must be one of PGA, PGV, or SA). </span>
+<span class="sd">            OpenQuake IMT of the input amps (must be one of PGA, PGV, or SA).</span>
 <span class="sd">            `[link] &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;`</span>
 <span class="sd">        :returns:</span>
-<span class="sd">            Numpy array of amps converted from imc_in to imc_out</span>
+<span class="sd">            Numpy array of amps converted from imc_in to imc_out.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
-            <span class="c1"># The amps are already in the B&amp;B &quot;reference&quot; type (&quot;GM&quot;, i.e.,</span>
-            <span class="c1"># geometric mean)</span>
-            <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span>
-            <span class="n">denom</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2other</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc_in</span><span class="p">)</span>
+        
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2other</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">)</span>
+        <span class="n">numer</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2other</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
-            <span class="c1"># The previous step will put the amps into the B&amp;B &quot;reference&quot;</span>
-            <span class="c1"># type (&quot;GM&quot;, i.e. geometric mean)</span>
-            <span class="n">numer</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span>
-            <span class="n">numer</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2other</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc_out</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">amps</span> <span class="o">*</span> <span class="p">(</span><span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">amps</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="BeyerBommer2006.sigmaIMCtoIMC"><a class="viewcode-back" href="../../../../../shakemap.grind.conversions.imc.beyer_bommer_2006.html#shakemap.grind.conversions.imc.beyer_bommer_2006.BeyerBommer2006.sigmaIMCtoIMC">[docs]</a>    <span class="k">def</span> <span class="nf">sigmaIMCtoIMC</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">,</span> <span class="n">imt</span><span class="p">):</span>
@@ -250,7 +242,7 @@
 
 <span class="sd">        **Important**: </span>
 
-<span class="sd">            - Assumes the input sigmas are in log space</span>
+<span class="sd">            - Assumes the input sigmas are in natural log space</span>
 <span class="sd">            - IMC types &#39;VERTICAL&#39; and &#39;HORIZONTAL&#39; are not supported</span>
 
 <span class="sd">        :param sigmas:</span>
@@ -268,42 +260,52 @@
 <span class="sd">        :returns:</span>
 <span class="sd">            Numpy array of standard deviations converted from imc_in to imc_out</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
-            <span class="c1"># The amps are already in the B&amp;B &quot;reference&quot; type (&quot;GM&quot;, i.e.,</span>
-            <span class="c1"># geometric mean)</span>
-            <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">or</span>\
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">or</span>\
-                <span class="n">imc_in</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span>
-            <span class="n">R</span><span class="p">,</span> <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2otherSigma</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc_in</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------</span>
+        <span class="c1"># Take input sigma to geometric mean sigma. </span>
+        <span class="c1"># Solve eqn 8 for sigma_GM2, which is sigma_logSa_GM</span>
+        <span class="c1"># This is the sigma converted to geometric mean</span>
+        <span class="c1"># (i.e., reference component). </span>
+        <span class="c1">#---------------------------------------------------</span>
+        <span class="n">R</span><span class="p">,</span> <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2otherSigma</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">)</span>
         <span class="n">sigma_GM2</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigmas</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sig_log_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span>
 
-        <span class="k">if</span> <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
-            <span class="c1"># The sigmas (sigma_GM2) are already in the B&amp;B &quot;reference&quot; type (&quot;GM&quot;, i.e.,</span>
-            <span class="c1"># geometric mean)</span>
-            <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">or</span> \
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">or</span>\
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">or</span>\
-                <span class="n">imc_out</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span><span class="p">:</span>
-            <span class="n">R</span><span class="p">,</span> <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2otherSigma</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc_out</span><span class="p">)</span>
-
+        <span class="c1">#---------------------------------------------------</span>
+        <span class="c1"># Evaluate equation 8 to go from GM to requested IMC</span>
+        <span class="c1">#---------------------------------------------------</span>
+        <span class="n">R</span><span class="p">,</span> <span class="n">sig_log_ratio</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__GM2otherSigma</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">)</span>
         <span class="n">sigma_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_GM2</span> <span class="o">*</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sig_log_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">sigma_out</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">__GM2other</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Helper function to extract coefficients from the parameter tables &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to extract coefficients from the parameters for </span>
+<span class="sd">        converting the median ground motions.</span>
+
+<span class="sd">        :param imt:</span>
+<span class="sd">            Intensity measure type.</span>
+<span class="sd">        :param imc:</span>
+<span class="sd">            Intensity measure component.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Median ratios. This is directly from Table 2 for PGA and PGV, and</span>
+<span class="sd">            computed from coefficients in Table 3 along with eqn 10 for Sa. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">imc</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
+            <span class="c1"># The amps are already in the B&amp;B &quot;reference&quot; type (&quot;GM&quot;, i.e.,</span>
+            <span class="c1"># geometric mean)</span>
+            <span class="k">return</span> <span class="mf">1.</span>
+
+        <span class="k">if</span> <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="s1">&#39;PGA&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__pga_dict</span><span class="p">[</span><span class="n">imc</span><span class="p">][</span><span class="s1">&#39;c12&#39;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="s1">&#39;PGV&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
@@ -327,7 +329,31 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">__GM2otherSigma</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">imc</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Helper function to extract coefficients from the parameter tables &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to extract coefficients from the parameters for</span>
+<span class="sd">        converting standard deviations. </span>
+
+<span class="sd">        :param imt:</span>
+<span class="sd">            Intensity measure type.</span>
+<span class="sd">        :param imc:</span>
+<span class="sd">            Intensity measure component.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            Coefficients: R (ratio of sigma values), standard deviation of sigma ratios.  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">imc</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">AVERAGE_HORIZONTAL</span><span class="p">:</span>
+            <span class="c1"># The amps are already in the B&amp;B &quot;reference&quot; type (&quot;GM&quot;, i.e.,</span>
+            <span class="c1"># geometric mean)</span>
+            <span class="k">return</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span>
+
+        <span class="k">if</span> <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">MEDIAN_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GMRotI50</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RotD50</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">RANDOM_HORIZONTAL</span> <span class="ow">and</span> \
+                <span class="n">imc</span> <span class="o">!=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown IMC </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">imc</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="s1">&#39;PGA&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__pga_dict</span><span class="p">[</span><span class="n">imc</span><span class="p">][</span><span class="s1">&#39;R&#39;</span><span class="p">],</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">__pga_dict</span><span class="p">[</span><span class="n">imc</span><span class="p">][</span><span class="s1">&#39;c34&#39;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="s1">&#39;PGV&#39;</span> <span class="ow">in</span> <span class="n">imt</span><span class="p">:</span>

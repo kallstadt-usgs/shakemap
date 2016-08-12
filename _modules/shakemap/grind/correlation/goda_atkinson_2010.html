@@ -209,7 +209,12 @@
             <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.319</span>
             <span class="n">gamma</span> <span class="o">=</span> <span class="mf">5.0</span>
             <span class="k">pass</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div></div>
+        <span class="n">cor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span>
+                                              <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span> <span class="o">-</span>
+                                       <span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                       <span class="mi">0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cor</span></div></div>
 </pre></div>
 
            </div>

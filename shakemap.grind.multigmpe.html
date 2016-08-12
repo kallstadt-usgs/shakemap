@@ -166,8 +166,10 @@
 <p>To do</p>
 <blockquote>
 <div><ul class="simple">
-<li>Convert IMT (e.g., PGV) from another IMT if it is not available from
-the GMPE in get_mean_and_stddevs.</li>
+<li>Update IMT conversion to account for additional uncertainty.</li>
+<li>Develop a method to include GMPEs that don&#8217;t have a site term.</li>
+<li>Add a check that the lenght of the weights match the length 
+of the GMPE list.</li>
 </ul>
 </div></blockquote>
 <dl class="attribute">
@@ -207,7 +209,7 @@ the GMPE in get_mean_and_stddevs.</li>
 
 <dl class="classmethod">
 <dt id="shakemap.grind.multigmpe.MultiGMPE.from_list">
-<em class="property">classmethod </em><code class="descname">from_list</code><span class="sig-paren">(</span><em>GMPEs</em>, <em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE.from_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.from_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_list</code><span class="sig-paren">(</span><em>GMPEs</em>, <em>weights</em>, <em>imc='Greater of two horizontal'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/multigmpe.html#MultiGMPE.from_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.multigmpe.MultiGMPE.from_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a MultiGMPE instance from lists of GMPEs and weights.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,6 +220,12 @@ the GMPE in get_mean_and_stddevs.</li>
 <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims">GMPE</a> 
 instances.</li>
 <li><strong>weights</strong> &#8211; List of weights; must sum to 1.0.</li>
+<li><strong>imc</strong> &#8211; Requested intensity measure component. Must be one listed
+<a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">here</a>.
+The amplitudes returned by the GMPEs will be converted to this IMT. 
+Default is &#8216;GREATER_OF_TWO_HORIZONTAL&#8217;, which is used by ShakeMap. 
+See discussion in <a class="reference external" href="http://usgs.github.io/shakemap/tg_choice_of_parameters.html#use-of-peak-values-rather-than-mean">this section</a>
+of the ShakeMap manual.</li>
 </ul>
 </td>
 </tr>

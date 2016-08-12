@@ -184,7 +184,7 @@ Components&#8221; (IMCs) per Beyer and Bommer (2006).</p>
 <td>GMxy (Geometric mean)</td>
 </tr>
 <tr class="row-odd"><td>HORIZONTAL</td>
-<td>???</td>
+<td>Random?</td>
 </tr>
 <tr class="row-even"><td>MEDIAN_HORIZONTAL</td>
 <td>AMxy (Arithmetic mean)</td>
@@ -206,20 +206,28 @@ Components&#8221; (IMCs) per Beyer and Bommer (2006).</p>
 </tr>
 </tbody>
 </table>
-<p>Note that AVERAGE_HORIZONTAL is the &#8220;reference&#8221; type</p>
-<dl class="docutils">
-<dt>To do</dt>
-<dd><ul class="first last simple">
+<p>Notes</p>
+<blockquote>
+<div><ul class="simple">
+<li>AVERAGE_HORIZONTAL is the &#8220;reference&#8221; type.</li>
+<li>The OQ IMC &#8220;HORIZONAL&#8221; indicates that the horizontal IMC category
+may be ambiguous. In these cases, we are assuming that it is a 
+random horizontal component as a default.</li>
+</ul>
+</div></blockquote>
+<p>To do</p>
+<blockquote>
+<div><ul class="simple">
 <li>Inherit from ConvertIMC class.</li>
 </ul>
-</dd>
-<dt>References: </dt>
-<dd>Beyer, K., &amp; Bommer, J. J. (2006). Relationships between median values
+</div></blockquote>
+<p>References</p>
+<blockquote>
+<div>Beyer, K., &amp; Bommer, J. J. (2006). Relationships between median values
 and between aleatory variabilities for different definitions of the 
 horizontal component of motion. Bulletin of the Seismological Society of
 America, 96(4A), 1512-1522. 
-<a class="reference external" href="http://www.bssaonline.org/content/96/4A/1512.short">[link]</a></dd>
-</dl>
+<a class="reference external" href="http://www.bssaonline.org/content/96/4A/1512.short">[link]</a></div></blockquote>
 <dl class="staticmethod">
 <dt id="shakemap.grind.conversions.imc.beyer_bommer_2006.BeyerBommer2006.ampIMCtoIMC">
 <em class="property">static </em><code class="descname">ampIMCtoIMC</code><span class="sig-paren">(</span><em>amps</em>, <em>imc_in</em>, <em>imc_out</em>, <em>imt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shakemap/grind/conversions/imc/beyer_bommer_2006.html#BeyerBommer2006.ampIMCtoIMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shakemap.grind.conversions.imc.beyer_bommer_2006.BeyerBommer2006.ampIMCtoIMC" title="Permalink to this definition">¶</a></dt>
@@ -227,8 +235,8 @@ America, 96(4A), 1512-1522.
 <p><strong>Important</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Assumes the input amps are in linear (not log) space</li>
-<li>IMC types &#8216;VERTICAL&#8217; and &#8216;HORIZONTAL&#8217; are not supported</li>
+<li>Assumes the input amps are in natural log (not linear) space</li>
+<li>IMC type &#8216;VERTICAL&#8217; is not supported</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -237,16 +245,16 @@ America, 96(4A), 1512-1522.
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>amps</strong> &#8211; Numpy array of ground motion amplitudes.</li>
-<li><strong>imc_in</strong> &#8211; OpenQuake IMC type of the input amp array. 
+<li><strong>imc_in</strong> &#8211; OpenQuake IMC type of the input amp array.
 <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">[link]</a></li>
-<li><strong>imc_out</strong> &#8211; Desired OpenQuake IMC type of the output amps. 
+<li><strong>imc_out</strong> &#8211; Desired OpenQuake IMC type of the output amps.
 <a class="reference external" href="http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC">[link]</a></li>
-<li><strong>imt</strong> &#8211; OpenQuake IMT of the input amps (must be one of PGA, PGV, or SA). 
+<li><strong>imt</strong> &#8211; OpenQuake IMT of the input amps (must be one of PGA, PGV, or SA).
 <cite>[link] &lt;http://docs.openquake.org/oq-hazardlib/master/imt.html&gt;</cite></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of amps converted from imc_in to imc_out</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy array of amps converted from imc_in to imc_out.</p>
 </td>
 </tr>
 </tbody>
@@ -260,7 +268,7 @@ America, 96(4A), 1512-1522.
 <p><strong>Important</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Assumes the input sigmas are in log space</li>
+<li>Assumes the input sigmas are in natural log space</li>
 <li>IMC types &#8216;VERTICAL&#8217; and &#8216;HORIZONTAL&#8217; are not supported</li>
 </ul>
 </div></blockquote>

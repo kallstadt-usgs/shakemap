@@ -131,9 +131,12 @@
 
 <span class="kn">from</span> <span class="nn">openquake.hazardlib.gsim.base</span> <span class="kn">import</span> <span class="n">GMPE</span>
 <span class="kn">from</span> <span class="nn">openquake.hazardlib</span> <span class="kn">import</span> <span class="n">const</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.imt</span> <span class="kn">import</span> <span class="n">PGV</span>
+<span class="kn">from</span> <span class="nn">openquake.hazardlib.imt</span> <span class="kn">import</span> <span class="n">SA</span>
 
-<span class="kn">from</span> <span class="nn">shakemap.grind.conversions.imc.beyer_bommer_2006</span> <span class="kn">import</span> <span class="n">BeyerBommer2006</span> <span class="k">as</span> <span class="n">bb06</span>
-
+<span class="kn">from</span> <span class="nn">shakemap.grind.conversions.imt.newmark_hall_1982</span> <span class="kn">import</span> <span class="n">NewmarkHall1982</span>
+<span class="kn">from</span> <span class="nn">shakemap.grind.conversions.imc.beyer_bommer_2006</span> <span class="kn">import</span> <span class="n">BeyerBommer2006</span>
+<span class="kn">from</span> <span class="nn">shakemap.grind.gmpe2shakemap</span> <span class="kn">import</span> <span class="n">ampGmpeToShakeMap</span>
 
 <div class="viewcode-block" id="MultiGMPE"><a class="viewcode-back" href="../../../shakemap.grind.multigmpe.html#shakemap.grind.multigmpe.MultiGMPE">[docs]</a><span class="k">class</span> <span class="nc">MultiGMPE</span><span class="p">(</span><span class="n">GMPE</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -141,8 +144,10 @@
 
 <span class="sd">    To do</span>
 
-<span class="sd">        * Convert IMT (e.g., PGV) from another IMT if it is not available from</span>
-<span class="sd">          the GMPE in get_mean_and_stddevs.</span>
+<span class="sd">        * Update IMT conversion to account for additional uncertainty. </span>
+<span class="sd">        * Develop a method to include GMPEs that don&#39;t have a site term. </span>
+<span class="sd">        * Add a check that the lenght of the weights match the length </span>
+<span class="sd">          of the GMPE list. </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -158,12 +163,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See superclass `method &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#openquake.hazardlib.gsim.base.GroundShakingIntensityModel.get_mean_and_stddevs&gt;`__. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># These are arrays to hold the weighted combination of the GMPEs</span>
         <span class="n">lnmu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">)</span>
-        <span class="n">lnsd2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">)</span>
-        <span class="n">lmean</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GMPEs</span><span class="p">)</span>
-        <span class="n">lsd</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GMPEs</span><span class="p">)</span>
+        <span class="n">stddev_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_STANDARD_DEVIATION_TYPES</span>
+        <span class="n">lnsd2</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sites</span><span class="o">.</span><span class="n">vs30</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">stddev_types</span><span class="p">]</span>
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GMPEs</span><span class="p">)):</span>
+            <span class="c1">#---------------------------------------------------------------</span>
+            <span class="c1"># Loop over GMPE list</span>
+            <span class="c1">#---------------------------------------------------------------</span>
+
             <span class="n">gmpe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GMPEs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1">#---------------------------------------------------------------</span>
             <span class="c1"># Need to select the appropriate z1pt0 value for different GMPEs.</span>
             <span class="c1"># Note that these are required site parameters, so even though</span>
             <span class="c1"># OQ has these equations built into the class, the arrays must</span>
@@ -171,39 +184,62 @@
             <span class="c1"># a request to OQ to provide a subclass that that computes the</span>
             <span class="c1"># depth parameters when not provided (as is done for BSSA14 but</span>
             <span class="c1"># not the others).</span>
+            <span class="c1">#---------------------------------------------------------------</span>
+
             <span class="k">if</span> <span class="n">gmpe</span> <span class="o">==</span> <span class="s1">&#39;AbrahamsonEtAl2014()&#39;</span><span class="p">:</span>
                 <span class="n">sites</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">z1pt0ask14</span>
             <span class="k">if</span> <span class="n">gmpe</span> <span class="o">==</span> <span class="s1">&#39;BooreEtAl2014()&#39;</span> <span class="ow">or</span> <span class="n">gmpe</span> <span class="o">==</span> <span class="s1">&#39;ChiouYoungs2014()&#39;</span><span class="p">:</span>
                 <span class="n">sites</span><span class="o">.</span><span class="n">z1pt0</span> <span class="o">=</span> <span class="n">sites</span><span class="o">.</span><span class="n">z1pt0cy14</span>
-            <span class="n">lmean</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lsd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">get_mean_and_stddevs</span><span class="p">(</span>
-                <span class="n">sites</span><span class="p">,</span> <span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">imt</span><span class="p">,</span> <span class="n">stddev_types</span><span class="p">)</span>
 
-            <span class="c1"># Convert component type.</span>
-            <span class="c1"># Note: conversion is based on linear amps (not log)!!</span>
-            <span class="n">inc_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IMCs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">inc_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span>
-            <span class="n">lmean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
-                <span class="n">bb06</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lmean</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
-                    <span class="n">inc_in</span><span class="p">,</span>
-                    <span class="n">inc_out</span><span class="p">,</span>
-                    <span class="n">imt</span><span class="p">))</span>
-            <span class="n">lsd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
-                <span class="n">bb06</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lsd</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
-                    <span class="n">inc_in</span><span class="p">,</span>
-                    <span class="n">inc_out</span><span class="p">,</span>
-                    <span class="n">imt</span><span class="p">))</span>
 
+            <span class="c1">#---------------------------------------------------------------</span>
+            <span class="c1"># Evaluate GMPEs</span>
+            <span class="c1">#---------------------------------------------------------------</span>
+
+            <span class="n">gmpe_imts</span> <span class="o">=</span> <span class="p">[</span><span class="n">imt</span><span class="o">.</span><span class="n">__name__</span> <span class="k">for</span> <span class="n">imt</span> <span class="ow">in</span> \
+                         <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_TYPES</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">imt</span><span class="p">,</span> <span class="n">PGV</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;PGV&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gmpe_imts</span><span class="p">):</span>
+
+                <span class="c1"># If IMT is PGV and not given by GMPE, convert from PSA10</span>
+
+                <span class="n">psa10</span><span class="p">,</span> <span class="n">psa10sd</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">get_mean_and_stddevs</span><span class="p">(</span>
+                    <span class="n">sites</span><span class="p">,</span> <span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">SA</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">stddev_types</span><span class="p">)</span>
+                <span class="n">lmean</span><span class="p">,</span> <span class="n">lsd</span> <span class="o">=</span> <span class="n">NewmarkHall1982</span><span class="o">.</span><span class="n">psa102pgv</span><span class="p">(</span><span class="n">psa10</span><span class="p">,</span> <span class="n">psa10sd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lmean</span><span class="p">,</span> <span class="n">lsd</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">get_mean_and_stddevs</span><span class="p">(</span>
+                    <span class="n">sites</span><span class="p">,</span> <span class="n">rup</span><span class="p">,</span> <span class="n">dists</span><span class="p">,</span> <span class="n">imt</span><span class="p">,</span> <span class="n">stddev_types</span><span class="p">)</span>
+
+            <span class="c1">#---------------------------------------------------------------</span>
+            <span class="c1"># Convertions due to component definition</span>
+            <span class="c1">#---------------------------------------------------------------</span>
+
+            <span class="n">imc_in</span> <span class="o">=</span> <span class="n">gmpe</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span>
+            <span class="n">imc_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span>
+            <span class="n">lmean</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">ampIMCtoIMC</span><span class="p">(</span><span class="n">lmean</span><span class="p">,</span> <span class="n">imc_in</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lnsd2</span><span class="p">)):</span>
+                <span class="n">lsd</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">BeyerBommer2006</span><span class="o">.</span><span class="n">sigmaIMCtoIMC</span><span class="p">(</span>
+                    <span class="n">lsd</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">imc_in</span><span class="p">,</span> <span class="n">imc_out</span><span class="p">,</span> <span class="n">imt</span><span class="p">)</span>
+
+            <span class="c1">#---------------------------------------------------------------</span>
             <span class="c1"># Compute weighted mean and sd</span>
-            <span class="n">lnmu</span> <span class="o">=</span> <span class="n">lnmu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">lmean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">lnsd2</span> <span class="o">=</span> <span class="n">lnsd2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">lmean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">lsd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">lnsd2</span> <span class="o">=</span> <span class="n">lnsd2</span> <span class="o">-</span> <span class="n">lnmu</span><span class="o">**</span><span class="mi">2</span>
+            <span class="c1">#---------------------------------------------------------------</span>
 
-        <span class="k">return</span> <span class="n">lnmu</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">lnsd2</span><span class="p">)</span></div>
+            <span class="n">lnmu</span> <span class="o">=</span> <span class="n">lnmu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">lmean</span>
+
+            <span class="c1"># Note: the lnsd2 calculation isn&#39;t complete until we drop out of</span>
+            <span class="c1"># this loop and substract lnmu**2</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lnsd2</span><span class="p">)):</span>
+                <span class="n">lnsd2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lnsd2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">lmean</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">lsd</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lnsd2</span><span class="p">)):</span>
+            <span class="n">lnsd2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lnsd2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">lnmu</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="n">lnsd</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">lnsd2</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">lnmu</span><span class="p">,</span> <span class="n">lnsd</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="MultiGMPE.from_list"><a class="viewcode-back" href="../../../shakemap.grind.multigmpe.html#shakemap.grind.multigmpe.MultiGMPE.from_list">[docs]</a>    <span class="k">def</span> <span class="nf">from_list</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">GMPEs</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiGMPE.from_list"><a class="viewcode-back" href="../../../shakemap.grind.multigmpe.html#shakemap.grind.multigmpe.MultiGMPE.from_list">[docs]</a>    <span class="k">def</span> <span class="nf">from_list</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">GMPEs</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">imc</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Construct a MultiGMPE instance from lists of GMPEs and weights.</span>
 
 <span class="sd">        :param GMPEs:</span>
@@ -211,13 +247,32 @@
 <span class="sd">            `GMPE &lt;http://docs.openquake.org/oq-hazardlib/master/gsim/index.html#built-in-gsims&gt;`__ </span>
 <span class="sd">            instances.</span>
 <span class="sd">        :param weights:</span>
-<span class="sd">            List of weights; must sum to 1.0. </span>
+<span class="sd">            List of weights; must sum to 1.0.</span>
+<span class="sd">        :param imc: Requested intensity measure component. Must be one listed</span>
+<span class="sd">            `here &lt;http://docs.openquake.org/oq-hazardlib/master/const.html?highlight=imc#openquake.hazardlib.const.IMC&gt;`__.</span>
+<span class="sd">            The amplitudes returned by the GMPEs will be converted to this IMT. </span>
+<span class="sd">            Default is &#39;GREATER_OF_TWO_HORIZONTAL&#39;, which is used by ShakeMap. </span>
+<span class="sd">            See discussion in `this section &lt;http://usgs.github.io/shakemap/tg_choice_of_parameters.html#use-of-peak-values-rather-than-mean&gt;`__</span>
+<span class="sd">            of the ShakeMap manual. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Check that weights sum to 1.0:</span>
+        <span class="c1">#---------------------------------------------------------</span>
+
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Weights must sum to one.&#39;</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
+        <span class="c1"># Check that length of weights equals length of gmpe list</span>
+        <span class="c1">#---------------------------------------------------------</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">GMPEs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Length of weights must match length of GMPE list.&#39;</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Check that GMPEs is a list of OQ GMPE instances</span>
+        <span class="c1">#---------------------------------------------------------</span>
+
         <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">GMPE</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not a GMPE instance.&quot;</span> <span class="o">%</span> <span class="n">g</span><span class="p">)</span>
@@ -226,8 +281,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">GMPEs</span> <span class="o">=</span> <span class="n">GMPEs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Check that GMPEs all are for the same tectonic region,</span>
         <span class="c1"># otherwise raise exception.</span>
+        <span class="c1">#---------------------------------------------------------</span>
+
         <span class="n">tmp</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">DEFINED_FOR_TECTONIC_REGION_TYPE</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">])</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_TECTONIC_REGION_TYPE</span> <span class="o">=</span> \
@@ -235,6 +293,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;GMPEs are not all for the same tectonic region.&#39;</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Combine the intensity measure types. This is problematic:</span>
         <span class="c1">#   - Logically, we should only include the intersection of the sets</span>
         <span class="c1">#     of imts for the different GMPEs.</span>
@@ -242,33 +301,47 @@
         <span class="c1">#     subduction zones do not have PGV.</span>
         <span class="c1">#   - So instead we will use the union of the imts and then convert</span>
         <span class="c1">#     to get the missing imts later in get_mean_and_stddevs.</span>
+        <span class="c1">#---------------------------------------------------------</span>
+
         <span class="n">imts</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_TYPES</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_TYPES</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">imts</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Store intensity measure types for conversion in get_mean_and_stddevs.</span>
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IMCs</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
 
-        <span class="c1"># For ShakeMap, the target IMC is max</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span> <span class="o">=</span> \
-            <span class="n">const</span><span class="o">.</span><span class="n">IMC</span><span class="o">.</span><span class="n">GREATER_OF_TWO_HORIZONTAL</span>
+        <span class="c1">#---------------------------------------------------------</span>
+        <span class="c1"># Store the component</span>
+        <span class="c1">#---------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_INTENSITY_MEASURE_COMPONENT</span> <span class="o">=</span> <span class="n">imc</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># For scenarios, we only care about total standard deviation,</span>
         <span class="c1"># but for real-time we need inter and intra. For now, lets</span>
-        <span class="c1"># just take the intersection of the different GMPEs to make life</span>
-        <span class="c1"># slightly easier.</span>
-        <span class="n">stdlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">DEFINED_FOR_STANDARD_DEVIATION_TYPES</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_STANDARD_DEVIATION_TYPES</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">stdlist</span><span class="p">)</span>
+        <span class="c1"># just use total to make life easier. </span>
+        <span class="c1">#---------------------------------------------------------</span>
+<span class="c1">#        stdlist = [set(g.DEFINED_FOR_STANDARD_DEVIATION_TYPES) for g in GMPEs]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DEFINED_FOR_STANDARD_DEVIATION_TYPES</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
+            <span class="n">const</span><span class="o">.</span><span class="n">StdDev</span><span class="o">.</span><span class="n">TOTAL</span>
+        <span class="p">])</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Need union of site parameters, but it is complicated by the</span>
         <span class="c1"># different depth parameter flavors.</span>
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="n">sitepars</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">REQUIRES_SITES_PARAMETERS</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">REQUIRES_SITES_PARAMETERS</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">sitepars</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Union of rupture parameters</span>
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="n">ruppars</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">REQUIRES_RUPTURE_PARAMETERS</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">REQUIRES_RUPTURE_PARAMETERS</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">ruppars</span><span class="p">)</span>
 
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="c1"># Union of distance parameters</span>
+        <span class="c1">#---------------------------------------------------------</span>
         <span class="n">distpars</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">REQUIRES_DISTANCES</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">GMPEs</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">REQUIRES_DISTANCES</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">distpars</span><span class="p">)</span>
 

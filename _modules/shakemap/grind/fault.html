@@ -749,8 +749,8 @@
         <span class="c1"># would be ok.</span>
 
         <span class="c1"># Are the top and bottom edges both parallel to the surface?</span>
-        <span class="n">topDepthsEqual</span> <span class="o">=</span> <span class="n">P0</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span>
-        <span class="n">bottomDepthsEqual</span> <span class="o">=</span> <span class="n">P2</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">topDepthsEqual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">P0</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">atol</span> <span class="o">=</span> <span class="mf">2e-3</span><span class="p">)</span>
+        <span class="n">bottomDepthsEqual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">P2</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">P3</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">atol</span> <span class="o">=</span> <span class="mf">2e-3</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">topDepthsEqual</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">bottomDepthsEqual</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ShakeMapException</span><span class="p">(</span>
                 <span class="s1">&#39;Top and bottom edges of fault quadrilateral must be parallel to the surface&#39;</span><span class="p">)</span>
