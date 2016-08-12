@@ -15,7 +15,6 @@ Submodules
 
    shakemap.grind.distance
    shakemap.grind.fault
-   shakemap.grind.gmpe2shakemap
    shakemap.grind.multigmpe
    shakemap.grind.sites
    shakemap.grind.source
